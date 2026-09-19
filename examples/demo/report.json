@@ -1,0 +1,2134 @@
+{
+  "engine_version": "0.1.0",
+  "data_kind": "synthetic",
+  "as_of": "2026-09-19T12:00:00Z",
+  "input_sha256": "832f09fe236f5584e8e2f07b125321075403769dfb5072d29c5ad49d74bf2dff",
+  "currency_exponents": {
+    "AED": 2,
+    "USD": 2,
+    "PKR": 2,
+    "JPY": 0,
+    "KWD": 3
+  },
+  "policy": {
+    "signal_grace_hours": 24,
+    "collection_grace_hours": 48,
+    "cod_settlement_grace_hours": 168
+  },
+  "coverage": [
+    {
+      "store_id": "demo",
+      "stream": "payments",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "cod",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "fulfillment",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "signals:meta",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "signals:ga4",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    }
+  ],
+  "summary": {
+    "orders": 12,
+    "unique_events_as_of": 30,
+    "retries_ignored": 1,
+    "future_rows_excluded": 0,
+    "findings": 8,
+    "affected_orders": 8,
+    "checks_not_evaluated": 0,
+    "financial_exposure_total": null,
+    "amount_warning": "Finding amounts have different meanings and may overlap. Never sum them as revenue lost, recovered or at risk."
+  },
+  "segments": [
+    {
+      "market": "AE",
+      "locale": "ar-AE",
+      "affected_orders": 6
+    },
+    {
+      "market": "JP",
+      "locale": "ja-JP",
+      "affected_orders": 1
+    },
+    {
+      "market": "US",
+      "locale": "es-US",
+      "affected_orders": 1
+    }
+  ],
+  "findings": [
+    {
+      "id": "finding-f6d6a59c121be2c8",
+      "rule": "signal_policy_conflict",
+      "severity": "critical",
+      "title": "Purchase signal conflicts with supplied policy",
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": "meta",
+      "explanation": "A purchase signal is present although this order/destination is marked not permitted. This is a policy-contract exception, not a legal determination.",
+      "next_step": "Inspect the consent/policy mapping and emission path before further collection. Do not infer legal compliance from this tool.",
+      "amount_minor": null,
+      "currency": null,
+      "amount_basis": null,
+      "evidence_refs": [
+        "order-6adf64f4931e25cc",
+        "event-b19e3dcb43d22b16"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-77e9971e6b4c6f9e",
+      "rule": "cod_remittance_overdue",
+      "severity": "high",
+      "title": "COD collection has an overdue unsettled balance",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": null,
+      "explanation": "Mature courier collections exceed allocated gross settlements. Settlements are conservatively allocated to the oldest collections first.",
+      "next_step": "Reconcile the courier statement, bank transfer and recognized fees/adjustments. Confirm the contractual due date.",
+      "amount_minor": 15000,
+      "currency": "AED",
+      "amount_basis": "overdue unsettled COD balance under configured grace; not lost revenue",
+      "evidence_refs": [
+        "order-d7e2b62395a141ca",
+        "event-5d73ea3bc67a0886",
+        "event-75f8cff31ce4be25"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-f31e36902570d6f8",
+      "rule": "delivered_cash_shortfall",
+      "severity": "high",
+      "title": "Delivered order has a recorded collection shortfall",
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": null,
+      "explanation": "Delivery is recorded and the configured grace period elapsed, but gross customer collections do not cover the final order total.",
+      "next_step": "Verify cash receipt, payment terms and final order amount with the gateway or courier. Do not charge the customer automatically.",
+      "amount_minor": 8000,
+      "currency": "AED",
+      "amount_basis": "unmatched delivered order balance; not proven bad debt",
+      "evidence_refs": [
+        "order-72f81392f8855dff",
+        "event-1f0e2e11484c6e43"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-99c28609a0a6245b",
+      "rule": "overcollection",
+      "severity": "high",
+      "title": "Recorded collection exceeds the order total",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": null,
+      "explanation": "Distinct successful collection transactions exceed the supplied final order total; a mapping error is also possible.",
+      "next_step": "Verify transaction identities, order edits and legitimate adjustments with payments operations before considering any refund.",
+      "amount_minor": 9900,
+      "currency": "AED",
+      "amount_basis": "gross collection above final order total; not lost revenue",
+      "evidence_refs": [
+        "order-00f7f10955bbdaf9",
+        "event-65f22d65252daefd",
+        "event-dde42bccdf9acfbd"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-466b455fdc234509",
+      "rule": "duplicate_purchase_keys",
+      "severity": "medium",
+      "title": "Multiple purchase identities for one order",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": "meta",
+      "explanation": "Distinct normalized deduplication keys were observed for one order/destination. Actual downstream double counting is not established.",
+      "next_step": "Inspect browser/server identity alignment and the destination's own deduplication results. Never infer Meta, TikTok and GA4 share one dedup rule.",
+      "amount_minor": null,
+      "currency": null,
+      "amount_basis": null,
+      "evidence_refs": [
+        "order-a06c59fc52540ed9",
+        "event-5b6b1aca14929b8b",
+        "event-85db4fb447bfdf70"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-89fa70c62d1ac946",
+      "rule": "signal_value_mismatch",
+      "severity": "medium",
+      "title": "Purchase value differs from its configured basis",
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "market": "JP",
+      "locale": "ja-JP",
+      "destination": "meta",
+      "explanation": "Expected 5000 minor units for this destination; at least one observation differs. Tax/shipping conventions are configured, not guessed.",
+      "next_step": "Verify each destination's value definition, discounts, tax and shipping treatment against the source order.",
+      "amount_minor": null,
+      "currency": null,
+      "amount_basis": null,
+      "evidence_refs": [
+        "order-22c9a9b70b513049",
+        "event-19a4dd0b5def837f"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-a004323f8a7c8ef5",
+      "rule": "missing_purchase_signal",
+      "severity": "medium",
+      "title": "Expected purchase signal is absent",
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "market": "AE",
+      "locale": "ar-AE",
+      "destination": "meta",
+      "explanation": "No purchase signal exists in the declared complete destination export after the configured grace period.",
+      "next_step": "Verify identity mapping, consent snapshot, integration delivery logs and downstream receipt before resending anything.",
+      "amount_minor": null,
+      "currency": null,
+      "amount_basis": null,
+      "evidence_refs": [
+        "order-7aab1560d35978e0"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    },
+    {
+      "id": "finding-aa7448c82740dbf9",
+      "rule": "signal_currency_mismatch",
+      "severity": "medium",
+      "title": "Purchase currency differs from the expected basis",
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "market": "US",
+      "locale": "es-US",
+      "destination": "meta",
+      "explanation": "Observed purchase currency differs from the canonical order currency. Cross-currency amounts are not subtracted.",
+      "next_step": "Check whether the destination intentionally uses shop currency versus presentment currency and correct the mapping contract first.",
+      "amount_minor": null,
+      "currency": null,
+      "amount_basis": null,
+      "evidence_refs": [
+        "order-921d68ea0498dbc4",
+        "event-0ec6ff2a084740fb"
+      ],
+      "confidence": "Observed exception under supplied mapping and completeness assumptions; not a verified cause or recovered revenue."
+    }
+  ],
+  "checks": [
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "flagged",
+      "reason": "Distinct normalized deduplication keys were observed for one order/destination. Actual downstream double counting is not established."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "passed",
+      "reason": "Gross collection covers the delivered order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "flagged",
+      "reason": "Mature courier collections exceed allocated gross settlements. Settlements are conservatively allocated to the oldest collections first."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Settlement does not exceed collection."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "flagged",
+      "reason": "Delivery is recorded and the configured grace period elapsed, but gross customer collections do not cover the final order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "flagged",
+      "reason": "Expected 5000 minor units for this destination; at least one observation differs. Tax/shipping conventions are configured, not guessed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "waiting",
+      "reason": "Collection grace period has not elapsed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "passed",
+      "reason": "No mature unsettled COD balance under the configured grace period."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Settlement does not exceed collection."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "flagged",
+      "reason": "A purchase signal is present although this order/destination is marked not permitted. This is a policy-contract exception, not a legal determination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "not_applicable",
+      "reason": "Absence is expected under supplied policy."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "flagged",
+      "reason": "No purchase signal exists in the declared complete destination export after the configured grace period."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "flagged",
+      "reason": "Distinct successful collection transactions exceed the supplied final order total; a mapping error is also possible."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed purchase currency mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "cash_currency_unresolved",
+      "destination": null,
+      "status": "passed",
+      "reason": "No observed cash event uses a different currency."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "overcollection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Collection does not exceed the supplied order total."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "refund_exceeds_collection",
+      "destination": null,
+      "status": "passed",
+      "reason": "Refund amounts do not exceed captured amounts."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "delivered_cash_shortfall",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "No delivery evidence; no conclusion about fulfillment completeness."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "cod_remittance_overdue",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "cod_settlement_exceeds_collection",
+      "destination": null,
+      "status": "not_applicable",
+      "reason": "Prepaid order."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "signal_policy_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "Supplied policy permits this destination."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "missing_purchase_signal",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At least one purchase signal is present."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "duplicate_purchase_keys",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "At most one normalized purchase identity was observed."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "signal_payload_conflict",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No conflicting values for a shared normalized identity."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "signal_currency_mismatch",
+      "destination": "meta",
+      "status": "flagged",
+      "reason": "Observed purchase currency differs from the canonical order currency. Cross-currency amounts are not subtracted."
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "rule": "signal_value_mismatch",
+      "destination": "meta",
+      "status": "passed",
+      "reason": "No observed same-currency value mismatch."
+    }
+  ],
+  "orders": [
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 10000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 10000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 10000,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-808e5782e2d2b2ba",
+        "event-070be5b7eb395e16",
+        "event-c8522cd3f9c93a4b"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 14000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 14000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 14000,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-08ad9b9715083273",
+        "event-5b6b1aca14929b8b",
+        "event-85db4fb447bfdf70"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 25000,
+      "payment_method": "cod",
+      "cash_complete": true,
+      "observed_collected_minor": 25000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 25000,
+      "observed_cod_settled_minor": 10000,
+      "timeline_refs": [
+        "event-b3e84b010842fade",
+        "event-5d73ea3bc67a0886",
+        "event-760ad4aa8bccaac0",
+        "event-75f8cff31ce4be25"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 8000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 0,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 0,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-2e6f5de5479b8591",
+        "event-1f0e2e11484c6e43"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "market": "US",
+      "locale": "en-US",
+      "currency": "USD",
+      "order_total_minor": 12000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 12000,
+      "observed_refunded_minor": 12000,
+      "observed_customer_cash_net_minor": 0,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-5a4a5188e0c930b8",
+        "event-9c55fc157bfdd355",
+        "event-dfcb878f73100a98"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "market": "JP",
+      "locale": "ja-JP",
+      "currency": "JPY",
+      "order_total_minor": 5000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 5000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 5000,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-24f44a16a5161310",
+        "event-19a4dd0b5def837f"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "market": "KW",
+      "locale": "ar-KW",
+      "currency": "KWD",
+      "order_total_minor": 15900,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 15900,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 15900,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-29a9a1d2f22b6766",
+        "event-d3817341e55a0d1f"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "market": "PK",
+      "locale": "ur-PK",
+      "currency": "PKR",
+      "order_total_minor": 200000,
+      "payment_method": "cod",
+      "cash_complete": true,
+      "observed_collected_minor": 200000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 200000,
+      "observed_cod_settled_minor": 0,
+      "timeline_refs": [
+        "event-e5bb1bb1850bb77b",
+        "event-8b97ce785a0f01fb",
+        "event-e73d90a33b9557ef"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 11000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 11000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 11000,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-5db250dc5283ea65",
+        "event-b19e3dcb43d22b16"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 7500,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 7500,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 7500,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-f3e67934edf5efdb"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "market": "AE",
+      "locale": "ar-AE",
+      "currency": "AED",
+      "order_total_minor": 9900,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 19800,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 19800,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-65f22d65252daefd",
+        "event-dde42bccdf9acfbd",
+        "event-8e7c41e041303d1b"
+      ]
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "market": "US",
+      "locale": "es-US",
+      "currency": "USD",
+      "order_total_minor": 3000,
+      "payment_method": "prepaid",
+      "cash_complete": true,
+      "observed_collected_minor": 3000,
+      "observed_refunded_minor": 0,
+      "observed_customer_cash_net_minor": 3000,
+      "observed_cod_settled_minor": null,
+      "timeline_refs": [
+        "event-d1e383dea8978dd3",
+        "event-0ec6ff2a084740fb"
+      ]
+    }
+  ],
+  "evidence": {
+    "event-808e5782e2d2b2ba": {
+      "id": "DEMO-001-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED"
+    },
+    "event-08ad9b9715083273": {
+      "id": "DEMO-002-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED"
+    },
+    "event-5a4a5188e0c930b8": {
+      "id": "DEMO-005-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 12000,
+      "currency": "USD"
+    },
+    "event-24f44a16a5161310": {
+      "id": "DEMO-006-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 5000,
+      "currency": "JPY"
+    },
+    "event-29a9a1d2f22b6766": {
+      "id": "DEMO-007-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 15900,
+      "currency": "KWD"
+    },
+    "event-5db250dc5283ea65": {
+      "id": "DEMO-009-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 11000,
+      "currency": "AED"
+    },
+    "event-f3e67934edf5efdb": {
+      "id": "DEMO-010-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 7500,
+      "currency": "AED"
+    },
+    "event-65f22d65252daefd": {
+      "id": "DEMO-011-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED"
+    },
+    "event-dde42bccdf9acfbd": {
+      "id": "DEMO-011-capture-2",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED"
+    },
+    "event-d1e383dea8978dd3": {
+      "id": "DEMO-012-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 3000,
+      "currency": "USD"
+    },
+    "event-070be5b7eb395e16": {
+      "id": "DEMO-001-browser",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-001"
+    },
+    "event-c8522cd3f9c93a4b": {
+      "id": "DEMO-001-server",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-001"
+    },
+    "event-5b6b1aca14929b8b": {
+      "id": "DEMO-002-browser",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED",
+      "dedup_key": "browser-002"
+    },
+    "event-85db4fb447bfdf70": {
+      "id": "DEMO-002-server",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED",
+      "dedup_key": "server-002"
+    },
+    "event-b3e84b010842fade": {
+      "id": "DEMO-003-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 25000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-003"
+    },
+    "event-2e6f5de5479b8591": {
+      "id": "DEMO-004-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 8000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-004"
+    },
+    "event-9c55fc157bfdd355": {
+      "id": "DEMO-005-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 12000,
+      "currency": "USD",
+      "dedup_key": "purchase-DEMO-005"
+    },
+    "event-19a4dd0b5def837f": {
+      "id": "DEMO-006-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 500000,
+      "currency": "JPY",
+      "dedup_key": "purchase-DEMO-006"
+    },
+    "event-d3817341e55a0d1f": {
+      "id": "DEMO-007-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 15900,
+      "currency": "KWD",
+      "dedup_key": "purchase-DEMO-007"
+    },
+    "event-e5bb1bb1850bb77b": {
+      "id": "DEMO-008-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 200000,
+      "currency": "PKR",
+      "dedup_key": "purchase-DEMO-008"
+    },
+    "event-b19e3dcb43d22b16": {
+      "id": "DEMO-009-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 11000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-009"
+    },
+    "event-8e7c41e041303d1b": {
+      "id": "DEMO-011-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-011"
+    },
+    "event-0ec6ff2a084740fb": {
+      "id": "DEMO-012-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 3000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-012"
+    },
+    "event-5d73ea3bc67a0886": {
+      "id": "DEMO-003-collected",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "cod",
+      "kind": "cod_collected",
+      "at": "2026-09-04T10:00:00Z",
+      "amount_minor": 25000,
+      "currency": "AED"
+    },
+    "event-760ad4aa8bccaac0": {
+      "id": "DEMO-003-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-04T10:00:00Z"
+    },
+    "event-1f0e2e11484c6e43": {
+      "id": "DEMO-004-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-04T10:00:00Z"
+    },
+    "event-dfcb878f73100a98": {
+      "id": "DEMO-005-refund",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "payments",
+      "kind": "refund",
+      "at": "2026-09-07T10:00:00Z",
+      "amount_minor": 12000,
+      "currency": "USD"
+    },
+    "event-75f8cff31ce4be25": {
+      "id": "DEMO-003-settled",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "cod",
+      "kind": "cod_settled",
+      "at": "2026-09-08T10:00:00Z",
+      "amount_minor": 10000,
+      "currency": "AED"
+    },
+    "event-8b97ce785a0f01fb": {
+      "id": "DEMO-008-collected",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "cod",
+      "kind": "cod_collected",
+      "at": "2026-09-19T09:00:00Z",
+      "amount_minor": 200000,
+      "currency": "PKR"
+    },
+    "event-e73d90a33b9557ef": {
+      "id": "DEMO-008-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-19T09:00:00Z"
+    },
+    "order-eab705e2fcb8dcf7": {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 10000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 10000
+        }
+      }
+    },
+    "order-a06c59fc52540ed9": {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 14000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 14000
+        }
+      }
+    },
+    "order-d7e2b62395a141ca": {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 25000,
+      "payment_method": "cod",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 25000
+        }
+      }
+    },
+    "order-72f81392f8855dff": {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 8000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 8000
+        }
+      }
+    },
+    "order-0fbbf98ca7a91d42": {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "USD",
+      "total_minor": 12000,
+      "payment_method": "prepaid",
+      "market": "US",
+      "locale": "en-US",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 12000
+        }
+      }
+    },
+    "order-22c9a9b70b513049": {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "JPY",
+      "total_minor": 5000,
+      "payment_method": "prepaid",
+      "market": "JP",
+      "locale": "ja-JP",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 5000
+        }
+      }
+    },
+    "order-d2c600f254efbc0e": {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "KWD",
+      "total_minor": 15900,
+      "payment_method": "prepaid",
+      "market": "KW",
+      "locale": "ar-KW",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 15900
+        }
+      }
+    },
+    "order-fa6a050d035f5c8c": {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "PKR",
+      "total_minor": 200000,
+      "payment_method": "cod",
+      "market": "PK",
+      "locale": "ur-PK",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 200000
+        }
+      }
+    },
+    "order-6adf64f4931e25cc": {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 11000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": false,
+          "expected_value_minor": 11000
+        }
+      }
+    },
+    "order-7aab1560d35978e0": {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 7500,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 7500
+        }
+      }
+    },
+    "order-00f7f10955bbdaf9": {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 9900,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 9900
+        }
+      }
+    },
+    "order-921d68ea0498dbc4": {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "USD",
+      "total_minor": 3000,
+      "payment_method": "prepaid",
+      "market": "US",
+      "locale": "es-US",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 3000
+        }
+      }
+    }
+  }
+}
