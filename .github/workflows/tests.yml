@@ -1,0 +1,29 @@
+name: Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Test offline engine
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+      - name: Verify example reports and documentation
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_release.py
+      - name: Smoke test demo and replay
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m commerce_truth demo --out local-reports/ci-demo
+          python -m commerce_truth replay --input examples/demo/input.json --scenario settle-overdue-cod --out local-reports/ci-replay
