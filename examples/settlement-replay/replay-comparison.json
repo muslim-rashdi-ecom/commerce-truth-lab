@@ -1,0 +1,14 @@
+{
+  "scenario": "settle-overdue-cod",
+  "description": "Simulate a full, allocated COD settlement at the audit cutoff.",
+  "notice": "SYNTHETIC REPLAY: changed records are simulated. No store, payment, consent state or ad account was changed. Resolution here is not recovered revenue.",
+  "before_sha256": "832f09fe236f5584e8e2f07b125321075403769dfb5072d29c5ad49d74bf2dff",
+  "after_sha256": "9976f8a1c2ebcef1d914a08f2805cdc8b0c190e889e1efec55dd2637e0b57b38",
+  "before_findings": 8,
+  "after_findings": 7,
+  "new_findings": [],
+  "no_longer_flagged": [
+    "finding-77e9971e6b4c6f9e"
+  ],
+  "after_not_evaluated": 0
+}
