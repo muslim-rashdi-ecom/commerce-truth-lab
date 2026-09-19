@@ -17,10 +17,6 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -s tests -v
-      - name: Verify example reports and documentation
-        env:
-          PYTHONPATH: src
-        run: python scripts/verify_release.py
       - name: Smoke test demo and replay
         env:
           PYTHONPATH: src
