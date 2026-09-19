@@ -1,0 +1,568 @@
+{
+  "schema_version": 1,
+  "data_kind": "synthetic",
+  "as_of": "2026-09-19T12:00:00Z",
+  "currency_exponents": {
+    "AED": 2,
+    "USD": 2,
+    "PKR": 2,
+    "JPY": 0,
+    "KWD": 3
+  },
+  "policy": {
+    "signal_grace_hours": 24,
+    "collection_grace_hours": 48,
+    "cod_settlement_grace_hours": 168
+  },
+  "coverage": [
+    {
+      "store_id": "demo",
+      "stream": "payments",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "cod",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "fulfillment",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "signals:meta",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    },
+    {
+      "store_id": "demo",
+      "stream": "signals:ga4",
+      "from": "2026-09-01T00:00:00Z",
+      "through": "2026-09-19T12:00:00Z",
+      "complete": true
+    }
+  ],
+  "orders": [
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 10000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 10000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 14000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 14000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 25000,
+      "payment_method": "cod",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 25000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 8000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 8000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "USD",
+      "total_minor": 12000,
+      "payment_method": "prepaid",
+      "market": "US",
+      "locale": "en-US",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 12000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "JPY",
+      "total_minor": 5000,
+      "payment_method": "prepaid",
+      "market": "JP",
+      "locale": "ja-JP",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 5000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "KWD",
+      "total_minor": 15900,
+      "payment_method": "prepaid",
+      "market": "KW",
+      "locale": "ar-KW",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 15900
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "PKR",
+      "total_minor": 200000,
+      "payment_method": "cod",
+      "market": "PK",
+      "locale": "ur-PK",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 200000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 11000,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": false,
+          "expected_value_minor": 11000
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 7500,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 7500
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "AED",
+      "total_minor": 9900,
+      "payment_method": "prepaid",
+      "market": "AE",
+      "locale": "ar-AE",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 9900
+        }
+      }
+    },
+    {
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "created_at": "2026-09-02T09:00:00Z",
+      "currency": "USD",
+      "total_minor": 3000,
+      "payment_method": "prepaid",
+      "market": "US",
+      "locale": "es-US",
+      "signals": {
+        "meta": {
+          "permitted": true,
+          "expected_value_minor": 3000
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "DEMO-001-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-001-browser",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-001"
+    },
+    {
+      "id": "DEMO-001-server",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-001"
+    },
+    {
+      "id": "DEMO-001-server",
+      "store_id": "demo",
+      "order_id": "DEMO-001",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 10000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-001"
+    },
+    {
+      "id": "DEMO-002-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-002-browser",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED",
+      "dedup_key": "browser-002"
+    },
+    {
+      "id": "DEMO-002-server",
+      "store_id": "demo",
+      "order_id": "DEMO-002",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 14000,
+      "currency": "AED",
+      "dedup_key": "server-002"
+    },
+    {
+      "id": "DEMO-003-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 25000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-003"
+    },
+    {
+      "id": "DEMO-003-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-04T10:00:00Z"
+    },
+    {
+      "id": "DEMO-003-collected",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "cod",
+      "kind": "cod_collected",
+      "at": "2026-09-04T10:00:00Z",
+      "amount_minor": 25000,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-003-settled",
+      "store_id": "demo",
+      "order_id": "DEMO-003",
+      "stream": "cod",
+      "kind": "cod_settled",
+      "at": "2026-09-08T10:00:00Z",
+      "amount_minor": 10000,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-004-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 8000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-004"
+    },
+    {
+      "id": "DEMO-004-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-004",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-04T10:00:00Z"
+    },
+    {
+      "id": "DEMO-005-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 12000,
+      "currency": "USD"
+    },
+    {
+      "id": "DEMO-005-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 12000,
+      "currency": "USD",
+      "dedup_key": "purchase-DEMO-005"
+    },
+    {
+      "id": "DEMO-005-refund",
+      "store_id": "demo",
+      "order_id": "DEMO-005",
+      "stream": "payments",
+      "kind": "refund",
+      "at": "2026-09-07T10:00:00Z",
+      "amount_minor": 12000,
+      "currency": "USD"
+    },
+    {
+      "id": "DEMO-006-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 5000,
+      "currency": "JPY"
+    },
+    {
+      "id": "DEMO-006-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-006",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 500000,
+      "currency": "JPY",
+      "dedup_key": "purchase-DEMO-006"
+    },
+    {
+      "id": "DEMO-007-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 15900,
+      "currency": "KWD"
+    },
+    {
+      "id": "DEMO-007-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-007",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 15900,
+      "currency": "KWD",
+      "dedup_key": "purchase-DEMO-007"
+    },
+    {
+      "id": "DEMO-008-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 200000,
+      "currency": "PKR",
+      "dedup_key": "purchase-DEMO-008"
+    },
+    {
+      "id": "DEMO-008-delivery",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "fulfillment",
+      "kind": "delivered",
+      "at": "2026-09-19T09:00:00Z"
+    },
+    {
+      "id": "DEMO-008-collected",
+      "store_id": "demo",
+      "order_id": "DEMO-008",
+      "stream": "cod",
+      "kind": "cod_collected",
+      "at": "2026-09-19T09:00:00Z",
+      "amount_minor": 200000,
+      "currency": "PKR"
+    },
+    {
+      "id": "DEMO-009-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 11000,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-009-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-009",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 11000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-009"
+    },
+    {
+      "id": "DEMO-010-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-010",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 7500,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-011-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-011-capture-2",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED"
+    },
+    {
+      "id": "DEMO-011-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-011",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 9900,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-011"
+    },
+    {
+      "id": "DEMO-012-capture",
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "stream": "payments",
+      "kind": "capture",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 3000,
+      "currency": "USD"
+    },
+    {
+      "id": "DEMO-012-signal",
+      "store_id": "demo",
+      "order_id": "DEMO-012",
+      "stream": "signals:meta",
+      "kind": "purchase_signal",
+      "at": "2026-09-02T09:05:00Z",
+      "amount_minor": 3000,
+      "currency": "AED",
+      "dedup_key": "purchase-DEMO-012"
+    }
+  ]
+}
