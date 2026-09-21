@@ -19,6 +19,7 @@ build/
 
 # Node / Frontend
 node_modules/
+.vite/
 dist/
 .next/
 out/
