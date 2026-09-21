@@ -2,6 +2,10 @@
 
 This document outlines the step-by-step procedure for deploying **Commerce Truth Lab v1** to public hosting platforms (such as **Vercel** for the React frontend and **Render / Railway / Koyeb** for the FastAPI backend) with zero cost and zero paid API dependencies.
 
+- **Public Production URL:** [https://commerce-truth-lab-v1.vercel.app/demo](https://commerce-truth-lab-v1.vercel.app/demo)
+- **GitHub Repository:** [https://github.com/muslim-rashdi-ecom/commerce-truth-lab](https://github.com/muslim-rashdi-ecom/commerce-truth-lab)
+- **Founder Portfolio:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
+
 ---
 
 ## Architecture Overview for Deployment
