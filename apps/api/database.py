@@ -5,15 +5,19 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
 
+from config import ENVIRONMENT, RAW_DATABASE_URL
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, "data")
-os.makedirs(DATA_DIR, exist_ok=True)
 DEFAULT_SQLITE_PATH = os.path.join(DATA_DIR, "demo.db")
 DB_PATH = DEFAULT_SQLITE_PATH
 
-
-from config import ENVIRONMENT, RAW_DATABASE_URL
+# Vercel production uses PostgreSQL and its deployed filesystem is read-only.
+# Only create the local SQLite directory for development/test environments.
+if not RAW_DATABASE_URL or RAW_DATABASE_URL.startswith("sqlite"):
+    if ENVIRONMENT != "production":
+        os.makedirs(DATA_DIR, exist_ok=True)
 
 
 def _normalize_database_url(raw_db_url: str) -> str:
