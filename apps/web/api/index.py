@@ -4,9 +4,12 @@ from pathlib import Path
 import sys
 
 
-REPO_DIR = Path(__file__).resolve().parents[3]
-API_DIR = REPO_DIR / "apps" / "api"
-PACKAGES_DIR = REPO_DIR / "packages"
+# ``apps/web`` is the Vercel project root. ``prepare_api.py`` copies the
+# backend source into this root during the build so the serverless function
+# can import it from the deployed bundle.
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+API_DIR = PROJECT_DIR / "api_src"
+PACKAGES_DIR = PROJECT_DIR / "packages"
 
 for path in (API_DIR, PACKAGES_DIR):
     path_string = str(path)
