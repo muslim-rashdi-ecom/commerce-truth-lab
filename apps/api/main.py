@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from routers import health, upload, demo
+from routers import health, upload, demo, auth, workspace, merchant_upload, merchant_audit
 from database import Base, engine
 
 
@@ -22,7 +22,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:4173"],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -30,3 +31,8 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(upload.router)
 app.include_router(demo.router)
+app.include_router(auth.router)
+app.include_router(workspace.router)
+app.include_router(merchant_upload.router)
+app.include_router(merchant_audit.router)
+

@@ -6,8 +6,14 @@ import {
   TrackingHealthResponse,
   AuditRunResult,
   UploadResponse,
-  PaginatedFindings
+  PaginatedFindings,
+  MerchantWorkspace,
+  StageUploadResponse,
+  CommitUploadResponse,
+  RunAuditResponse,
+  AuditLogEntry
 } from '../types';
+
 import {
   SYNTHETIC_WORKSPACE,
   SYNTHETIC_ORDERS,
@@ -238,6 +244,7 @@ function generateStaticHtmlReport(): string {
 </html>`;
 }
 
+
 function generateStaticMarkdownReport(): string {
   const list = SYNTHETIC_FINDINGS.map(f => 
     `| ${f.rule_id} | ${f.rule_name} | ${f.order_id} | ${f.severity} | ${f.observed} | ${f.next_step} |`
@@ -275,3 +282,122 @@ ${list}
 *Report generated deterministically by Commerce Truth Lab v1.*
 `;
 }
+
+function getAuthHeaders(): Record<string, string> {
+  const token = localStorage.getItem('ctl_auth_token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+export const workspaceApi = {
+  getWorkspace: async (workspaceId: string): Promise<MerchantWorkspace> => {
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error(`Failed to fetch workspace: ${res.statusText}`);
+    return res.json();
+  },
+
+  createWorkspace: async (name: string, currency: string = 'USD'): Promise<MerchantWorkspace> => {
+    const res = await fetch(`${API_BASE}/api/workspaces`, {
+      method: 'POST',
+      headers: { ...getAuthHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, currency }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to create workspace');
+    }
+    return res.json();
+  },
+
+  getOrders: async (workspaceId: string): Promise<Order[]> => {
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/orders`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error(`Failed to load orders: ${res.statusText}`);
+    return res.json();
+  },
+
+  getFindings: async (workspaceId: string, params?: Record<string, string>): Promise<FindingResult[]> => {
+    const qs = params ? new URLSearchParams(params).toString() : '';
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/findings${qs ? '?' + qs : ''}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error(`Failed to load findings: ${res.statusText}`);
+    const data: PaginatedFindings = await res.json();
+    return data.items || [];
+  },
+
+  getReconciliation: async (workspaceId: string, orderId: string): Promise<ReconciliationView> => {
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/reconciliation/${orderId}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error(`Failed to load reconciliation view: ${res.statusText}`);
+    return res.json();
+  },
+
+  stageUpload: async (workspaceId: string, sourceType: string, file: File): Promise<StageUploadResponse> => {
+    const formData = new FormData();
+    formData.append('source_type', sourceType);
+    formData.append('file', file);
+
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/upload/stage`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'CSV staging validation failed');
+    }
+    return res.json();
+  },
+
+  commitUpload: async (
+    workspaceId: string,
+    uploadId: string,
+    mappings: Record<string, string>,
+    file: File
+  ): Promise<CommitUploadResponse> => {
+    const formData = new FormData();
+    formData.append('upload_id', uploadId);
+    formData.append('mappings', JSON.stringify(mappings));
+    formData.append('file', file);
+
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/upload/commit`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Import commit failed');
+    }
+    return res.json();
+  },
+
+  runAudit: async (workspaceId: string): Promise<RunAuditResponse> => {
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/audit/run`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Audit execution failed');
+    }
+    return res.json();
+  },
+
+  getLogs: async (workspaceId: string): Promise<AuditLogEntry[]> => {
+    const res = await fetch(`${API_BASE}/api/workspaces/${workspaceId}/logs`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error(`Failed to load audit logs: ${res.statusText}`);
+    return res.json();
+  },
+
+  getReportDownloadUrl: (workspaceId: string, format: string): string => {
+    return `${API_BASE}/api/workspaces/${workspaceId}/reports/${format}`;
+  },
+};
+

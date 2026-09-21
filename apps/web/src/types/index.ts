@@ -161,6 +161,7 @@ export interface ReconciliationView {
   order: Order;
   payment?: Payment | null;
   payments?: Payment[]; // fallback
+  settlement?: CourierSettlement | null;
   settlements: CourierSettlement[];
   refunds: Refund[];
   purchase_signals: PurchaseSignal[];
@@ -169,6 +170,7 @@ export interface ReconciliationView {
   timeline: TimelineEvent[];
   currency_guard: boolean | { has_mismatch: boolean; detected_currencies: Currency[] };
 }
+
 
 export interface TrackingSummary {
   total_orders: number;
@@ -211,3 +213,66 @@ export interface AuditRunResult {
   evaluated_orders: number;
   skipped_orders_insufficient_data: number;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  full_name: string;
+  created_at: string;
+}
+
+export interface AuthResponse {
+  access_token: string;
+  token_type: string;
+  user: User;
+}
+
+export interface MerchantWorkspace {
+  id: string;
+  name: string;
+  owner_id?: string;
+  currency: string;
+  is_synthetic: boolean;
+  created_at: string;
+  order_count: number;
+  finding_count: number;
+  data_completeness_pct: number;
+  latest_audit_status?: string;
+}
+
+export interface StageUploadResponse {
+  upload_id: string;
+  file_name: string;
+  source_type: string;
+  detected_headers: string[];
+  suggested_mappings: Record<string, string>;
+  preview_rows: Record<string, any>[];
+  row_count: number;
+  warnings: string[];
+  errors: string[];
+  pseudonymized_fields: string[];
+}
+
+export interface CommitUploadResponse {
+  success: boolean;
+  source_type: string;
+  imported_rows: number;
+  message: string;
+}
+
+export interface RunAuditResponse {
+  audit_id: string;
+  status: string;
+  evaluated_orders: number;
+  total_findings: number;
+  healthy_controls_count: number;
+  completed_at: string;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  action: string;
+  details: any;
+  timestamp: string;
+}
+
