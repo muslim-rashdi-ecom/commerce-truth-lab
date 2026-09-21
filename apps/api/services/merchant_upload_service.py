@@ -13,6 +13,27 @@ from models import (
 )
 from security import pseudonymize_identifier
 
+def sanitize_csv_value(val: Any) -> str:
+    """
+    Sanitizes CSV cell values to neutralize CSV Formula Injection (CWE-1236).
+    If a string starts with formula trigger characters (=, +, -, @, \\t, \\r),
+    prepend a single quote (') to prevent spreadsheet calculation upon viewing or export,
+    unless it is a purely numerical signed number (e.g. -42.50).
+    """
+    if val is None:
+        return ""
+    s = str(val)
+    if not s:
+        return ""
+    trimmed = s.strip()
+    if re.match(r'^[+-]?\d+(\.\d+)?$', trimmed):
+        return trimmed
+    if s[0] in ('=', '+', '-', '@', '\t', '\r'):
+        return f"'{s}"
+    if trimmed and trimmed[0] in ('=', '+', '-', '@'):
+        return f"'{trimmed}"
+    return trimmed
+
 STREAM_DEFINITIONS = {
     "shopify_orders": {
         "required": ["order_id", "total_amount", "currency"],
@@ -181,13 +202,16 @@ async def stage_csv_upload(
     for i, row in enumerate(reader):
         total_rows += 1
         if i < 5:
-            # Mask PII in preview
+            # Mask PII in preview and sanitize formula injections
             safe_row = {}
             for k, v in row.items():
+                if not k:
+                    continue
+                clean_k = sanitize_csv_value(k)
                 if k in pii_cols:
-                    safe_row[k] = f"[PSEUDONYMIZED: {pseudonymize_identifier(v)}]"
+                    safe_row[clean_k] = f"[PSEUDONYMIZED: {pseudonymize_identifier(v)}]"
                 else:
-                    safe_row[k] = v
+                    safe_row[clean_k] = sanitize_csv_value(v)
             preview.append(safe_row)
             
     if total_rows == 0:
@@ -250,17 +274,18 @@ async def commit_csv_import(
     
     if source_type == "shopify_orders":
         for row in reader:
-            oid = str(row.get(inv.get("order_id", ""), "")).strip()
-            if not oid:
+            raw_oid = str(row.get(inv.get("order_id", ""), "")).strip()
+            if not raw_oid:
                 continue
+            oid = sanitize_csv_value(raw_oid)
             curr = str(row.get(inv.get("currency", ""), "USD")).strip().upper()
             raw_amt = row.get(inv.get("total_amount", ""), "0")
             amt_minor = parse_monetary_minor(raw_amt, curr)
             raw_cust = row.get(inv.get("customer_id", ""), "")
             cust_hash = pseudonymize_identifier(raw_cust)
-            created = row.get(inv.get("created_at", ""), now_iso)
-            status = row.get(inv.get("status", ""), "paid")
-            method = row.get(inv.get("payment_method", ""), "prepaid")
+            created = str(row.get(inv.get("created_at", ""), now_iso)).strip()
+            status = sanitize_csv_value(row.get(inv.get("status", ""), "paid"))
+            method = sanitize_csv_value(row.get(inv.get("payment_method", ""), "prepaid"))
             
             # Upsert Order
             order = (await db.execute(
@@ -289,28 +314,32 @@ async def commit_csv_import(
             
     elif source_type == "payments":
         for row in reader:
-            pid = str(row.get(inv.get("id", ""), "")).strip() or f"pay_{secrets.token_hex(6)}"
-            oid = str(row.get(inv.get("order_id", ""), "")).strip()
-            if not oid: continue
+            raw_pid = str(row.get(inv.get("id", ""), "")).strip()
+            pid = sanitize_csv_value(raw_pid) if raw_pid else f"pay_{secrets.token_hex(6)}"
+            raw_oid = str(row.get(inv.get("order_id", ""), "")).strip()
+            if not raw_oid: continue
+            oid = sanitize_csv_value(raw_oid)
             curr = str(row.get(inv.get("currency", ""), "USD")).strip().upper()
             amt = parse_monetary_minor(row.get(inv.get("amount", ""), "0"), curr)
             db.add(Payment(
                 id=pid,
                 workspace_id=workspace_id,
                 order_id=oid,
-                captured_at=row.get(inv.get("captured_at", ""), now_iso),
+                captured_at=str(row.get(inv.get("captured_at", ""), now_iso)).strip(),
                 currency=curr,
                 amount_minor=amt,
-                gateway=row.get(inv.get("gateway", ""), "gateway"),
-                status=row.get(inv.get("status", ""), "captured")
+                gateway=sanitize_csv_value(row.get(inv.get("gateway", ""), "gateway")),
+                status=sanitize_csv_value(row.get(inv.get("status", ""), "captured"))
             ))
             imported_count += 1
             
     elif source_type == "courier_settlements":
         for row in reader:
-            sid = str(row.get(inv.get("id", ""), "")).strip() or f"set_{secrets.token_hex(6)}"
-            oid = str(row.get(inv.get("order_id", ""), "")).strip()
-            if not oid: continue
+            raw_sid = str(row.get(inv.get("id", ""), "")).strip()
+            sid = sanitize_csv_value(raw_sid) if raw_sid else f"set_{secrets.token_hex(6)}"
+            raw_oid = str(row.get(inv.get("order_id", ""), "")).strip()
+            if not raw_oid: continue
+            oid = sanitize_csv_value(raw_oid)
             curr = str(row.get(inv.get("collection_currency", ""), "AED")).strip().upper()
             col = parse_monetary_minor(row.get(inv.get("collected_amount", ""), "0"), curr)
             raw_set = row.get(inv.get("settled_amount", ""), "")
@@ -319,52 +348,56 @@ async def commit_csv_import(
                 id=sid,
                 workspace_id=workspace_id,
                 order_id=oid,
-                courier_name=row.get(inv.get("courier_name", ""), "Courier"),
-                delivered_at=row.get(inv.get("delivered_at", ""), now_iso),
+                courier_name=sanitize_csv_value(row.get(inv.get("courier_name", ""), "Courier")),
+                delivered_at=str(row.get(inv.get("delivered_at", ""), now_iso)).strip(),
                 collected_amount_minor=col,
                 settled_amount_minor=settled,
                 collection_currency=curr,
-                settlement_status=row.get(inv.get("settlement_status", ""), "settled" if settled else "pending"),
+                settlement_status=sanitize_csv_value(row.get(inv.get("settlement_status", ""), "settled" if settled else "pending")),
                 grace_days=7
             ))
             imported_count += 1
             
     elif source_type == "refunds":
         for row in reader:
-            rid = str(row.get(inv.get("id", ""), "")).strip() or f"ref_{secrets.token_hex(6)}"
-            oid = str(row.get(inv.get("order_id", ""), "")).strip()
-            if not oid: continue
+            raw_rid = str(row.get(inv.get("id", ""), "")).strip()
+            rid = sanitize_csv_value(raw_rid) if raw_rid else f"ref_{secrets.token_hex(6)}"
+            raw_oid = str(row.get(inv.get("order_id", ""), "")).strip()
+            if not raw_oid: continue
+            oid = sanitize_csv_value(raw_oid)
             curr = str(row.get(inv.get("currency", ""), "USD")).strip().upper()
             amt = parse_monetary_minor(row.get(inv.get("amount", ""), "0"), curr)
             db.add(Refund(
                 id=rid,
                 workspace_id=workspace_id,
                 order_id=oid,
-                refunded_at=row.get(inv.get("refunded_at", ""), now_iso),
+                refunded_at=str(row.get(inv.get("refunded_at", ""), now_iso)).strip(),
                 currency=curr,
                 amount_minor=amt,
-                reason=row.get(inv.get("reason", ""), "Customer return")
+                reason=sanitize_csv_value(row.get(inv.get("reason", ""), "Customer return"))
             ))
             imported_count += 1
             
     elif source_type == "purchase_signals":
         for row in reader:
-            sig_id = str(row.get(inv.get("id", ""), "")).strip() or f"sig_{secrets.token_hex(6)}"
-            oid = str(row.get(inv.get("order_id", ""), "")).strip()
-            if not oid: continue
+            raw_sig_id = str(row.get(inv.get("id", ""), "")).strip()
+            sig_id = sanitize_csv_value(raw_sig_id) if raw_sig_id else f"sig_{secrets.token_hex(6)}"
+            raw_oid = str(row.get(inv.get("order_id", ""), "")).strip()
+            if not raw_oid: continue
+            oid = sanitize_csv_value(raw_oid)
             curr = str(row.get(inv.get("currency", ""), "USD")).strip().upper()
             val = parse_monetary_minor(row.get(inv.get("value", ""), "0"), curr)
             db.add(PurchaseSignal(
                 id=sig_id,
                 workspace_id=workspace_id,
                 order_id=oid,
-                platform=row.get(inv.get("platform", ""), "meta"),
-                event_name=row.get(inv.get("event_name", ""), "Purchase"),
-                event_id=row.get(inv.get("event_id", ""), f"evt_{secrets.token_hex(4)}"),
-                reported_at=row.get(inv.get("reported_at", ""), now_iso),
+                platform=sanitize_csv_value(row.get(inv.get("platform", ""), "meta")),
+                event_name=sanitize_csv_value(row.get(inv.get("event_name", ""), "Purchase")),
+                event_id=sanitize_csv_value(row.get(inv.get("event_id", ""), f"evt_{secrets.token_hex(4)}")),
+                reported_at=str(row.get(inv.get("reported_at", ""), now_iso)).strip(),
                 currency=curr,
                 value_minor=val,
-                signal_type=row.get(inv.get("signal_type", ""), "browser"),
+                signal_type=sanitize_csv_value(row.get(inv.get("signal_type", ""), "browser")),
                 consent_granted=True,
                 pixel_id="P1"
             ))

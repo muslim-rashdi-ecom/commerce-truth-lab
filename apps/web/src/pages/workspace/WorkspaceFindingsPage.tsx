@@ -19,10 +19,12 @@ export const WorkspaceFindingsPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedSeverity, setSelectedSeverity] = useState<string>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const loadFindings = async () => {
     if (!activeWorkspace) return;
     setLoading(true);
+    setFetchError(null);
     try {
       const params: Record<string, string> = {};
       if (selectedSeverity !== 'all') params.severity = selectedSeverity;
@@ -30,8 +32,8 @@ export const WorkspaceFindingsPage: React.FC = () => {
 
       const items = await workspaceApi.getFindings(activeWorkspace.id, params);
       setFindings(items);
-    } catch (err) {
-      console.error('Failed to load findings', err);
+    } catch (err: any) {
+      setFetchError(err.message || 'Failed to load audit findings from backend.');
     } finally {
       setLoading(false);
     }
@@ -103,6 +105,20 @@ export const WorkspaceFindingsPage: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {fetchError && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <span className="font-semibold block">Failed to fetch findings: {fetchError}</span>
+          </div>
+          <button
+            onClick={loadFindings}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Discrepancy Anti-Hype Notice */}
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-900 flex items-start space-x-3">

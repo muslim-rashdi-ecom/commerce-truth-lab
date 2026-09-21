@@ -9,7 +9,9 @@ DEFAULT_SQLITE_PATH = os.path.join(DATA_DIR, "demo.db")
 DB_PATH = DEFAULT_SQLITE_PATH
 
 
-raw_db_url = os.getenv("DATABASE_URL", "").strip()
+from config import ENVIRONMENT, RAW_DATABASE_URL
+
+raw_db_url = RAW_DATABASE_URL
 
 if raw_db_url:
     # Normalize postgres connection strings for asyncpg
@@ -18,10 +20,14 @@ if raw_db_url:
     elif raw_db_url.startswith("postgresql://") and not raw_db_url.startswith("postgresql+"):
         DATABASE_URL = raw_db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
     elif raw_db_url.startswith("sqlite://") and not raw_db_url.startswith("sqlite+"):
+        if ENVIRONMENT == "production":
+            raise RuntimeError("SQLite is strictly forbidden in production. Use PostgreSQL (asyncpg).")
         DATABASE_URL = raw_db_url.replace("sqlite://", "sqlite+aiosqlite://", 1)
     else:
         DATABASE_URL = raw_db_url
 else:
+    if ENVIRONMENT == "production":
+        raise RuntimeError("DATABASE_URL must be configured with PostgreSQL in production.")
     DATABASE_URL = f"sqlite+aiosqlite:///{DEFAULT_SQLITE_PATH}"
 
 # Configure engine kwargs depending on dialect

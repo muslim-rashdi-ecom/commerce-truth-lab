@@ -10,13 +10,12 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
+from config import get_jwt_secret_key, get_pseudonymization_salt
 from database import get_db
 from models import User, Workspace, WorkspaceMember
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "ctl_production_secret_key_change_in_env_2026")
 JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 7
-GLOBAL_PSEUDONYMIZATION_SALT = os.getenv("PSEUDONYMIZATION_SALT", "ctl_salt_987654321")
 
 security_bearer = HTTPBearer(auto_error=False)
 
@@ -42,11 +41,11 @@ def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] 
     else:
         expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+    return jwt.encode(to_encode, get_jwt_secret_key(), algorithm=JWT_ALGORITHM)
 
 def decode_access_token(token: str) -> dict:
     try:
-        return jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
+        return jwt.decode(token, get_jwt_secret_key(), algorithms=[JWT_ALGORITHM])
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Session expired. Please sign in again.")
     except Exception:
@@ -62,7 +61,7 @@ def pseudonymize_identifier(raw_value: str, salt: Optional[str] = None) -> str:
     v = str(raw_value).strip().lower()
     if not v:
         return ""
-    effective_salt = salt or GLOBAL_PSEUDONYMIZATION_SALT
+    effective_salt = salt or get_pseudonymization_salt()
     digest = hashlib.sha256((v + effective_salt).encode('utf-8')).hexdigest()
     return f"CUST_{digest[:16]}"
 

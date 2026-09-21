@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
 [![React 18](https://img.shields.io/badge/React-18-61DAFB.svg)](https://reactjs.org/)
-[![Tests](https://img.shields.io/badge/Tests-25%20Passed-emerald.svg)](#tests)
+[![Tests](https://img.shields.io/badge/Tests-39%20Passed-emerald.svg)](#tests)
 
 ---
 
@@ -86,9 +86,8 @@ Frontend runs at `http://localhost:5173`.
 ## 🧪 Test Commands
 
 ```bash
-# Run 25 deterministic unit and engine audit rule tests
-$env:PYTHONPATH = "packages;apps\api"
-python -m pytest tests/engine/ -v
+# Run 39 automated tests covering engine rules, auth, tenant isolation, and production hardening:
+python -m pytest tests/ -v
 
 # Run production frontend build
 cd apps/web

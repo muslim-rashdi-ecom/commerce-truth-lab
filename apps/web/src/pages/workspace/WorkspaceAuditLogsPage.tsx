@@ -9,15 +9,17 @@ export const WorkspaceAuditLogsPage: React.FC = () => {
   const { activeWorkspace } = useAuth();
   const [logs, setLogs] = useState<AuditLogEntry[]>([]);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const loadLogs = async () => {
     if (!activeWorkspace) return;
     setLoading(true);
+    setFetchError(null);
     try {
       const data = await workspaceApi.getLogs(activeWorkspace.id);
       setLogs(data);
-    } catch (err) {
-      console.error('Failed to load logs', err);
+    } catch (err: any) {
+      setFetchError(err.message || 'Failed to load audit logs from backend.');
     } finally {
       setLoading(false);
     }
@@ -61,6 +63,18 @@ export const WorkspaceAuditLogsPage: React.FC = () => {
           <strong>Audit Integrity:</strong> Log entries are append-only and recorded synchronously during state modifications. All actions are scoped to tenant boundary <code>{activeWorkspace.id}</code>.
         </span>
       </div>
+
+      {fetchError && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+          <span className="font-semibold block">{fetchError}</span>
+          <button
+            onClick={loadLogs}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <div className="text-center py-16 bg-white rounded-2xl border border-gray-200">

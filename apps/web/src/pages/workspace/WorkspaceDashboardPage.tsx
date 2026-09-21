@@ -26,15 +26,17 @@ export const WorkspaceDashboardPage: React.FC = () => {
   const [runningAudit, setRunningAudit] = useState(false);
   const [auditResult, setAuditResult] = useState<RunAuditResponse | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const loadFindings = async () => {
     if (!activeWorkspace) return;
     setLoadingFindings(true);
+    setFetchError(null);
     try {
       const data = await workspaceApi.getFindings(activeWorkspace.id);
       setFindings(data);
     } catch (err: any) {
-      console.error('Failed to load findings', err);
+      setFetchError(err.message || 'Failed to connect to audit backend. Please check network connectivity.');
     } finally {
       setLoadingFindings(false);
     }
@@ -119,6 +121,24 @@ export const WorkspaceDashboardPage: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {fetchError && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <AlertTriangle className="w-5 h-5 text-red-500 shrink-0" />
+            <div>
+              <strong className="font-semibold block">Connection / API Error:</strong>
+              {fetchError}
+            </div>
+          </div>
+          <button
+            onClick={loadFindings}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {actionError && (
         <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start">

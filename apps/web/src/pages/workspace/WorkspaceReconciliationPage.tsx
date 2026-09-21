@@ -24,24 +24,26 @@ export const WorkspaceReconciliationPage: React.FC = () => {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(searchParams.get('order_id'));
   const [reconciliation, setReconciliation] = useState<ReconciliationView | null>(null);
   const [loadingRec, setLoadingRec] = useState(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  const loadOrders = async () => {
+    if (!activeWorkspace) return;
+    setLoadingOrders(true);
+    setFetchError(null);
+    try {
+      const data = await workspaceApi.getOrders(activeWorkspace.id);
+      setOrders(data);
+      if (!selectedOrderId && data.length > 0) {
+        setSelectedOrderId(data[0].id);
+      }
+    } catch (err: any) {
+      setFetchError(err.message || 'Failed to load orders from backend.');
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
 
   useEffect(() => {
-    const loadOrders = async () => {
-      if (!activeWorkspace) return;
-      setLoadingOrders(true);
-      try {
-        const data = await workspaceApi.getOrders(activeWorkspace.id);
-        setOrders(data);
-        if (!selectedOrderId && data.length > 0) {
-          setSelectedOrderId(data[0].id);
-        }
-      } catch (err) {
-        console.error('Failed to load orders', err);
-      } finally {
-        setLoadingOrders(false);
-      }
-    };
-
     loadOrders();
   }, [activeWorkspace?.id]);
 
@@ -53,8 +55,8 @@ export const WorkspaceReconciliationPage: React.FC = () => {
         const data = await workspaceApi.getReconciliation(activeWorkspace.id, selectedOrderId);
         setReconciliation(data);
         setSearchParams({ order_id: selectedOrderId });
-      } catch (err) {
-        console.error('Failed to load reconciliation', err);
+      } catch (err: any) {
+        setFetchError(err.message || 'Failed to load reconciliation detail from backend.');
       } finally {
         setLoadingRec(false);
       }
@@ -85,6 +87,21 @@ export const WorkspaceReconciliationPage: React.FC = () => {
           Workspace: <strong>{activeWorkspace.name}</strong> &bull; Inspect cross-system alignment across Orders, Payments, Courier COD, Refunds, and Ad Signals.
         </p>
       </div>
+
+      {fetchError && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <AlertTriangle className="w-5 h-5 text-red-500 shrink-0" />
+            <span className="font-semibold block">{fetchError}</span>
+          </div>
+          <button
+            onClick={loadOrders}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left order selector column */}

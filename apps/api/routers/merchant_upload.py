@@ -10,6 +10,18 @@ from services.merchant_upload_service import stage_csv_upload, commit_csv_import
 
 router = APIRouter(prefix="/api/workspaces/{workspace_id}/upload", tags=["Merchant Upload"])
 
+MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
+
+def validate_uploaded_csv_file(file: UploadFile, contents: bytes):
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file selected.")
+    if not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Invalid file format. Only .csv files are supported.")
+    if len(contents) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=400, detail="File size exceeds 25MB limit. Please upload smaller monthly batches.")
+    if len(contents) == 0:
+        raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+
 @router.post("/stage", response_model=StageUploadResponse)
 async def stage_upload(
     workspace_id: str,
@@ -21,10 +33,9 @@ async def stage_upload(
     """Stage a CSV file, analyze headers, preview data with masked PII, and generate mapping suggestions."""
     await verify_workspace_access(workspace_id, user, db)
     
-    if not file.filename:
-        raise HTTPException(status_code=400, detail="No file selected")
-    
     contents = await file.read()
+    validate_uploaded_csv_file(file, contents)
+    
     try:
         res = await stage_csv_upload(workspace_id, source_type, file.filename, contents, db)
         return StageUploadResponse(**res)
@@ -49,6 +60,7 @@ async def commit_upload(
         raise HTTPException(status_code=400, detail="Invalid JSON column mapping dictionary")
         
     contents = await file.read()
+    validate_uploaded_csv_file(file, contents)
     try:
         res = await commit_csv_import(
             workspace_id=workspace_id,
