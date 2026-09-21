@@ -11,8 +11,8 @@ async def lifespan(app: FastAPI):
     # In development and test environments, auto-create tables
     # In production, schema is strictly managed by Alembic migrations
     if ENVIRONMENT != "production":
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+        with engine.begin() as conn:
+            Base.metadata.create_all(conn)
     yield
 
 
