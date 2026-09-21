@@ -19,6 +19,8 @@ TARGET_PACKAGES_DIR = PROJECT_DIR / "packages"
 def copy_tree(source: Path, target: Path) -> None:
     if not source.exists():
         raise FileNotFoundError(f"Required deployment source does not exist: {source}")
+    if target.exists():
+        shutil.rmtree(target)
     shutil.copytree(
         source,
         target,
