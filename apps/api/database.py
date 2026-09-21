@@ -14,14 +14,14 @@ from config import ENVIRONMENT, RAW_DATABASE_URL
 raw_db_url = RAW_DATABASE_URL
 
 if raw_db_url:
-    # Normalize postgres connection strings for asyncpg
+    # Normalize postgres connection strings for psycopg's async SQLAlchemy dialect.
     if raw_db_url.startswith("postgres://"):
-        DATABASE_URL = raw_db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+        DATABASE_URL = raw_db_url.replace("postgres://", "postgresql+psycopg://", 1)
     elif raw_db_url.startswith("postgresql://") and not raw_db_url.startswith("postgresql+"):
-        DATABASE_URL = raw_db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        DATABASE_URL = raw_db_url.replace("postgresql://", "postgresql+psycopg://", 1)
     elif raw_db_url.startswith("sqlite://") and not raw_db_url.startswith("sqlite+"):
         if ENVIRONMENT == "production":
-            raise RuntimeError("SQLite is strictly forbidden in production. Use PostgreSQL (asyncpg).")
+            raise RuntimeError("SQLite is strictly forbidden in production. Use PostgreSQL (psycopg).")
         DATABASE_URL = raw_db_url.replace("sqlite://", "sqlite+aiosqlite://", 1)
     else:
         DATABASE_URL = raw_db_url

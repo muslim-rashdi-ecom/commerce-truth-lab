@@ -34,11 +34,12 @@ def validate_production_config():
             )
         if "sqlite" in RAW_DATABASE_URL.lower():
             raise RuntimeError(
-                "CRITICAL CONFIGURATION ERROR: SQLite is strictly forbidden in production. Use PostgreSQL (asyncpg)."
+                "CRITICAL CONFIGURATION ERROR: SQLite is strictly forbidden in production. Use PostgreSQL (psycopg)."
             )
         if not (
             RAW_DATABASE_URL.startswith("postgresql://")
             or RAW_DATABASE_URL.startswith("postgres://")
+            or RAW_DATABASE_URL.startswith("postgresql+psycopg://")
             or RAW_DATABASE_URL.startswith("postgresql+asyncpg://")
         ):
             raise RuntimeError(
