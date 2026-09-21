@@ -1,136 +1,142 @@
-# Commerce Truth Lab
+# Commerce Truth Lab v1
 
-### Sales recorded. Cash verified?
+> **Evidence-first e-commerce audit application for Shopify and DTC brands.**  
+> Answers: *"Do our orders, payments, COD settlements, refunds, and advertising purchase signals agree—and what evidence supports each exception?"*
 
-An evidence-first audit of the gaps between **orders, customer collections, COD settlements and purchase signals**. Every finding includes source records, assumptions and a next verification step.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
+[![React 18](https://img.shields.io/badge/React-18-61DAFB.svg)](https://reactjs.org/)
+[![Tests](https://img.shields.io/badge/Tests-25%20Passed-emerald.svg)](#tests)
 
-**Status: working offline prototype · synthetic demonstration · Python 3.11+ · zero runtime dependencies.** No live store or advertising account is connected. No recovered revenue, client deployment or universal integration is claimed.
+---
 
-Built by [Syed Muslim Shah](https://github.com/muslim-rashdi-ecom) as a technical performance-marketing portfolio project.
+### ⚠️ SYNTHETIC DEMO — NOT REAL BUSINESS DATA
+**All records, financial metrics, customer identifiers, and tracking events shown in this demonstration are strictly synthetic test vectors.**  
+Commerce Truth Lab **never** makes unsubstantiated claims of recovered revenue, lost revenue, automated fraud detection, or causal ROAS improvements.
 
-## Why this project
+- **Founder:** Syed Muslim Shah
+- **Portfolio:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
+- **GitHub Repository:** [https://github.com/muslim-rashdi-ecom/commerce-truth-lab](https://github.com/muslim-rashdi-ecom/commerce-truth-lab)
+- **Reference Deployment:** [https://commerce-truth-lab--rashdimukram26.replit.app/](https://commerce-truth-lab--rashdimukram26.replit.app/)
 
-A purchase event, a paid order, a courier collection and a bank payout are different facts. A founder needs to know which fact is supported before changing budgets or operations.
+---
 
-Commerce Truth Lab answers a narrower question than attribution or accounting software:
+## 🎯 What Problem It Solves
 
-**Which order-level exceptions can I substantiate from the evidence I have—and which checks must I withhold?**
+A purchase event reported by Meta, an order registered in Shopify, a cash receipt collected by a courier, and a bank deposit are four completely different operational facts:
+1. **COD Settlement Delay:** Courier collects Cash on Delivery but does not remit it within agreed grace periods.
+2. **Signal Deduplication Failures:** Web pixel and server CAPI fire differing `event_id` keys, causing ad platforms to over-report conversions.
+3. **Currency Minor-Unit Anomalies:** Multi-currency stores (e.g. JPY with 0 decimals or KWD with 3 decimals) suffer 100x value misreporting due to floating-point truncation.
+4. **Refund Leakage:** Refunds issued exceed original transaction captures.
 
-It is not a world-first claim or a replacement for Triple Whale, A2X, a payment processor, or an accountant. The portfolio angle is transparent, reproducible investigation across operational and measurement records, with an offline fault-replay lab. See [research and positioning](docs/research.md).
+Every exception identified by Commerce Truth Lab provides:
+- **What was observed**
+- **Which source records support it**
+- **Which assumptions were applied**
+- **What is NOT proven (anti-hype boundary)**
+- **The recommended next verification step**
+- **The responsible team owner**
 
-## Open the demonstration first
+---
 
-- [Founder briefing](examples/demo/report.md): readable on GitHub.
-- [Interactive evidence report](examples/demo/report.html): download and open locally in a browser; expand evidence and timelines. GitHub displays HTML source, not a live app.
-- [Exact results](examples/demo/report.json): machine-readable findings, all rule decisions and evidence references.
-- [Synthetic input](examples/demo/input.json): no client/customer information.
-- [Three-minute walkthrough](docs/demo-walkthrough.md).
-- [Verification record and limitations](docs/verification.md).
+## 🚀 Public Demo Routes (No Login Required)
 
-The included casebook contains **12 synthetic orders, 5 currencies, 8 findings and 4 orders with no flagged exceptions**. A clean result means only that these rules did not flag that supplied case—not that a business is healthy.
-
-| Synthetic case | Engine behavior | Why it matters |
-|---|---|---|
-| Browser/server purchase observations share an identity | Does not flag duplicate purchase identities | Two observations are not automatically two purchases |
-| One order has two purchase identities | Flags a deduplication investigation | Does not claim the destination actually counted twice |
-| AED 250 collected by courier, AED 100 settled | Flags AED 150 overdue under the configured grace | Collection and settlement are separate |
-| Delivered AED 80 order lacks collection evidence | Flags a shortfall only with complete cash coverage | An incomplete export is not proof of unpaid money |
-| USD 120 capture followed by USD 120 refund | Shows zero net customer cash, no fault solely for refund | Gross signals are not retained cash |
-| JPY purchase has a 100× value error | Flags the configured value mismatch | Decimal conventions cannot be assumed globally |
-| KWD 15.900 order | Formats and compares integer minor units correctly | Three-decimal currencies stay precise |
-| Fresh PKR COD collection | Does not label settlement overdue | Respect lifecycle maturity and grace periods |
-
-**Never add finding amounts together:** they have different meanings and can overlap. There is intentionally no “total revenue recovered” card.
-
-## Run it in two minutes
-
-No accounts, API keys, paid services or runtime package installation are required.
-
-### Windows PowerShell
-
-From the extracted repository folder, with Python 3.11+ installed:
-
-```powershell
-$env:PYTHONPATH = "src"
-py -m commerce_truth demo --out local-reports/my-first-demo
-Start-Process local-reports/my-first-demo/report.html
-py -m unittest discover -s tests -v
-```
-
-### macOS / Linux
-
-```bash
-PYTHONPATH=src python3 -m commerce_truth demo --out local-reports/my-first-demo
-PYTHONPATH=src python3 -m unittest discover -s tests -v
-```
-
-Open `local-reports/my-first-demo/report.html` in your browser. Choose a new output directory for each run; existing report files are never overwritten.
-
-Optional installation: `python -m pip install .`, then `commerce-truth demo --out local-reports/installed-demo`. Installation may need build tooling from the Python package registry; the no-install commands above do not.
-
-## Four offline replay scenarios
-
-```bash
-PYTHONPATH=src python3 -m commerce_truth replay \
-  --input examples/demo/input.json \
-  --scenario settle-overdue-cod \
-  --out local-reports/settlement-replay
-```
-
-PowerShell users: set `PYTHONPATH` as above and use the same command on one line starting with `py`.
-
-| Scenario | What changes in the copy | What to inspect |
-|---|---|---|
-| `settle-overdue-cod` | Adds a simulated allocated settlement | One COD finding disappears; this is not money actually recovered |
-| `duplicate-signal` | Adds a new normalized purchase identity | One additional investigation finding |
-| `incomplete-cash-export` | Withdraws declared cash completeness | Cash checks become not evaluated; disappearing flags do not mean repairs |
-| `drop-collection` | Models a collection that never happened | Observed cash changes; an order-placement signal alone does not prove payment |
-
-Replay refuses `merchant_export` data. It does not edit the source input or call any outside service. It outputs a new input, report and `replay-comparison.json`.
-
-## What is actually implemented
-
-- Strict canonical JSON contract; explicit currencies, timezone-aware timestamps and policy booleans.
-- Store-scoped identities; exact retry suppression and conflicting-record rejection.
-- Twelve rule types covering collections, refunds, COD maturity and purchase-signal integrity.
-- Required coverage gates for missing/negative financial evidence.
-- Per-destination value expectations; no assumption that analytics value equals tax-inclusive order total.
-- Per-order timeline, evidence references, input digest and complete rule-decision log.
-- Segmentation by supplied market/locale; Unicode values preserved.
-- Self-contained HTML, Markdown and JSON reports with no external scripts or assets.
-- Synthetic-only fault replay and an automated test suite.
-
-## Not implemented—and not implied
-
-- No Shopify, Stripe, Meta, TikTok, Google Ads, GA4, GTM or Triple Whale live connector.
-- No production webhook receiver, authentication, encrypted database, scheduler, SaaS tenancy or access control.
-- No crawler that discovers a store's private cash/operations from a public URL.
-- No universal deduplication model: adapters must normalize each platform's actual identity semantics.
-- No FX conversion, bank-payout reconciliation, accounting revenue recognition, tax engine, profit attribution, causal lift, or automatic budget decisions.
-- No subscriptions, gift-card/store-credit accounting, split tenders, COD returns/refunds, chargebacks or multi-invoice terms in v0.1. Unsupported cases must be excluded and documented, not coerced into supported states.
-- The report interface is English. Locale labels are supported, but this is not a fully translated worldwide product.
-
-For real data, use only merchant-authorized, pseudonymized exports and complete [the pilot checklist](docs/pilot-checklist.md). The tool can audit a properly mapped export; the included demonstration is not real-store validation.
-
-## Repository map
-
-| Path | Purpose |
+| Route | Description |
 |---|---|
-| `src/commerce_truth/schema.py` | Strict input validation |
-| `src/commerce_truth/engine.py` | Deterministic evidence rules |
-| `src/commerce_truth/replay.py` | Synthetic-only scenarios |
-| `src/commerce_truth/report.py` | Portable evidence reports |
-| `src/commerce_truth/cli.py` | Local command-line workflow |
-| `tests/` | Automated behavioral and contract tests |
-| `examples/demo/` | Reproducible synthetic casebook and outputs |
-| `docs/` | Research, architecture, data contract, demo and pilot guidance |
+| `/` | Landing page explaining mission, anti-hype principles, and limitations |
+| `/demo` or `/demo/overview` | Executive audit dashboard calculating metrics from synthetic dataset |
+| `/demo/findings` | Categorized exceptions and healthy controls with severity filters |
+| `/demo/reconciliation` | Order lifecycle explorer (Order, Payment, Courier COD, Refund, Signals) |
+| `/demo/tracking-health` | Ad platform purchase signal comparison & duplicate identity review |
+| `/demo/reports` | Export audit results to standalone HTML, JSON, or Markdown (.md) |
+| `/workspace` | Protected private workspace screen outlining merchant pilot authorization |
 
-## How this fits the portfolio
+---
 
-The Livora case study shows an investigation. The measurement gateway explores signal transport. The growth control tower explores reporting. This project examines the **trustworthiness of the evidence behind operational and marketing decisions**.
+## 🛠️ Local Setup & Quickstart
 
-It provides inspectable evidence of Python, measurement reasoning, reconciliation, testing and technical communication. It does **not** demonstrate unimplemented Liquid customization or prove hands-on mastery of every advertising platform. Add verified implementation work separately.
+No API keys, external databases, or paid SaaS tools are needed to run the entire suite locally.
 
-## License and contributions
+### Prerequisites
+- Python 3.12+
+- Node.js 18+ (or Node 20+)
+- npm
 
-MIT licensed. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Do not publish merchant exports, customer information, credentials or access tokens in issues, examples or commits.
+### 1. Start the FastAPI Backend
+```bash
+# From workspace root:
+cd apps/api
+python -m pip install -r requirements.txt
+python seed.py          # Seeds SQLite with the 12 synthetic orders
+python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+API runs at `http://localhost:8000`. Interactive docs at `http://localhost:8000/docs`.
+
+### 2. Start the React Frontend
+```bash
+# In a separate terminal:
+cd apps/web
+npm install
+npm run dev
+```
+Frontend runs at `http://localhost:5173`.
+
+---
+
+## 🧪 Test Commands
+
+```bash
+# Run 25 deterministic unit and engine audit rule tests
+$env:PYTHONPATH = "packages;apps\api"
+python -m pytest tests/engine/ -v
+
+# Run production frontend build
+cd apps/web
+npm run build
+```
+
+---
+
+## 🏗️ Monorepo Architecture
+
+```
+commerce-truth-lab-v1/
+├── apps/
+│   ├── web/               # React 18, TypeScript, Vite, Tailwind CSS
+│   └── api/               # Python 3.12, FastAPI, SQLAlchemy 2.0 (async), SQLite
+├── packages/
+│   ├── ctl_engine/        # Pure Python deterministic audit rules (CTL-001 to CTL-012)
+│   └── shared/            # Shared Pydantic v2 domain schemas and currency metadata
+├── data/
+│   └── synthetic/         # Reproducible 12-order test dataset across 5 currencies
+├── docs/                  # Product specs, architecture, security, deployment guides
+├── scripts/               # PowerShell convenience startup scripts
+├── docker-compose.yml     # Containerized deployment spec
+└── pytest.ini             # Pytest discovery configuration
+```
+
+---
+
+## 📋 Synthetic Casebook Overview
+
+The seed workspace includes **12 synthetic orders across 5 currencies (AED, USD, JPY, KWD, PKR)**:
+- **4 Healthy Controls:** Valid deduplication, zero-discrepancy refunds, within-grace COD delivery, and accurate KWD 3-decimal precision.
+- **8 Intentional Audit Exceptions:** Duplicate signal event IDs, missing pixel events, 100x JPY decimal error, currency mismatch, overdue COD remittance, delivery shortfall, overcollection, and refund exceeding capture.
+
+---
+
+## 🔒 Security & Merchant Pilot Readiness
+
+Real-world pilot sprints for Shopify brands operate on authorized, pseudonymized data exports:
+1. No customer names, phone numbers, credit card numbers, or plaintext emails are stored.
+2. Monorepo architecture is ready for multi-tenant PostgreSQL workspaces.
+3. For deployment details, see [`docs/public-demo-deployment.md`](docs/public-demo-deployment.md).
+4. For pilot authorization standards, see [`docs/pilot-checklist.md`](docs/pilot-checklist.md).
+
+---
+
+## 👨‍💻 Founder & Portfolio
+
+Built by **Syed Muslim Shah** as an evidence-first e-commerce measurement and verification portfolio project.  
+- Portfolio: [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)  
+- GitHub: [https://github.com/muslim-rashdi-ecom/commerce-truth-lab](https://github.com/muslim-rashdi-ecom/commerce-truth-lab)
