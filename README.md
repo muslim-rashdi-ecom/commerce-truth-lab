@@ -14,7 +14,7 @@
 **All records, financial metrics, customer identifiers, and tracking events shown in this demonstration are strictly synthetic test vectors.**  
 Commerce Truth Lab **never** makes unsubstantiated claims of recovered revenue, lost revenue, automated fraud detection, or causal ROAS improvements.
 
-- **Public Demo URL:** [https://commerce-truth-lab-v1.vercel.app/demo](https://commerce-truth-lab-v1.vercel.app/demo)
+- **Public Demo URL:** [https://commerce-truth-lab.vercel.app/demo](https://commerce-truth-lab.vercel.app/demo)
 - **Founder Portfolio:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
 - **GitHub Repository:** [https://github.com/muslim-rashdi-ecom/commerce-truth-lab](https://github.com/muslim-rashdi-ecom/commerce-truth-lab)
 - **Reference Deployment:** [https://commerce-truth-lab--rashdimukram26.replit.app/](https://commerce-truth-lab--rashdimukram26.replit.app/)
