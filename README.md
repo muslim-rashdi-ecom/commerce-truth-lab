@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
 [![React 18](https://img.shields.io/badge/React-18-61DAFB.svg)](https://reactjs.org/)
-[![Tests](https://img.shields.io/badge/Tests-53%20Passed-emerald.svg)](#tests)
+[![Tests](https://img.shields.io/badge/Tests-63%20Passed-emerald.svg)](#tests)
 
 ---
 
@@ -84,9 +84,9 @@ Frontend runs at `http://localhost:5173`.
 ---
 
 ## 🧪 Test Commands
-
+ 
 ```bash
-# Run 53 automated tests covering engine rules, auth, tenant isolation, demo reliability, and production hardening:
+# Run 63 automated tests covering engine rules, auth, tenant isolation, pilot workflow, demo reliability, and production hardening:
 python -m pytest tests/ -v
 
 # Run production frontend build
@@ -109,7 +109,12 @@ commerce-truth-lab-v1/
 ├── data/
 │   └── synthetic/         # Reproducible 12-order test dataset across 7 currencies
 ├── docs/                  # Product specs, architecture, security, templates, deployment guides
-│   └── sample-csv-templates/ # Safe CSV templates for merchant pilot onboarding
+│   ├── pilot-authorization-agreement.md  # Pilot authorization agreement, scopes, zero-PII and 30-day retention terms
+│   ├── pilot-data-contract.md            # Minimum required input streams, column synonyms, integer minor units
+│   ├── pilot-evidence-ledger.md          # Traceable evidence pointers and controls for pilot brand 01
+│   ├── pilot-implementation-report-brand-01.md # Client-ready audit report with 3 prioritized fixes & verification
+│   ├── pilot-case-study-template.md      # Strictly formatted case study template with anti-fabrication standards
+│   └── sample-csv-templates/             # Safe CSV templates for merchant pilot onboarding
 ├── scripts/               # PowerShell convenience startup scripts
 ├── docker-compose.yml     # Containerized deployment spec
 └── pytest.ini             # Pytest discovery configuration
@@ -128,12 +133,13 @@ The seed workspace includes **12 synthetic orders across 7 currencies (AED, USD,
 ## 🔒 Security & Merchant Pilot Readiness
 
 Real-world pilot sprints for Shopify brands operate on authorized, pseudonymized data exports:
-1. No customer names, phone numbers, credit card numbers, or plaintext emails are stored.
-2. Monorepo architecture is ready for multi-tenant PostgreSQL workspaces.
-3. For deployment details, see [`docs/public-demo-deployment.md`](docs/public-demo-deployment.md).
-4. For pilot authorization standards, see [`docs/pilot-checklist.md`](docs/pilot-checklist.md).
-5. For sample data templates, see [`docs/sample-csv-templates/`](docs/sample-csv-templates/).
-6. For pilot report delivery structure, see [`docs/implementation-report-template.md`](docs/implementation-report-template.md).
+1. **Zero Plaintext PII:** No customer names, phone numbers, credit card numbers, or plaintext emails are stored.
+2. **Tenant Isolation:** Independent merchant workspaces enforced at database query and session levels.
+3. **Formal Pilot Governance:** Governed by [`docs/pilot-authorization-agreement.md`](docs/pilot-authorization-agreement.md) and [`docs/pilot-data-contract.md`](docs/pilot-data-contract.md).
+4. **Traceable Evidence:** Every exception points to immutable source rows documented in [`docs/pilot-evidence-ledger.md`](docs/pilot-evidence-ledger.md).
+5. **Actionable Remediation:** Verified implementation report with 3 prioritized fixes in [`docs/pilot-implementation-report-brand-01.md`](docs/pilot-implementation-report-brand-01.md).
+6. **Case Study Integrity:** Anti-fabrication template with strict placeholders in [`docs/pilot-case-study-template.md`](docs/pilot-case-study-template.md).
+7. **Production Deployment Guide:** See [`docs/public-demo-deployment.md`](docs/public-demo-deployment.md).
 
 ---
 
