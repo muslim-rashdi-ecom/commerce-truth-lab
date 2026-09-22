@@ -17,7 +17,6 @@ import {
   Compass,
   Clock,
   CheckCircle2,
-  Mail,
   Building2,
   FileText
 } from 'lucide-react';
@@ -91,7 +90,9 @@ export const LandingPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a 
-              href="mailto:syedmuslimshah@gmail.com?subject=Shopify%20Measurement%20%26%20Funnel%20Truth%20Sprint%20Inquiry"
+              href="https://syed-muslim-shah-portfolio.vercel.app/"
+              target="_blank" 
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center text-base sm:text-lg"
             >
               Request a Shopify Measurement &amp; Funnel Truth Sprint
@@ -548,10 +549,12 @@ export const LandingPage: React.FC = () => {
 
           <div className="text-center pt-2">
             <a 
-              href="mailto:syedmuslimshah@gmail.com?subject=Agency%20Partner%20Inquiry%20-%20Commerce%20Truth%20Lab"
+              href="https://syed-muslim-shah-portfolio.vercel.app/"
+              target="_blank" 
+              rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-gray-900 hover:bg-black text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
             >
-              <Mail className="w-4 h-4 mr-2" />
+              <ExternalLink className="w-4 h-4 mr-2" />
               Inquire About Agency Partnerships
             </a>
           </div>
@@ -574,7 +577,7 @@ export const LandingPage: React.FC = () => {
           <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl border border-gray-200 text-left grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
             <div className="space-y-1">
               <span className="font-bold text-gray-900 block">Step 1: Diagnostic Inquiry</span>
-              <p className="text-gray-600">Send an email or message with your store URL and approximate monthly order volume.</p>
+              <p className="text-gray-600">Send an inquiry via the verified founder portal with your store URL and approximate monthly order volume.</p>
             </div>
             <div className="space-y-1">
               <span className="font-bold text-gray-900 block">Step 2: 15-Minute Diagnostic Call</span>
@@ -592,21 +595,20 @@ export const LandingPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
             <a 
-              href="mailto:syedmuslimshah@gmail.com?subject=Shopify%20Measurement%20%26%20Funnel%20Truth%20Sprint%20Inquiry"
-              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-all flex items-center justify-center text-base"
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              Email Founder Directly (syedmuslimshah@gmail.com)
-            </a>
-            <a 
               href="https://syed-muslim-shah-portfolio.vercel.app/"
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base"
+              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-all flex items-center justify-center text-base"
             >
-              Founder Portfolio
-              <ExternalLink className="ml-2 w-4 h-4" />
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Founder Contact &amp; Booking Portal
             </a>
+            <button 
+              onClick={() => navigate('/demo')}
+              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all text-base"
+            >
+              Explore the Synthetic Demo
+            </button>
           </div>
 
           <div className="pt-4 flex flex-wrap justify-center items-center gap-6 text-xs text-gray-500 font-medium">

@@ -89,9 +89,9 @@ Before the completed forensic report is presented to the merchant, the auditor v
 
 To schedule an initial 15–20 minute diagnostic session:
 
-1. **Calendar Link:** Connect directly via Syed Muslim Shah’s booking link or email request at:
+1. **Calendar & Diagnostic Link:** Connect directly via Syed Muslim Shah’s verified contact and booking portal:
    - **Founder Portfolio & Contact:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
-   - **Direct Email:** `syedmuslimshah@gmail.com` (or LinkedIn Direct Message)
+   - **LinkedIn Direct Channel:** LinkedIn Message to Lead Product Architect Syed Muslim Shah
 2. **Call Preparation:** No technical preparation is needed from the merchant. Come prepared to share:
    - Store platform (Shopify or Shopify Plus)
    - Estimated monthly order volume
