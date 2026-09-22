@@ -24,15 +24,22 @@
 
 ---
 
-## 2. Active Prospect Pipeline
+## 2. Active Prospect Pipeline (10 Target DTC Brands)
 
-*This table tracks live prospect interactions. All prospect identities are treated under strict confidentiality until formal case study consent is executed.*
+*This table tracks live prospect interactions. Personalized outreach copy for each lead is maintained in [`docs/commercial/outreach-campaign-10-prospects.md`](outreach-campaign-10-prospects.md).*
 
-| Lead ID | Target Brand / Vertical | Estimated Monthly Volume | Primary Friction Area | Decision Maker Contact | Outreach Date | Status / Current Stage | Next Action Scheduled |
+| Lead ID | Target Brand & Vertical | Primary Market / Volume | Primary Friction Area Hook | Target Decision-Maker | Outreach Channel | Current Status | Next Action Required |
 |---|---|---|---|---|---|---|---|
-| `LEAD-001` | *Active Prospect Candidate 1* | ~3,500 orders/mo (USD) | Meta CAPI / Pixel deduplication mismatch | Head of E-Commerce | Pending | Qualification | Send direct outreach via LinkedIn |
-| `LEAD-002` | *Active Prospect Candidate 2* | ~6,000 orders/mo (AED/SAR) | Aramex COD remittance delays | Operations & Logistics Lead | Pending | Qualification | Send COD diagnostic inquiry |
-| `LEAD-003` | *Active Prospect Candidate 3* | ~8,000 orders/mo (EUR/USD) | Cross-currency refund discrepancies | Founder & Finance Director | Pending | Qualification | Share public demo link & casebook |
+| `LEAD-001` | **The Giving Movement** (Activewear) | UAE / GCC (~25k/mo) | KSA/UAE COD remittance lag & CAPI duplicate events | Head of E-Commerce | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-002` | **Bouguessa** (Luxury Womenswear) | UAE / Global (~2k/mo) | High-AOV refund ceilings & multi-currency drift | Founder / Managing Director | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-003` | **Dapper Boi** (Everyday Apparel) | USA (~4k/mo) | Meta CAPI / Pixel checkout event ID mismatch | Co-Founder / Head of Growth | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-004` | **Suta** (Artisanal Textiles) | India / GCC (~15k/mo) | Multi-courier COD remittance backlog (Delhivery/Aramex) | Head of Operations | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-005` | **Peppercorn Kids** (Accessories) | USA (~3k/mo) | Multi-channel ad signal variance (Meta vs Shopify) | Founder & E-Com Director | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-006` | **Forrey & Galland** (Confectionery) | UAE (~2.5k/mo) | Same-day COD driver collection vs bank deposit | General Manager | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-007` | **Droplette** (Beauty Tech) | USA (~8k/mo) | Subscription re-order CAPI attribution inflation | VP of Growth | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-008` | **L'AFSHAR** (Luxury Handbags) | UAE / UK (~1.5k/mo) | Cross-border minor unit conversion & return tracking | Operations Manager | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-009` | **Wilding Wallbeds** (Home Furnishings)| USA (~1k/mo) | High-ticket financing gateways (Affirm) & tax mismatch | E-Commerce Director / CFO | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
+| `LEAD-010` | **Nuqta** (Modest Wear) | KSA / UAE (~10k/mo) | 60%+ COD courier remittance delay & Snapchat/Meta pixel | Founder & Ops Lead | LinkedIn / Email | Outreach Prepared | Founder to send personalized message |
 
 ---
 

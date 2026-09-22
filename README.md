@@ -153,6 +153,7 @@ The platform is commercially prepared for paid merchant pilot execution ("Shopif
 - **Case Study Consent & Feedback Form:** [`docs/commercial/case-study-consent-and-feedback-form.md`](docs/commercial/case-study-consent-and-feedback-form.md)
 - **Merchant Outreach & Qualification Playbook:** [`docs/commercial/merchant-outreach-and-qualification-playbook.md`](docs/commercial/merchant-outreach-and-qualification-playbook.md)
 - **Commercial Funnel Tracker:** [`docs/commercial/commercial-funnel-tracker.md`](docs/commercial/commercial-funnel-tracker.md)
+- **10-Prospect Personalized Outreach Campaign:** [`docs/commercial/outreach-campaign-10-prospects.md`](docs/commercial/outreach-campaign-10-prospects.md)
 - **Milestone 4 Acceptance Matrix:** [`docs/commercial/milestone-4-acceptance-matrix.md`](docs/commercial/milestone-4-acceptance-matrix.md)
 
 ---
