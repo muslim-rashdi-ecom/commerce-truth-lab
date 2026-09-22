@@ -146,11 +146,14 @@ Real-world pilot sprints for Shopify brands operate on authorized, pseudonymized
 ## 💼 Commercial Sprint Assets (Milestone 4 Readiness)
 
 The platform is commercially prepared for paid merchant pilot execution ("Shopify Measurement & Funnel Truth Sprint"):
-- **Service Packaging & Transparent Flat Pricing:** [`docs/commercial/pricing-and-service-packaging.md`](docs/commercial/pricing-and-service-packaging.md)
+- **Service Packaging & Proposed Flat Pricing:** [`docs/commercial/pricing-and-service-packaging.md`](docs/commercial/pricing-and-service-packaging.md)
 - **Statement of Work & Proposal Template:** [`docs/commercial/pilot-proposal-and-statement-of-work.md`](docs/commercial/pilot-proposal-and-statement-of-work.md)
 - **Merchant Onboarding & Data Export Guide:** [`docs/commercial/merchant-onboarding-and-data-export-guide.md`](docs/commercial/merchant-onboarding-and-data-export-guide.md)
+- **Discovery Call Playbook (10 Diagnostic Questions):** [`docs/commercial/discovery-call-playbook.md`](docs/commercial/discovery-call-playbook.md)
 - **Case Study Consent & Feedback Form:** [`docs/commercial/case-study-consent-and-feedback-form.md`](docs/commercial/case-study-consent-and-feedback-form.md)
 - **Merchant Outreach & Qualification Playbook:** [`docs/commercial/merchant-outreach-and-qualification-playbook.md`](docs/commercial/merchant-outreach-and-qualification-playbook.md)
+- **Commercial Funnel Tracker:** [`docs/commercial/commercial-funnel-tracker.md`](docs/commercial/commercial-funnel-tracker.md)
+- **Milestone 4 Acceptance Matrix:** [`docs/commercial/milestone-4-acceptance-matrix.md`](docs/commercial/milestone-4-acceptance-matrix.md)
 
 ---
 
