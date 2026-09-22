@@ -46,7 +46,7 @@ export const api = {
   getDemoWorkspace: async (): Promise<WorkspaceMetadata> => {
     try {
       const res = await apiFetch<WorkspaceMetadata>('/api/demo/workspace');
-      if (res && res.id) return res;
+      if (res && res.id && res.order_count > 0) return res;
       return SYNTHETIC_WORKSPACE;
     } catch {
       return SYNTHETIC_WORKSPACE;
@@ -128,7 +128,7 @@ export const api = {
   getDemoTrackingHealth: async (): Promise<TrackingHealthResponse> => {
     try {
       const res = await apiFetch<TrackingHealthResponse>('/api/demo/tracking-health');
-      if (res && res.summary) return res;
+      if (res && res.summary && res.summary.total_orders > 0) return res;
       return SYNTHETIC_TRACKING_HEALTH;
     } catch {
       return SYNTHETIC_TRACKING_HEALTH;
