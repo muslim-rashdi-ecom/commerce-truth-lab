@@ -14,7 +14,12 @@ import {
   FileSpreadsheet,
   AlertTriangle,
   Users,
-  Compass
+  Compass,
+  Clock,
+  CheckCircle2,
+  Mail,
+  Building2,
+  FileText
 } from 'lucide-react';
 import { SyntheticBadge } from '../components/SyntheticBadge';
 import { Footer } from '../components/Footer';
@@ -86,9 +91,7 @@ export const LandingPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a 
-              href="https://syed-muslim-shah-portfolio.vercel.app/"
-              target="_blank" 
-              rel="noopener noreferrer"
+              href="mailto:syedmuslimshah@gmail.com?subject=Shopify%20Measurement%20%26%20Funnel%20Truth%20Sprint%20Inquiry"
               className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center text-base sm:text-lg"
             >
               Request a Shopify Measurement &amp; Funnel Truth Sprint
@@ -96,10 +99,28 @@ export const LandingPage: React.FC = () => {
             </a>
             <button 
               onClick={() => navigate('/demo')}
-              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base sm:text-lg"
+              className="w-full sm:w-auto px-6 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base sm:text-lg"
             >
               Explore the Synthetic Demo
             </button>
+          </div>
+
+          <div className="mt-4 flex flex-wrap justify-center items-center gap-4 text-sm">
+            <button 
+              onClick={() => navigate('/demo/reports')}
+              className="inline-flex items-center text-brand-700 hover:text-brand-900 font-medium underline"
+            >
+              <FileText className="w-4 h-4 mr-1.5" />
+              View Sample Forensic Report
+            </button>
+            <span className="text-gray-300">&middot;</span>
+            <a 
+              href="#agency-partner"
+              className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium"
+            >
+              <Building2 className="w-4 h-4 mr-1.5 text-gray-500" />
+              For Shopify &amp; CRO Agencies &rarr;
+            </a>
           </div>
 
           <p className="mt-5 text-xs sm:text-sm text-gray-500 font-medium">
@@ -395,13 +416,13 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 8: Pilot Process Overview */}
+        {/* Section 8: How the Pilot Works */}
         <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-8">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
-              <FileSpreadsheet className="w-3.5 h-3.5 mr-1" /> Merchant Sprint Flow
+              <Clock className="w-3.5 h-3.5 mr-1" /> Rapid 48-Hour Diagnostic
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">8. Pilot Process: Shopify Measurement &amp; Funnel Truth Sprint</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">8. How the Pilot Works: Shopify Measurement &amp; Funnel Truth Sprint</h2>
             <p className="mt-2 text-gray-600 text-sm sm:text-base">
               A structured 4-step offline audit sprint designed for Shopify stores and agencies to eliminate measurement ambiguity without complex API integrations.
             </p>
@@ -418,7 +439,7 @@ export const LandingPage: React.FC = () => {
 
             <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
               <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">2</div>
-              <h4 className="font-bold text-gray-900 text-sm">Safe CSV Exports</h4>
+              <h4 className="font-bold text-gray-900 text-sm">Sanitized CSV Handoff</h4>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Export standard transaction files. Plaintext PII is intercepted and salted with SHA-256 into anonymous identifiers (<code className="font-mono text-xs">CUST_xxxx</code>).
               </p>
@@ -434,52 +455,176 @@ export const LandingPage: React.FC = () => {
 
             <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
               <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">4</div>
-              <h4 className="font-bold text-gray-900 text-sm">Truth Briefing Delivery</h4>
+              <h4 className="font-bold text-gray-900 text-sm">48-Hour Report Delivery</h4>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Receive standalone HTML, JSON, and Markdown briefings with exact exception evidence and clear action items for your media or ops teams.
+                Receive standalone HTML, JSON, and Markdown briefings with 3 prioritized fixes, followed by an executive walkthrough.
               </p>
             </div>
           </div>
+
+          {/* Guarantees & Privacy Promise Callout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+            <div className="p-5 bg-blue-50/60 rounded-xl border border-blue-100 flex items-start space-x-3.5">
+              <Clock className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-gray-900 text-sm mb-1">48-Hour Turnaround SLA</h4>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  We guarantee complete forensic report delivery within 48 business hours after receiving complete sanitized CSV files.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 bg-emerald-50/60 rounded-xl border border-emerald-100 flex items-start space-x-3.5">
+              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-gray-900 text-sm mb-1">The Sanitized-Data Promise</h4>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Zero customer personal info (no names, phones, or addresses). Isolated single-tenant schemas and mandatory 30-day data destruction.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-6 pt-2 text-sm">
+            <button 
+              onClick={() => navigate('/demo/reports')}
+              className="inline-flex items-center text-brand-600 hover:text-brand-800 font-medium underline"
+            >
+              <FileText className="w-4 h-4 mr-1.5" />
+              Inspect Sample Forensic Report
+            </button>
+            <span className="text-gray-300">&middot;</span>
+            <a 
+              href="https://github.com/muslim-rashdi-ecom/commerce-truth-lab/blob/main/docs/commercial/nda-and-confidentiality-terms.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium underline"
+            >
+              <Lock className="w-4 h-4 mr-1.5" />
+              View Security &amp; Confidentiality NDA
+            </a>
+          </div>
         </section>
 
-        {/* Section 9: Founder & Portfolio (Commercial Call to Action) */}
-        <section className="text-center bg-gradient-to-b from-brand-50 to-white p-8 sm:p-14 rounded-2xl border border-brand-100 shadow-sm space-y-6">
-          <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              9. Founder &amp; Pilot Engagement
-            </h2>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              Built by <strong className="text-gray-900">Syed Muslim Shah</strong> as an evidence-first e-commerce audit engine. If you are preparing to change ad budgets or onboard a new performance agency, audit your measurement foundation first.
+        {/* Section 9: Agency & Consultant Partnership */}
+        <section id="agency-partner" className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
+              <Building2 className="w-3.5 h-3.5 mr-1" /> Agency Partner Package
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">9. For Shopify &amp; CRO Agencies</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base">
+              Protect your client relationships and establish an unassailable data baseline before launching new campaigns or redesigning storefronts.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div className="p-6 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <div className="font-semibold text-brand-700 text-sm uppercase tracking-wider">Option A: White-Label Audit Sprint</div>
+              <h4 className="font-bold text-gray-900 text-base">Client Onboarding Diagnostic</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Deliver independent measurement baselines under your agency brand within 48 hours. Wholesale partner pricing ($950 sprint rate vs $1,250 standard) with complete white-label reports.
+              </p>
+              <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                <li>Identify broken CAPI deduplication before spending media budgets</li>
+                <li>Clear engineering handoff for your theme developers</li>
+                <li>Zero competition: we do not manage ads or build themes</li>
+              </ul>
+            </div>
+
+            <div className="p-6 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <div className="font-semibold text-emerald-700 text-sm uppercase tracking-wider">Option B: Referral Partner</div>
+              <h4 className="font-bold text-gray-900 text-base">For Fractional COOs, CFOs &amp; Consultants</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Introduce clients to an objective, evidence-first audit partner. Receive a 20% recurring referral commission on all initial sprints and quarterly monitoring retainers.
+              </p>
+              <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                <li>Independent third-party validation free of agency bias</li>
+                <li>20% commission on sprints ($250–$490) and monitoring</li>
+                <li>Strict mutual non-compete and non-disclosure guarantees</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-center pt-2">
+            <a 
+              href="mailto:syedmuslimshah@gmail.com?subject=Agency%20Partner%20Inquiry%20-%20Commerce%20Truth%20Lab"
+              className="inline-flex items-center px-6 py-3 bg-gray-900 hover:bg-black text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Inquire About Agency Partnerships
+            </a>
+          </div>
+        </section>
+
+        {/* Section 10: Founder & Booking Instructions */}
+        <section className="text-center bg-gradient-to-b from-brand-50 to-white p-8 sm:p-14 rounded-2xl border border-brand-100 shadow-sm space-y-6">
+          <div className="max-w-2xl mx-auto space-y-3">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-700 bg-brand-100 px-2.5 py-1 rounded-md">
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Direct Booking Path
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              10. How to Request Your Audit Sprint
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Commerce Truth Lab is built and operated by <strong className="text-gray-900">Syed Muslim Shah</strong>. We work directly with founders, growth directors, and agency leaders without layers of sales reps.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl border border-gray-200 text-left grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div className="space-y-1">
+              <span className="font-bold text-gray-900 block">Step 1: Diagnostic Inquiry</span>
+              <p className="text-gray-600">Send an email or message with your store URL and approximate monthly order volume.</p>
+            </div>
+            <div className="space-y-1">
+              <span className="font-bold text-gray-900 block">Step 2: 15-Minute Diagnostic Call</span>
+              <p className="text-gray-600">A brief conversation to confirm scope, courier terms, and ad platform channels.</p>
+            </div>
+            <div className="space-y-1">
+              <span className="font-bold text-gray-900 block">Step 3: Safe CSV Handoff</span>
+              <p className="text-gray-600">Follow our 1-page export guide with zero customer names, phones, or addresses.</p>
+            </div>
+            <div className="space-y-1">
+              <span className="font-bold text-gray-900 block">Step 4: 48-Hour Report &amp; Walkthrough</span>
+              <p className="text-gray-600">Receive your complete forensic report and 3 prioritized fixes in 48 business hours.</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+            <a 
+              href="mailto:syedmuslimshah@gmail.com?subject=Shopify%20Measurement%20%26%20Funnel%20Truth%20Sprint%20Inquiry"
+              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-all flex items-center justify-center text-base"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Email Founder Directly (syedmuslimshah@gmail.com)
+            </a>
             <a 
               href="https://syed-muslim-shah-portfolio.vercel.app/"
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-all flex items-center justify-center text-base"
+              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base"
             >
-              Request a Shopify Measurement &amp; Funnel Truth Sprint
+              Founder Portfolio
               <ExternalLink className="ml-2 w-4 h-4" />
             </a>
-            <button 
-              onClick={() => navigate('/demo')}
-              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all text-base"
-            >
-              Explore the Synthetic Demo
-            </button>
           </div>
 
           <div className="pt-4 flex flex-wrap justify-center items-center gap-6 text-xs text-gray-500 font-medium">
             <a 
-              href="https://syed-muslim-shah-portfolio.vercel.app/"
+              href="https://github.com/muslim-rashdi-ecom/commerce-truth-lab/blob/main/docs/commercial/nda-and-confidentiality-terms.md"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-brand-600 underline"
             >
-              Founder Portfolio
+              Security &amp; Privacy NDA Terms
             </a>
+            <span>&middot;</span>
+            <button 
+              onClick={() => navigate('/demo/reports')}
+              className="hover:text-brand-600 underline"
+            >
+              Sample Forensic Report
+            </button>
             <span>&middot;</span>
             <a 
               href="https://github.com/muslim-rashdi-ecom/commerce-truth-lab"

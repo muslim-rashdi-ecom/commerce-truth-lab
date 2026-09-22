@@ -1,52 +1,92 @@
 # Commercial Funnel & Engagement Tracker
-## Milestone 4: Sales Pipeline & Merchant Conversion Record
+## Milestone 4: 16-Stage Sales Pipeline & Merchant Conversion Record
 
 **Product:** Commerce Truth Lab v1  
-**Lead Auditor / Commercial Lead:** Syed Muslim Shah  
+**Lead Auditor / Commercial Lead:** Syed Muslim Shah ([Portfolio](https://syed-muslim-shah-portfolio.vercel.app/))  
+
 > [!IMPORTANT] CAMPAIGN EXECUTION STATUS: READY FOR MANUAL TRANSMISSION
-> - **Operational State:** All outreach transmission packets are finalized with hypothesis framing and zero-access disclosures in [`docs/commercial/outreach-campaign-10-prospects.md`](outreach-campaign-10-prospects.md).
-> - **Transmission Status:** **0 messages sent.** No outreach has been transmitted yet.
-> - **Commercial Funnel Counts:** All metrics are strictly at **zero** (0 contacted, 0 replies, 0 calls, 0 pilots, 0 reports, 0 paid conversions).
-> - **Next Operational Event:** Founder (Syed Muslim Shah) manually transmits the packets for LEAD-001, LEAD-002, and LEAD-003 from his personal accounts, then reports the transmission timestamp to advance the tracker.
+> - **Operational State:** All outreach transmission packets, sequences, and trust assets are finalized with hypothesis framing and zero-access disclosures.
+> - **Transmission Status:** **0 messages sent.** No external outreach has been transmitted yet.
+> - **Commercial Funnel Counts:** All metrics are strictly at **zero** until external execution occurs.
+> - **Next Operational Event:** Founder (Syed Muslim Shah) manually transmits the initial packets for LEAD-001, LEAD-002, and LEAD-003, then reports the transmission timestamps to log in the tracker.
 
 ---
 
-## 1. Funnel Summary Metrics
+## 1. 16-Stage Funnel Summary Metrics
 
-| Funnel Stage | Current Count | Target for M4 Completion | Stage Gate Definition |
-|---|:---:|:---:|---|
-| **1. Prospects Contacted** | `0` | $\ge 20$ | Targeted Shopify DTC brands contacted with personalized outreach copy |
-| **2. Meaningful Replies** | `0` | $\ge 5$ | Merchant responses expressing interest or requesting additional details |
-| **3. Discovery Calls Held** | `0` | $\ge 3$ | 20-minute diagnostic session completed via [`docs/commercial/discovery-call-playbook.md`](discovery-call-playbook.md) |
-| **4. Qualified Opportunities** | `0` | $\ge 2$ | Meets ICP (Shopify, >1,500 orders/mo, CAPI or COD exposure, accessible data) |
-| **5. Authorized Pilots (Signed)** | `0` | $\ge 1$ | Signed [`docs/pilot-authorization-agreement.md`](../pilot-authorization-agreement.md) + SOW |
-| **6. Reports Delivered (<48h SLA)** | `0` | $\ge 1$ | Forensic Implementation Report delivered with 3 prioritized fixes |
-| **7. Post-Fix Verifications** | `0` | $\ge 1$ | 14-day follow-up audit completed or scheduled |
-| **8. Permissioned Case Studies** | `0` | $\ge 1$ | Signed Option A (Attributed) or Option B (Anonymized) consent |
-| **9. Paid Engagements Converted** | `0` | $\ge 1$ | Paid follow-up sprint, quarterly retainer, or initial fee attempted/converted |
+| Stage # | Funnel Stage | Current Count | Target for M4 Completion | Stage Gate Definition |
+|:---:|---|:---:|:---:|---|
+| **1** | **Prospect Identified** | `30` | $\ge 30$ | Curated list of 30 qualified Shopify DTC brands, agencies, and ops leaders |
+| **2** | **Message Prepared** | `30` | $\ge 30$ | Tailored, hypothesis-framed message drafted with zero-access disclosure |
+| **3** | **Message Sent** | `0` | $\ge 20$ | Message transmitted manually via LinkedIn or direct email |
+| **4** | **Reply Received** | `0` | $\ge 5$ | Prospect responds expressing interest, questions, or asking for scope |
+| **5** | **Discovery Call Booked** | `0` | $\ge 3$ | 15–20 minute diagnostic call scheduled on calendar |
+| **6** | **Discovery Call Completed** | `0` | $\ge 2$ | Diagnostic call held using discovery call playbook |
+| **7** | **Qualified Opportunity** | `0` | $\ge 2$ | Confirmed fit (Shopify/Plus, order volume, data availability, tracking/COD need) |
+| **8** | **Authorization Signed** | `0` | $\ge 1$ | Counter-signed pilot authorization agreement |
+| **9** | **SOW Signed** | `0` | $\ge 1$ | Counter-signed Statement of Work defining scope and date range |
+| **10** | **Sanitized Data Received** | `0` | $\ge 1$ | Complete CSV files received and validated for zero PII |
+| **11** | **Audit Completed** | `0` | $\ge 1$ | Deterministic engine executed across all 12 rules in isolated workspace |
+| **12** | **Report Delivered** | `0` | $\ge 1$ | Forensic implementation report delivered in HTML/MD/JSON within 48 hours |
+| **13** | **Post-Fix Verification Completed** | `0` | $\ge 1$ | 14-day re-audit measuring reconciliation or tracking signal deltas |
+| **14** | **Feedback Received** | `0` | $\ge 1$ | Structured feedback survey completed (1–5 rubric) |
+| **15** | **Paid Proposal Presented** | `0` | $\ge 1$ | Formal commercial proposal presented for follow-up sprint or monitoring |
+| **16** | **Paid Engagement Won or Lost** | `0` | $\ge 1$ | Commercial outcome recorded with evidence |
 
 ---
 
-## 2. Active Prospect Pipeline (10 Target DTC Brands)
+## 2. 30 Qualified Prospect Pipeline
 
-*Personalized, hypothesis-framed outreach copy for each prospect is maintained in [`docs/commercial/outreach-campaign-10-prospects.md`](outreach-campaign-10-prospects.md). All entries are tracked with zero fabrication.*
+### Category A: 10 Shopify & DTC Merchant Prospects
 
-| Lead ID | Target Brand & Vertical | Target Recipient & Role | Outreach Channel | Date Logged | Transmitted Date & Time | Message Status | Follow-up Date | Response Status | Next Action Required |
-|---|---|---|---|:---:|:---:|:---:|:---:|:---:|---|
-| `LEAD-001` | **The Giving Movement** *(Activewear, UAE/GCC)* | Head of E-Commerce / Operations Director | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-002` | **Bouguessa** *(Luxury Womenswear, UAE/Global)* | Founder & Managing Director | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-003` | **Dapper Boi** *(Apparel, USA)* | Co-Founder & Head of Growth | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-004` | **Suta** *(Artisanal Textiles, India/GCC)* | Head of Operations / Logistics Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-005` | **Peppercorn Kids** *(Accessories, USA)* | Founder & E-Commerce Director | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-006` | **Forrey & Galland** *(Luxury Gifting, UAE)* | General Manager & Digital Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-007` | **Droplette** *(Beauty Tech, USA/UK)* | VP of Growth / Performance Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-008` | **L'AFSHAR** *(Luxury Handbags, UAE/UK)* | Operations & Fulfillment Manager | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-009` | **Wilding Wallbeds** *(Home Furnishings, USA)* | E-Commerce Director / CFO | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
-| `LEAD-010` | **Nuqta** *(Modest Fashion, KSA/UAE)* | Founder & Operations Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| Lead ID | Brand & Vertical | Target Recipient & Role | Outreach Channel | Status | Test Offer | Next Action |
+|---|---|---|---|:---:|:---:|---|
+| `LEAD-001` | **The Giving Movement** *(Activewear, UAE/GCC)* | Head of E-Commerce / Operations Director | LinkedIn / Email | **Prepared** | Offer A (Complimentary) | Founder to send |
+| `LEAD-002` | **Bouguessa** *(Luxury Fashion, UAE/Global)* | Founder & Managing Director | LinkedIn / Email | **Prepared** | Offer A (Complimentary) | Founder to send |
+| `LEAD-003` | **Dapper Boi** *(Apparel, USA)* | Co-Founder & Head of Growth | LinkedIn / Email | **Prepared** | Offer A (Complimentary) | Founder to send |
+| `LEAD-004` | **Suta** *(Artisanal Textiles, India/GCC)* | Head of Operations / Logistics Lead | LinkedIn / Email | **Queue (Batch 2)** | Offer A (Complimentary) | Transmit after Batch 1 review |
+| `LEAD-005` | **Peppercorn Kids** *(Accessories, USA)* | Founder & E-Commerce Director | LinkedIn / Email | **Queue (Batch 2)** | Offer B (Discounted) | Transmit after Batch 1 review |
+| `LEAD-006` | **Forrey & Galland** *(Luxury Gifting, UAE)* | General Manager & Digital Lead | LinkedIn / Email | **Queue (Batch 2)** | Offer A (Complimentary) | Transmit after Batch 1 review |
+| `LEAD-007` | **Droplette** *(Beauty Tech, USA/UK)* | VP of Growth / Performance Lead | LinkedIn / Email | **Queue (Batch 2)** | Offer B (Discounted) | Transmit after Batch 1 review |
+| `LEAD-008` | **L'AFSHAR** *(Luxury Accessories, UAE/UK)* | Operations & Fulfillment Manager | LinkedIn / Email | **Queue (Batch 2)** | Offer A (Complimentary) | Transmit after Batch 1 review |
+| `LEAD-009` | **Wilding Wallbeds** *(Home Furnishings, USA)* | E-Commerce Director / CFO | LinkedIn / Email | **Queue (Batch 2)** | Offer C (Fixed-Price) | Transmit after Batch 1 review |
+| `LEAD-010` | **Nuqta** *(Modest Fashion, KSA/UAE)* | Founder & Operations Lead | LinkedIn / Email | **Queue (Batch 2)** | Offer A (Complimentary) | Transmit after Batch 1 review |
 
-### Phase 1 Batch 1 Transmission Log (LEAD-001, LEAD-002, LEAD-003)
+### Category B: 10 Shopify, CRO & Paid Media Agency Prospects
 
-*Note: All fields below are recorded upon manual transmission by Syed Muslim Shah. Counts remain strictly 0 until confirmed.*
+| Lead ID | Agency Name & Specialization | Target Recipient & Role | Outreach Channel | Status | Model | Next Action |
+|---|---|---|---|:---:|:---:|---|
+| `LEAD-011` | **We Make Websites** *(Shopify Plus Agency, UK/US)* | Technical Director / Head of Delivery | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-012` | **Woolman** *(Shopify Plus Agency, Nordics/EU)* | VP Services / Technical Architect | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-013` | **Eastside Co** *(Shopify Agency, UK/UAE)* | Managing Director / Head of Tech | LinkedIn / Email | **Prepared** | Referral Partner | Founder to send |
+| `LEAD-014` | **Charle** *(Shopify Plus Specialists, UK)* | Technical Director | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-015` | **Velstar** *(Shopify Plus Agency, UK)* | Head of Development | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-016` | **Blend Commerce** *(Shopify CRO Agency, UK/US)* | Founder & CRO Director | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-017` | **Fullsend** *(Shopify Growth Agency, US)* | Growth & Data Lead | LinkedIn / Email | **Prepared** | Referral Partner | Founder to send |
+| `LEAD-018` | **Common Thread Collective** *(DTC Growth, US)* | VP Performance Marketing | LinkedIn / Email | **Prepared** | Referral Partner | Founder to send |
+| `LEAD-019` | **MuteSix** *(Paid Media Agency, US)* | Head of Paid Social / Tracking Lead | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+| `LEAD-020` | **HawkSEM** *(Performance Marketing, US)* | Analytics & Tagging Director | LinkedIn / Email | **Prepared** | White-Label Baseline | Founder to send |
+
+### Category C: 10 E-Commerce Operations, Finance & Growth Leaders
+
+| Lead ID | Organization & Industry | Target Contact Title | Outreach Channel | Status | Focus Area | Next Action |
+|---|---|---|---|:---:|:---:|---|
+| `LEAD-021` | Regional GCC DTC Aggregator | Head of E-Commerce Finance | LinkedIn / Email | **Prepared** | COD & Gateway Audit | Founder to send |
+| `LEAD-022` | Omnichannel Luxury Footwear (UAE) | Fractional E-Commerce COO | LinkedIn / Email | **Prepared** | Multi-Currency Reconciliation | Founder to send |
+| `LEAD-023` | Direct-to-Consumer Beauty Brand (US) | VP of Growth & Acquisition | LinkedIn / Email | **Prepared** | Meta CAPI Deduplication | Founder to send |
+| `LEAD-024` | Sustainable Apparel Group (EU) | E-Commerce Financial Controller | LinkedIn / Email | **Prepared** | Refund Leakage Verification | Founder to send |
+| `LEAD-025` | Health & Wellness DTC (UK) | Growth Marketing Director | LinkedIn / Email | **Prepared** | GA4 vs Shopify Sales | Founder to send |
+| `LEAD-026` | Cross-Border Consumer Electronics (GCC) | Operations & Logistics Manager | LinkedIn / Email | **Prepared** | Courier Remittance Auditing | Founder to send |
+| `LEAD-027` | High-AOV Jewelry Merchant (US) | Fractional CFO for DTC Brands | LinkedIn / Email | **Prepared** | Minor-Unit Currency Integrity | Founder to send |
+| `LEAD-028` | Specialty Food & Beverage DTC (US) | Head of Digital Analytics | LinkedIn / Email | **Prepared** | Tracking Pixel Signal Audit | Founder to send |
+| `LEAD-029` | Kids Apparel Brand (GCC) | E-Commerce Commercial Director | LinkedIn / Email | **Prepared** | COD Settlement Verification | Founder to send |
+| `LEAD-030` | Activewear Subscription Brand (UK) | Head of Retention & Operations | LinkedIn / Email | **Prepared** | Gateway Settlement Audit | Founder to send |
+
+---
+
+## 3. Phase 1 Batch 1 Transmission Log (LEAD-001, LEAD-002, LEAD-003)
+
+*All fields below are recorded upon manual transmission by Syed Muslim Shah. Counts remain strictly 0 until confirmed.*
 
 | Field | LEAD-001 (The Giving Movement) | LEAD-002 (Bouguessa) | LEAD-003 (Dapper Boi) |
 |---|---|---|---|
@@ -57,47 +97,3 @@
 | **Message Status** | Ready to transmit | Ready to transmit | Ready to transmit |
 | **Follow-up Date** | Transmission + 3 business days | Transmission + 3 business days | Transmission + 3 business days |
 | **Response Status** | Awaiting send | Awaiting send | Awaiting send |
-
----
-
-## 3. Commercial Stage Gate Workflow
-
-```
-[Prospect Outreach]
-       │
-       ▼
-[Discovery Call (20 min)] ──► Unqualified (Archive with reason)
-       │
-       ▼
-[SOW & Authorization Agreement Sent]
-       │
-       ▼
-[Signed Agreement + Sanitized CSV Handoff] ◄── Commercial Gate 1 (Pilot Authorized)
-       │
-       ▼
-[48-Hour Rapid Forensic Audit Execution]
-       │
-       ▼
-[Report Delivery + 45-min Executive Walkthrough] ◄── Commercial Gate 2 (Report Delivered)
-       │
-       ▼
-[Merchant Feedback & Case Study Consent Collected] ◄── Commercial Gate 3 (Evidence Secured)
-       │
-       ▼
-[14-Day Post-Fix Re-Audit Delivered]
-       │
-       ▼
-[Paid Sprint / Retainer Proposal Presented] ◄── Commercial Gate 4 (Paid Engagement Attempted/Converted)
-```
-
----
-
-## 4. Current Commercial Blockers & Next Action Item
-
-### Primary Commercial Blocker:
-- **Zero Real Merchant Signatures:** While the product infrastructure, data ingestion contracts, forensic report generators, and sales assets are 100% complete and tested, an external commercial merchant has not yet executed the pilot agreement.
-
-### Immediate Action Required to Secure First Real Merchant:
-1. **Initiate Direct Outreach Campaign:** Send the personalized outreach script from [`docs/commercial/merchant-outreach-and-qualification-playbook.md`](merchant-outreach-and-qualification-playbook.md) to a curated list of 10 Shopify DTC founders/operators.
-2. **Execute First Discovery Call:** Book a 20-minute diagnostic session using [`docs/commercial/discovery-call-playbook.md`](discovery-call-playbook.md).
-3. **Offer Validation Terms:** Offer the waived setup fee pilot in exchange for complete sanitized CSV exports, feedback, and consented case-study publication.

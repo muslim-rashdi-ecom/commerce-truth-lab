@@ -35,26 +35,37 @@ A transparent, fixed flat fee for a rapid, 48-hour forensic reconciliation sprin
 
 ---
 
-## 3. First Real Merchant Engagement: Commercial Validation Pilot
+## 3. Three Empirical Pricing Validation Test Offers
 
-To secure the first real-world merchant engagement without speculative price friction, Commerce Truth Lab offers a **Discounted or Waived Pilot Setup Fee** for the first qualifying Shopify brand, structured strictly as an evidence exchange:
+To empirically discover what commercial structure the market accepts, Commerce Truth Lab deploys three test offers across outreach channels:
 
-### The Pilot Value Exchange
-- **What Commerce Truth Lab Delivers:**
-  - Complete 48-hour rapid forensic audit on the merchant's private workspace.
-  - Full implementation report with empirical discrepancy findings.
-  - Three Prioritized Remediations (P0, P1, P2) for their developers and logistics leads.
-  - 45-Minute Executive Walkthrough session.
-  - 14-Day Post-Fix Re-Audit measuring reconciliation deltas.
-- **What the Merchant Provides in Exchange:**
-  1. Signed Written Pilot Authorization ([`docs/pilot-authorization-agreement.md`](../pilot-authorization-agreement.md)).
-  2. Complete, sanitized operational CSV exports covering the agreed 30-day cohort.
-  3. Operational attendance at the 45-minute executive walkthrough.
-  4. Written operational feedback using the feedback evaluation matrix ([`docs/commercial/case-study-consent-and-feedback-form.md`](case-study-consent-and-feedback-form.md)).
-  5. Permissioned consent for an Anonymized (Option B) or Attributed (Option A) publication case study.
+### Offer Structure Matrix
 
-### Path to First Paid Conversion
-Following the delivery of verified post-fix deltas (e.g. proof of eliminated duplicate signals or cleared courier backlog), the merchant is presented with an ongoing quarterly monitoring agreement or follow-up audit proposal at a validated commercial rate.
+| Offer Type | Pricing Terms | Merchant Requirement | Case-Study Policy | Strategic Objective |
+|---|:---:|---|---|---|
+| **Test Offer A: Complimentary Validation Pilot** | **$0 Setup Fee** | Complete sanitized CSV files, attendance at 45-min walkthrough, completed feedback survey | **Strictly Optional** (Decoupled from pilot) | Eliminate all procurement friction to validate operational workflows and generate first evidence |
+| **Test Offer B: Discounted Validation Pilot** | **$450 – $650** *(65% discount)* | Complete sanitized CSV files, walkthrough attendance, feedback survey | **Strictly Optional** (Decoupled from pilot) | Test price sensitivity for bootstrapped Shopify merchants |
+| **Test Offer C: Full Fixed-Price Sprint** | **$1,250 – $2,450** *(Proposed Standard)* | Complete sanitized CSV files, standard commercial agreement | **Strictly Optional** (Decoupled from pilot) | Test willingness of high-growth / enterprise merchants to pay full proposed rate |
+
+> [!IMPORTANT] CASE STUDY CONSENT IS NEVER A CONDITION OF THE PILOT
+> In all three offers, public case-study consent (attributed or anonymized) is strictly **optional and separate** from the pilot authorization. Merchants who decline case-study publication receive the exact same 48-hour SLA, prioritized fixes, and post-fix re-verification without penalty.
+
+---
+
+### 4. Pricing Validation Tracking Matrix
+
+*Track which offer generates replies, discovery calls, signed pilots, and paid conversions:*
+
+| Offer Type | Leads Pitched | Meaningful Replies | Discovery Calls | Signed Pilots | Paid Conversions | Acceptance Rate |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Offer A (Complimentary Pilot)** | 0 | 0 | 0 | 0 | 0 | 0.0% |
+| **Offer B (Discounted Pilot)** | 0 | 0 | 0 | 0 | 0 | 0.0% |
+| **Offer C (Full Fixed-Price)** | 0 | 0 | 0 | 0 | 0 | 0.0% |
+
+---
+
+### 5. Path to First Paid Conversion
+Following the delivery of verified post-fix deltas (e.g. proof of eliminated duplicate signals or cleared courier backlog), the merchant is presented with an ongoing quarterly monitoring agreement or follow-up audit proposal at a validated commercial rate ($650–$850/month).
 
 
 ---
