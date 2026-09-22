@@ -31,18 +31,32 @@
 
 *Personalized, hypothesis-framed outreach copy for each prospect is maintained in [`docs/commercial/outreach-campaign-10-prospects.md`](outreach-campaign-10-prospects.md). All entries are tracked with zero fabrication.*
 
-| Lead ID | Target Brand & Vertical | Target Recipient & Role | Outreach Channel | Date Logged | Transmitted Date | Outreach Message Status | Response Status | Next Action Required |
-|---|---|---|---|:---:|:---:|:---:|:---:|---|
-| `LEAD-001` | **The Giving Movement** *(Activewear, UAE/GCC)* | Head of E-Commerce / Operations Director | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-002` | **Bouguessa** *(Luxury Womenswear, UAE/Global)* | Founder & Managing Director | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-003` | **Dapper Boi** *(Apparel, USA)* | Co-Founder & Head of Growth | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-004` | **Suta** *(Artisanal Textiles, India/GCC)* | Head of Operations / Logistics Lead | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-005` | **Peppercorn Kids** *(Accessories, USA)* | Founder & E-Commerce Director | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-006` | **Forrey & Galland** *(Luxury Gifting, UAE)* | General Manager & Digital Lead | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-007` | **Droplette** *(Beauty Tech, USA/UK)* | VP of Growth / Performance Lead | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-008` | **L'AFSHAR** *(Luxury Handbags, UAE/UK)* | Operations & Fulfillment Manager | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-009` | **Wilding Wallbeds** *(Home Furnishings, USA)* | E-Commerce Director / CFO | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
-| `LEAD-010` | **Nuqta** *(Modest Fashion, KSA/UAE)* | Founder & Operations Lead | LinkedIn / Direct Email | 2026-09-22 | *Pending* | **Prepared (Hypothesis-Framed)** | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
+| Lead ID | Target Brand & Vertical | Target Recipient & Role | Outreach Channel | Date Logged | Transmitted Date & Time | Message Status | Follow-up Date | Response Status | Next Action Required |
+|---|---|---|---|:---:|:---:|:---:|:---:|:---:|---|
+| `LEAD-001` | **The Giving Movement** *(Activewear, UAE/GCC)* | Head of E-Commerce / Operations Director | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
+| `LEAD-002` | **Bouguessa** *(Luxury Womenswear, UAE/Global)* | Founder & Managing Director | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
+| `LEAD-003` | **Dapper Boi** *(Apparel, USA)* | Co-Founder & Head of Growth | LinkedIn / Direct Email | 2026-09-22 | *Pending Send* | **Prepared (Hypothesis-Framed)** | *TBD (+3 Days)* | *Awaiting Send* | Founder (Syed Muslim Shah) to transmit |
+| `LEAD-004` | **Suta** *(Artisanal Textiles, India/GCC)* | Head of Operations / Logistics Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-005` | **Peppercorn Kids** *(Accessories, USA)* | Founder & E-Commerce Director | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-006` | **Forrey & Galland** *(Luxury Gifting, UAE)* | General Manager & Digital Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-007` | **Droplette** *(Beauty Tech, USA/UK)* | VP of Growth / Performance Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-008` | **L'AFSHAR** *(Luxury Handbags, UAE/UK)* | Operations & Fulfillment Manager | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-009` | **Wilding Wallbeds** *(Home Furnishings, USA)* | E-Commerce Director / CFO | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+| `LEAD-010` | **Nuqta** *(Modest Fashion, KSA/UAE)* | Founder & Operations Lead | LinkedIn / Direct Email | 2026-09-22 | *Queue (Batch 2)* | **Prepared (Hypothesis-Framed)** | *TBD* | *Queue* | Transmit after Batch 1 review |
+
+### Phase 1 Batch 1 Transmission Log (LEAD-001, LEAD-002, LEAD-003)
+
+*Note: All fields below are recorded upon manual transmission by Syed Muslim Shah. Counts remain strictly 0 until confirmed.*
+
+| Field | LEAD-001 (The Giving Movement) | LEAD-002 (Bouguessa) | LEAD-003 (Dapper Boi) |
+|---|---|---|---|
+| **Lead ID** | `LEAD-001` | `LEAD-002` | `LEAD-003` |
+| **Recipient Name & Role** | *To be filled on send* | *To be filled on send* | *To be filled on send* |
+| **Channel** | LinkedIn Direct Message / Email | LinkedIn Direct Message / Email | LinkedIn Direct Message / Email |
+| **Date and Time** | *Awaiting transmission* | *Awaiting transmission* | *Awaiting transmission* |
+| **Message Status** | Ready to transmit | Ready to transmit | Ready to transmit |
+| **Follow-up Date** | Transmission + 3 business days | Transmission + 3 business days | Transmission + 3 business days |
+| **Response Status** | Awaiting send | Awaiting send | Awaiting send |
 
 ---
 
