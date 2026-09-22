@@ -137,9 +137,20 @@ Real-world pilot sprints for Shopify brands operate on authorized, pseudonymized
 2. **Tenant Isolation:** Independent merchant workspaces enforced at database query and session levels.
 3. **Formal Pilot Governance:** Governed by [`docs/pilot-authorization-agreement.md`](docs/pilot-authorization-agreement.md) and [`docs/pilot-data-contract.md`](docs/pilot-data-contract.md).
 4. **Traceable Evidence:** Every exception points to immutable source rows documented in [`docs/pilot-evidence-ledger.md`](docs/pilot-evidence-ledger.md).
-5. **Actionable Remediation:** Verified implementation report with 3 prioritized fixes in [`docs/pilot-implementation-report-brand-01.md`](docs/pilot-implementation-report-brand-01.md).
+5. **Actionable Remediation:** Reference pilot specification & structural benchmark with 3 prioritized fixes in [`docs/pilot-implementation-report-brand-01.md`](docs/pilot-implementation-report-brand-01.md).
 6. **Case Study Integrity:** Anti-fabrication template with strict placeholders in [`docs/pilot-case-study-template.md`](docs/pilot-case-study-template.md).
 7. **Production Deployment Guide:** See [`docs/public-demo-deployment.md`](docs/public-demo-deployment.md).
+
+---
+
+## 💼 Commercial Sprint Assets (Milestone 4 Readiness)
+
+The platform is commercially prepared for paid merchant pilot execution ("Shopify Measurement & Funnel Truth Sprint"):
+- **Service Packaging & Transparent Flat Pricing:** [`docs/commercial/pricing-and-service-packaging.md`](docs/commercial/pricing-and-service-packaging.md)
+- **Statement of Work & Proposal Template:** [`docs/commercial/pilot-proposal-and-statement-of-work.md`](docs/commercial/pilot-proposal-and-statement-of-work.md)
+- **Merchant Onboarding & Data Export Guide:** [`docs/commercial/merchant-onboarding-and-data-export-guide.md`](docs/commercial/merchant-onboarding-and-data-export-guide.md)
+- **Case Study Consent & Feedback Form:** [`docs/commercial/case-study-consent-and-feedback-form.md`](docs/commercial/case-study-consent-and-feedback-form.md)
+- **Merchant Outreach & Qualification Playbook:** [`docs/commercial/merchant-outreach-and-qualification-playbook.md`](docs/commercial/merchant-outreach-and-qualification-playbook.md)
 
 ---
 

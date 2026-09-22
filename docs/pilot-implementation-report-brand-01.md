@@ -1,30 +1,38 @@
-# Pilot Implementation & Measurement Truth Report
-## Merchant Audit: Aura Living Studio (DTC Home & Lifestyle)
+# Reference Pilot Specification & Implementation Report (Simulated Benchmark)
+## Model Subject: "Aura Living Studio" (Simulated DTC Home & Lifestyle Brand)
 
-**Pilot Identifier:** `PILOT-2026-001-AURA`  
-**Audit Sprint Period:** 2026-08-01 to 2026-08-31 (30-Day Cohort)  
-**Lead Auditor:** Syed Muslim Shah, Lead Product Architect ([Portfolio](https://syed-muslim-shah-portfolio.vercel.app/))  
+> [!WARNING] SIMULATED REFERENCE PILOT SPECIFICATION — NOT AN EXTERNAL COMMERCIAL PROOF
+> **Evidence Audit Classification:** SIMULATED / INTERNAL BENCHMARK  
+> This document is an internal reference implementation and structural specification benchmark designed to test and demonstrate the technical audit pipeline, evidence structure, and remediation reporting protocols of Commerce Truth Lab v1.
+> - **Written Merchant Authorization:** UNEXECUTED (Governing agreement template provided in [`docs/pilot-authorization-agreement.md`](pilot-authorization-agreement.md))
+> - **Source Data Provenance:** SYNTHETIC / SIMULATED BENCHMARK DATASET (Modeled on standard Shopify Plus and Middle East courier COD logistics patterns)
+> - **Merchant Sign-off / Case-Study Consent:** NOT APPLICABLE (No external commercial business or third-party entity has executed this specific document)
+> - **Financial Outcomes:** The financial numbers, discrepancy figures, and settlement deltas below are illustrative model vectors. They do **not** represent verified external bank deposits, actual recovered revenues, or a third-party commercial endorsement.
+
+**Pilot Identifier:** `PILOT-2026-001-AURA` (Reference Benchmark)  
+**Audit Sprint Period:** 2026-08-01 to 2026-08-31 (Simulated 30-Day Cohort)  
+**Lead Architect / Auditor:** Syed Muslim Shah, Lead Product Architect ([Portfolio](https://syed-muslim-shah-portfolio.vercel.app/))  
 **Engine Version:** Commerce Truth Lab v1 (Deterministic Rules CTL-001 through CTL-012)  
-**Classification:** CONFIDENTIAL — CLIENT PILOT BRIEFING (Option B: Anonymized Publication Approved)  
+**Classification:** INTERNAL REFERENCE BENCHMARK / SIMULATED PILOT SPECIFICATION  
 
 ---
 
 ## 1. Executive Summary
 
-During August 2026, **Aura Living Studio** authorized Commerce Truth Lab to conduct a comprehensive "Shopify Measurement & Funnel Truth Sprint" across its United States (USD) and United Arab Emirates (AED) operations.
+This report establishes the baseline reference implementation for a "Shopify Measurement & Funnel Truth Sprint" evaluating a simulated multi-currency DTC merchant brand (**"Aura Living Studio"**) operating in the United States (USD) and United Arab Emirates (AED).
 
-The objective was to empirically verify whether store checkout revenues, payment gateway deposits, courier Cash on Delivery (COD) remittances, customer refunds, and ad platform purchase tracking signals agreed.
+The objective of this reference benchmark is to demonstrate how Commerce Truth Lab deterministically verifies whether store checkout revenues, payment gateway deposits, courier Cash on Delivery (COD) remittances, customer refunds, and ad platform purchase tracking signals agree.
 
-### Key Metrics Summary
+### Key Metrics Summary (Simulated Scenario)
 
 | Evaluation Dimension | Metric Result | Operational Significance |
 |---|---|---|
-| **Total Orders Audited** | `1,450` orders | Complete 30-day order cohort across Shopify Plus |
+| **Total Orders Audited** | `1,450` orders | Complete 30-day simulated order cohort |
 | **Gross Store Order Volume** | `$142,850.00` (USD) + `AED 82,500.00` | Multi-currency partitioned totals (zero currency mixing) |
-| **Total Reconciled Exceptions** | `4` findings | Discrepancies requiring operational or technical intervention |
+| **Total Reconciled Exceptions** | `4` findings | Discrepancies modeled for operational / technical remediation |
 | **Healthy Control Pass Rate** | `100%` on verified controls | Clean baseline validation of rule specificity |
-| **Overall Data Completeness** | `100.0%` | All 5 requested source streams successfully ingested |
-| **Signal Identity Alignment Score** | `85.2%` | 14.8% of tracked orders suffered deduplication key mismatch |
+| **Overall Data Completeness** | `100.0%` | All 5 required source streams represented |
+| **Signal Identity Alignment Score** | `85.2%` | 14.8% of tracked orders model deduplication key mismatch |
 
 ---
 
@@ -141,34 +149,37 @@ The audit identified three actionable, engineering-backed remediations to elimin
 - **Target Exceptions:** `F-PLT-002` (Cash Shortfall) & `F-PLT-004` (Overdue Settlement)
 - **Action Required:** Submit formal commercial claim to Aramex account representative with attached airway bill delivery proofs for AED 100.00 shortfall (`AWB-7721839210`) and AED 280.00 overdue parcel (`AWB-7721834412`).
 - **Assigned Owner:** Logistics & Fulfillment Manager
-- **Implementation Status:** **In Progress** (AED 280.00 settled; AED 100.00 under review)
+- **Implementation Status:** **Simulated Model Status: In Progress** (Modeled benchmark test case)
 
 ### Fix 3 (Priority P2): Establish Refund Authorization Ceilings in Shopify Admin
 - **Target Exception:** `F-PLT-003` (Refund Exceeding Order Value)
 - **Action Required:** Restrict customer support agent refund permissions to $\le 100\%$ of captured invoice value. Require supervisor PIN for goodwill compensatory credits and record them under an independent accounting code (`goodwill_credit`).
 - **Assigned Owner:** Finance Lead & Customer Support Manager
-- **Implementation Status:** **Completed & Verified** (2026-09-14)
+- **Implementation Status:** **Simulated Model Status: Completed & Verified** (Modeled benchmark test case)
 
 ---
 
-## 7. Before-and-After Verification Section
+## 7. Before-and-After Verification Section (Simulated Cohort Delta)
 
-Following remediation actions executed by the Aura Living Studio team, a follow-up verification audit was conducted on transactions between **2026-09-08 and 2026-09-15**:
+To validate how post-fix re-auditing functions in Commerce Truth Lab, a simulated follow-up verification audit was modeled on subsequent transactions:
 
-| Metric / Audit Area | Pre-Audit Baseline (August 2026) | Post-Fix Re-Audit (September 2026) | Measured Reconciliation Delta |
+| Metric / Audit Area | Pre-Audit Baseline (August 2026 Model) | Post-Fix Re-Audit (September 2026 Model) | Measured Reconciliation Delta |
 |---|---|---|---|
-| **CAPI Deduplication Failure Rate** | `14.8%` (215 / 1,450 orders) | `0.0%` (0 / 350 orders) | **-14.8% error rate eliminated** |
-| **Overdue COD Remittances** | `4` parcels > 7 days | `0` parcels > 7 days | **100% within grace terms** |
+| **CAPI Deduplication Failure Rate** | `14.8%` (215 / 1,450 orders) | `0.0%` (0 / 350 orders) | **-14.8% duplicate rate eliminated** |
+| **Overdue COD Remittances** | `4` parcels > 7 days | `0` parcels > 7 days | **100% within contractual grace terms** |
 | **Over-Refund Discrepancies** | `1` untagged excess refund | `0` excess refunds | **Policy adherence confirmed** |
-| **Active Courier Disputes** | `AED 380.00` unresolved | `AED 100.00` pending | **AED 280.00 cleared & deposited** |
+| **Simulated Courier Remittances** | `AED 380.00` unremitted | `AED 100.00` pending | **AED 280.00 model reconciliation delta verified** |
+
+> *Notice: Delta figures reflect algorithmic reconciliation checks on simulated source rows, not verified corporate cash deposits.*
 
 ---
 
-## 8. Final Auditor Sign-Off & Verification
+## 8. Benchmark Sign-Off & Platform Readiness Notice
 
-This implementation report represents an objective, empirical audit conducted by Commerce Truth Lab under strict tenant isolation and zero-PII data privacy policies.
+This document constitutes an internal reference audit specification validating the deterministic rules and reporting machinery of Commerce Truth Lab v1.
 
-- **Lead Auditor:** Syed Muslim Shah, Lead Product Architect
+- **Lead Architect:** Syed Muslim Shah, Lead Product Architect
 - **Portfolio:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
-- **Delivery Date:** September 18, 2026
-- **Scheduled Workspace Purge Date:** October 02, 2026 (30-day retention policy)
+- **Specification Date:** September 18, 2026
+- **Live Merchant Execution Status:** Ready for external merchant onboarding via [`docs/pilot-authorization-agreement.md`](pilot-authorization-agreement.md) and [`docs/commercial/pilot-proposal-and-statement-of-work.md`](commercial/pilot-proposal-and-statement-of-work.md).
+

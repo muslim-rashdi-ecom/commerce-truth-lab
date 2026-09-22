@@ -1,28 +1,42 @@
 # Pilot Evidence & Verification Ledger
 
-**Commerce Truth Lab v1 — Enterprise Pilot Tracking Record**  
+**Commerce Truth Lab v1 — Pilot Tracking & Verification Ledger**  
 *Maintained under strict privacy governance: Zero plaintext customer PII, zero tokens, zero raw credentials.*
+
+> [!NOTE] EVIDENCE AUDIT & TRUTH STATUS
+> - **Simulated Reference Benchmark:** `PILOT-2026-001-AURA` serves as an internal reference benchmark and scenario test vector. It validates rule execution, evidence pointers, and before-and-after verification deltas.
+> - **Live External Merchant Pilot:** Active onboarding in progress under Milestone 4 ("Commercial Validation & First Paid Engagement").
+> - **Zero Fabrication Guarantee:** No unverified external corporate endorsements, testimonials, or claims of recovered money are asserted.
 
 ---
 
 ## Active Pilot Registry
 
-### Pilot Record 1: `PILOT-2026-001-AURA`
-- **Authorized Merchant / Pseudonym:** Aura Living Studio (DTC Home & Lifestyle)
+### Reference Benchmark Record: `PILOT-2026-001-AURA`
+- **Model Subject / Pseudonym:** Aura Living Studio (DTC Home & Lifestyle — Simulated Scenario)
+- **Classification:** **INTERNAL REFERENCE SPECIFICATION (Simulated Benchmark)**
 - **Primary Market:** United States & United Arab Emirates (Multi-Currency: USD, AED)
 - **Store Platform:** Shopify Plus
-- **Audit Date Range:** 2026-08-01 to 2026-08-31 (30-Day Cohort)
-- **Total Orders Audited:** 1,450 orders
-- **Authorization Agreement Status:** Executed (Signed 2026-09-02)
-- **Data Retention Purge Date:** 2026-10-02 (30-Day Policy)
-- **Case Study Permission Status:** Option B Approved (Pseudonymized Public Case Study Permitted)
+- **Audit Date Range:** 2026-08-01 to 2026-08-31 (Simulated 30-Day Cohort)
+- **Total Orders Audited:** 1,450 modeled orders
+- **Authorization Agreement Status:** Template Specification (Governed by [`docs/pilot-authorization-agreement.md`](pilot-authorization-agreement.md))
+- **Case Study Permission Status:** Internal Reference (Not an external testimonial)
 
-#### Ingested Data Sources Checklist
+#### Ingested Data Sources Checklist (Benchmark Dataset)
 - [x] **Shopify Orders:** `aura_shopify_orders_aug2026.csv` (1,450 rows, SHA-256 pseudonymized)
 - [x] **Payment Gateway Captures:** `aura_stripe_payouts_aug2026.csv` (1,120 rows)
 - [x] **Courier COD Settlements:** `aura_aramex_cod_settlements_aug2026.csv` (330 rows)
 - [x] **Customer Refunds:** `aura_refunds_aug2026.csv` (42 rows)
 - [x] **Marketing Purchase Signals:** `aura_meta_events_aug2026.csv` (2,180 rows, Pixel + CAPI)
+
+---
+
+### External Merchant Pilot Pipeline (Live Onboarding)
+- **Target Slot:** `PILOT-2026-002-LIVE`
+- **Eligibility:** Active Shopify / Shopify Plus DTC brand with prepaid and/or COD volume.
+- **Agreement Status:** Pending Merchant Signature (`docs/pilot-authorization-agreement.md`)
+- **Required Turnaround:** 48-hour delivery from sanitized CSV handoff.
+
 
 ---
 
