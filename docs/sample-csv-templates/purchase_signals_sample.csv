@@ -1,0 +1,6 @@
+signal_id,order_id,platform,event_name,event_id,reported_at,currency,value,signal_type,consent_granted
+SIG-PILOT-001,ORD-PILOT-001,meta,Purchase,EVT-PILOT-001,2026-09-15T10:30:15Z,USD,120.00,browser,true
+SIG-PILOT-002,ORD-PILOT-001,meta_capi,Purchase,EVT-PILOT-001,2026-09-15T10:30:16Z,USD,120.00,server,true
+SIG-PILOT-003,ORD-PILOT-004,meta,Purchase,EVT-PILOT-004,2026-09-17T09:05:20Z,JPY,150,browser,true
+SIG-PILOT-004,ORD-PILOT-005,meta,Purchase,EVT-PILOT-005,2026-09-18T16:45:10Z,KWD,18.500,browser,true
+SIG-PILOT-005,ORD-PILOT-009,google_ads,purchase,EVT-PILOT-009,2026-09-19T13:00:00Z,USD,60.00,browser,false

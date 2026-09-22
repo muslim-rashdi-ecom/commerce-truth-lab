@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime, timezone, timedelta
-from shared.models import PurchaseSignal, SignalType, Currency, CourierSettlement, SettlementStatus, PaymentMethod, Refund, OrderStatus, Payment
+from shared.models import PurchaseSignal, SignalType, Currency, CourierSettlement, SettlementStatus, PaymentMethod, Refund, OrderStatus, Payment, DataSource
 from ctl_engine.rules.ctl_001 import RuleCTL001
 from ctl_engine.rules.ctl_002 import RuleCTL002
 from ctl_engine.rules.ctl_003 import RuleCTL003
@@ -10,7 +10,9 @@ from ctl_engine.rules.ctl_006 import RuleCTL006
 from ctl_engine.rules.ctl_007 import RuleCTL007
 from ctl_engine.rules.ctl_008 import RuleCTL008
 from ctl_engine.rules.ctl_009 import RuleCTL009
+from ctl_engine.rules.ctl_010 import RuleCTL010
 from ctl_engine.rules.ctl_011 import RuleCTL011
+from ctl_engine.rules.ctl_012 import RuleCTL012
 
 def test_ctl001_positive(base_order):
     rule = RuleCTL001()
@@ -174,3 +176,43 @@ def test_ctl011_negative(base_order):
     s = PurchaseSignal(id="1", order_id=base_order.id, signal_type=SignalType.browser, platform="Meta", event_name="Purchase", reported_at=datetime.now(timezone.utc), currency=base_order.currency, value_minor=10000, consent_granted=True)
     res = rule.evaluate(base_order, [], [], [], [s], [])
     assert res is None
+
+def test_ctl010_positive_incomplete_source(base_order):
+    rule = RuleCTL010()
+    src = DataSource(id="ds1", name="courier_export", source_type="courier", coverage_status="partial", completeness_status="incomplete", record_count=10)
+    res = rule.evaluate(base_order, [], [], [], [], [src])
+    assert res is not None
+    assert res.rule_id == "CTL-010"
+    assert "incomplete" in res.observed
+
+def test_ctl010_positive_ambiguous_source(base_order):
+    rule = RuleCTL010()
+    src = DataSource(id="ds2", name="legacy_feed", source_type="custom", coverage_status="full", completeness_status="ambiguous", record_count=5)
+    res = rule.evaluate(base_order, [], [], [], [], [src])
+    assert res is not None
+    assert res.rule_id == "CTL-010"
+    assert "ambiguous" in res.observed
+
+def test_ctl010_negative(base_order):
+    rule = RuleCTL010()
+    src = DataSource(id="ds3", name="shopify_orders", source_type="shopify", coverage_status="full", completeness_status="complete", record_count=12)
+    res = rule.evaluate(base_order, [], [], [], [], [src])
+    assert res is None
+
+def test_ctl012_positive_currency_mismatch(base_order):
+    rule = RuleCTL012()
+    # base_order is USD, add a payment in EUR
+    p = Payment(id="p1", order_id=base_order.id, currency=Currency.EUR, amount_minor=10000, method=PaymentMethod.prepaid, gateway="stripe", status="captured")
+    res = rule.evaluate(base_order, [p], [], [], [], [])
+    assert res is not None
+    assert res.rule_id == "CTL-012"
+    assert "Multiple currencies involved" in res.observed
+
+def test_ctl012_negative_single_currency(base_order):
+    rule = RuleCTL012()
+    # payment in same currency as base_order
+    p = Payment(id="p2", order_id=base_order.id, currency=base_order.currency, amount_minor=10000, method=PaymentMethod.prepaid, gateway="stripe", status="captured")
+    res = rule.evaluate(base_order, [p], [], [], [], [])
+    assert res is None
+
+

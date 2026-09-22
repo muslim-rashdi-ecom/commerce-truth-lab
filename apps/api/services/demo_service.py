@@ -1,23 +1,36 @@
 import json
+from typing import Any, Dict
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Order, DataSource, Finding, Payment, CourierSettlement, Refund, PurchaseSignal
-from schemas.responses import WorkspaceMetadata, PaginatedFindings, OrderSchema, OrderDetailSchema, ReconciliationView, TrackingHealthSchema, TimelineEvent, FindingSchema
+from schemas.responses import (
+    WorkspaceMetadata, PaginatedFindings, OrderSchema, OrderDetailSchema,
+    ReconciliationView, TrackingHealthSchema, TimelineEvent, FindingSchema,
+    PaymentSchema, CourierSettlementSchema, RefundSchema, PurchaseSignalSchema
+)
+
+def _clean(obj: Any) -> Dict[str, Any]:
+    """Clean SQLAlchemy model instance into a pure dictionary without internal state."""
+    if hasattr(obj, '__dict__'):
+        return {k: v for k, v in obj.__dict__.items() if not k.startswith('_')}
+    if isinstance(obj, dict):
+        return {k: v for k, v in obj.items() if not k.startswith('_')}
+    return obj
 
 async def get_workspace(db: AsyncSession) -> WorkspaceMetadata:
-    ds_result = await db.execute(select(DataSource))
+    ds_result = await db.execute(select(DataSource).where(DataSource.workspace_id == "demo"))
     data_sources = ds_result.scalars().all()
     
-    orders_count = await db.scalar(select(func.count(Order.id)))
-    findings_count = await db.scalar(select(func.count(Finding.id)).where(Finding.is_healthy_control == False))
-    affected_orders = await db.scalar(select(func.count(func.distinct(Finding.order_id))).where(Finding.is_healthy_control == False))
+    orders_count = await db.scalar(select(func.count(Order.id)).where(Order.workspace_id == "demo"))
+    findings_count = await db.scalar(select(func.count(Finding.id)).where(Finding.workspace_id == "demo", Finding.is_healthy_control == False))
+    affected_orders = await db.scalar(select(func.count(func.distinct(Finding.order_id))).where(Finding.workspace_id == "demo", Finding.is_healthy_control == False))
 
     return WorkspaceMetadata(
         id="demo",
         name="Synthetic Demo Workspace",
         is_synthetic=True,
-        created_at="2024-01-01T00:00:00Z",
-        data_sources=[ds.__dict__ for ds in data_sources],
+        created_at="2026-08-22T00:00:00Z",
+        data_sources=[_clean(ds) for ds in data_sources],
         order_count=orders_count or 0,
         finding_count=findings_count or 0,
         affected_order_count=affected_orders or 0,
@@ -26,7 +39,7 @@ async def get_workspace(db: AsyncSession) -> WorkspaceMetadata:
     )
 
 async def get_findings(db: AsyncSession, severity: str = None, category: str = None, status: str = None, page: int = 1, per_page: int = 20) -> PaginatedFindings:
-    query = select(Finding).where(Finding.is_healthy_control == False)
+    query = select(Finding).where(Finding.workspace_id == "demo", Finding.is_healthy_control == False)
     if severity: query = query.where(Finding.severity == severity)
     if category: query = query.where(Finding.category == category)
     if status: query = query.where(Finding.status == status)
@@ -38,7 +51,7 @@ async def get_findings(db: AsyncSession, severity: str = None, category: str = N
     items = result.scalars().all()
 
     return PaginatedFindings(
-        items=[item.__dict__ for item in items],
+        items=[_clean(item) for item in items],
         total=total or 0,
         page=page,
         per_page=per_page,
@@ -46,36 +59,36 @@ async def get_findings(db: AsyncSession, severity: str = None, category: str = N
     )
 
 async def get_healthy_controls(db: AsyncSession) -> list[FindingSchema]:
-    result = await db.execute(select(Finding).where(Finding.is_healthy_control == True))
-    return [FindingSchema.model_validate(f.__dict__) for f in result.scalars().all()]
+    result = await db.execute(select(Finding).where(Finding.workspace_id == "demo", Finding.is_healthy_control == True))
+    return [FindingSchema.model_validate(_clean(f)) for f in result.scalars().all()]
 
 async def get_orders(db: AsyncSession) -> list[OrderSchema]:
-    result = await db.execute(select(Order))
+    result = await db.execute(select(Order).where(Order.workspace_id == "demo"))
     orders = result.scalars().all()
     
     res = []
     for o in orders:
-        fc = await db.scalar(select(func.count(Finding.id)).where(Finding.order_id == o.id, Finding.is_healthy_control == False))
-        od = OrderSchema.model_validate(o.__dict__)
+        fc = await db.scalar(select(func.count(Finding.id)).where(Finding.workspace_id == "demo", Finding.order_id == o.id, Finding.is_healthy_control == False))
+        od = OrderSchema.model_validate(_clean(o))
         od.finding_count = fc
         res.append(od)
     return res
 
 async def get_order(db: AsyncSession, order_id: str) -> OrderDetailSchema:
-    order = await db.get(Order, order_id)
+    order = (await db.execute(select(Order).where(Order.workspace_id == "demo", Order.id == order_id))).scalars().first()
     if not order:
         return None
 
-    payments = (await db.execute(select(Payment).where(Payment.order_id == order_id))).scalars().all()
-    settlements = (await db.execute(select(CourierSettlement).where(CourierSettlement.order_id == order_id))).scalars().all()
-    refunds = (await db.execute(select(Refund).where(Refund.order_id == order_id))).scalars().all()
-    signals = (await db.execute(select(PurchaseSignal).where(PurchaseSignal.order_id == order_id))).scalars().all()
+    payments = (await db.execute(select(Payment).where(Payment.workspace_id == "demo", Payment.order_id == order_id))).scalars().all()
+    settlements = (await db.execute(select(CourierSettlement).where(CourierSettlement.workspace_id == "demo", CourierSettlement.order_id == order_id))).scalars().all()
+    refunds = (await db.execute(select(Refund).where(Refund.workspace_id == "demo", Refund.order_id == order_id))).scalars().all()
+    signals = (await db.execute(select(PurchaseSignal).where(PurchaseSignal.workspace_id == "demo", PurchaseSignal.order_id == order_id))).scalars().all()
 
-    od = OrderDetailSchema.model_validate(order.__dict__)
-    od.payments = [p.__dict__ for p in payments]
-    od.settlements = [s.__dict__ for s in settlements]
-    od.refunds = [r.__dict__ for r in refunds]
-    od.signals = [s.__dict__ for s in signals]
+    od = OrderDetailSchema.model_validate(_clean(order))
+    od.payments = [PaymentSchema.model_validate(_clean(p)) for p in payments]
+    od.settlements = [CourierSettlementSchema.model_validate(_clean(s)) for s in settlements]
+    od.refunds = [RefundSchema.model_validate(_clean(r)) for r in refunds]
+    od.signals = [PurchaseSignalSchema.model_validate(_clean(s)) for s in signals]
     
     return od
 
@@ -84,10 +97,9 @@ async def get_reconciliation(db: AsyncSession, order_id: str) -> ReconciliationV
     if not od:
         return None
         
-    findings = (await db.execute(select(Finding).where(Finding.order_id == order_id))).scalars().all()
+    findings = (await db.execute(select(Finding).where(Finding.workspace_id == "demo", Finding.order_id == order_id))).scalars().all()
     
     def _get(item, key, default=None):
-        """Get value from dict or object attribute."""
         if isinstance(item, dict):
             return item.get(key, default)
         return getattr(item, key, default)
@@ -129,13 +141,13 @@ async def get_reconciliation(db: AsyncSession, order_id: str) -> ReconciliationV
         settlements=od.settlements,
         refunds=od.refunds,
         purchase_signals=od.signals,
-        findings=[FindingSchema.model_validate(f.__dict__) for f in findings],
+        findings=[FindingSchema.model_validate(_clean(f)) for f in findings],
         timeline=timeline,
         currency_guard=len(currencies) > 1
     )
 
 async def get_tracking_health(db: AsyncSession) -> TrackingHealthSchema:
-    orders = (await db.execute(select(Order))).scalars().all()
+    orders = (await db.execute(select(Order).where(Order.workspace_id == "demo"))).scalars().all()
     
     total = len(orders)
     with_signals = 0
@@ -147,7 +159,7 @@ async def get_tracking_health(db: AsyncSession) -> TrackingHealthSchema:
     order_signals = []
     
     for o in orders:
-        signals = (await db.execute(select(PurchaseSignal).where(PurchaseSignal.order_id == o.id))).scalars().all()
+        signals = (await db.execute(select(PurchaseSignal).where(PurchaseSignal.workspace_id == "demo", PurchaseSignal.order_id == o.id))).scalars().all()
         issues = []
         if not signals:
             missing += 1
@@ -180,7 +192,7 @@ async def get_tracking_health(db: AsyncSession) -> TrackingHealthSchema:
             "order_id": o.id,
             "order_total_minor": o.total_amount_minor,
             "order_currency": o.currency,
-            "signals": [s.__dict__ for s in signals],
+            "signals": [_clean(s) for s in signals],
             "issues": issues
         })
         

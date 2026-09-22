@@ -9,7 +9,12 @@ import {
   ExternalLink, 
   Sparkles,
   Scale,
-  Lock
+  Lock,
+  Cpu,
+  FileSpreadsheet,
+  AlertTriangle,
+  Users,
+  Compass
 } from 'lucide-react';
 import { SyntheticBadge } from '../components/SyntheticBadge';
 import { Footer } from '../components/Footer';
@@ -25,8 +30,8 @@ export const LandingPage: React.FC = () => {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
               CTL
             </div>
             <span className="text-xl font-bold tracking-tight text-gray-900">Commerce Truth Lab</span>
@@ -55,61 +60,59 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/demo')}
               className="inline-flex items-center px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
             >
-              Open Demo
+              Explore Demo
               <ArrowRight className="ml-1.5 w-4 h-4" />
             </button>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-20">
-        {/* Hero Section */}
-        <section className="text-center max-w-3xl mx-auto pt-4 sm:pt-8">
-          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 mb-6">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-24">
+        {/* Section 0: Hero Section */}
+        <section className="text-center max-w-4xl mx-auto pt-4 sm:pt-8">
+          <div className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 mb-6 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 mr-1.5" />
             Evidence-First E-Commerce Audit Engine
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
-            Sales recorded.<br />
-            <span className="text-brand-600">Cash and signals verified?</span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            Verify whether orders, cash, and signals can be trusted{' '}
+            <span className="text-brand-600">before you change ad budgets.</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            An offline investigation and verification tool for Shopify &amp; DTC brands. 
-            Audit the exact gaps between store orders, payment captures, courier COD settlements, refunds, and advertising tracking signals.
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Commerce Truth Lab helps Shopify brands verify whether their orders, cash, COD settlements, refunds, and advertising signals can be trusted before they scale spend or make operational decisions.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <button 
-              onClick={() => navigate('/demo')}
-              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md transition-all flex items-center justify-center text-lg"
-            >
-              Launch Public Synthetic Demo
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </button>
             <a 
-              href="https://github.com/muslim-rashdi-ecom/commerce-truth-lab"
+              href="https://syed-muslim-shah-portfolio.vercel.app/"
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-6 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-lg"
+              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center text-base sm:text-lg"
             >
-              <Github className="mr-2 w-5 h-5" />
-              View Source Code
+              Request a Shopify Measurement &amp; Funnel Truth Sprint
+              <ArrowRight className="ml-2 w-5 h-5" />
             </a>
+            <button 
+              onClick={() => navigate('/demo')}
+              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base sm:text-lg"
+            >
+              Explore the Synthetic Demo
+            </button>
           </div>
 
-          <p className="mt-4 text-xs sm:text-sm text-gray-500 font-medium">
-            100% Free &amp; Open Source &middot; Instant access without login &middot; Tested on 12 multi-currency orders
+          <p className="mt-5 text-xs sm:text-sm text-gray-500 font-medium">
+            100% Deterministic Engine &middot; Instant access without login &middot; Tested across 12 orders in 7 currencies
           </p>
         </section>
 
-        {/* What Commerce Truth Lab does */}
-        <section className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">What Commerce Truth Lab Does</h2>
-            <p className="mt-2 text-gray-600 text-sm sm:text-base">
-              Answers with mathematical rigor: <em>“Do our orders, payments, COD settlements, refunds, and advertising purchase signals agree—and what evidence supports each exception?”</em>
+        {/* Section 1: What Commerce Truth Lab Does */}
+        <section className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">1. What Commerce Truth Lab Does</h2>
+            <p className="mt-3 text-gray-600 text-sm sm:text-base leading-relaxed">
+              We answer with mathematical rigor: <strong className="text-gray-800">“Do our store orders, payment captures, courier COD settlements, refunds, and advertising purchase signals agree—and what evidence supports each exception?”</strong>
             </p>
           </div>
 
@@ -130,7 +133,7 @@ export const LandingPage: React.FC = () => {
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Verify Tracking &amp; Purchase Signals</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Compares store-recorded orders with Meta/GA4/CAPI purchase signals. Catches duplicate purchase identities, missing signals, 100x currency minor-unit errors, and consent policy flags.
+                Compares store checkout orders with Meta/GA4/CAPI purchase signals. Catches duplicate purchase identities, missing signals, 100x currency minor-unit errors, and consent policy flags.
               </p>
             </div>
 
@@ -146,113 +149,348 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Who it's for */}
-        <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Who It Is For</h2>
+        {/* Section 2: Who It Is For */}
+        <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
+              <Users className="w-3.5 h-3.5 mr-1" /> Target Roles
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">2. Who It Is For</h2>
             <p className="mt-2 text-gray-600 text-sm sm:text-base">
               Tailored for high-growth e-commerce teams requiring empirical validation before making operational or paid media decisions.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Shopify &amp; DTC Founders</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Know whether your reported dashboard numbers reflect deposited cash or uncollected courier receivables.</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Shopify &amp; DTC Founders</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Know whether your reported dashboard numbers reflect deposited cash or uncollected courier receivables before committing new capital.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Paid-Media &amp; Growth Teams</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Detect deduplication failures, broken pixel events, and inflated platform conversions before changing ad budgets.</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Paid-Media &amp; Growth Leads</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Detect deduplication failures, broken pixel events, and inflated platform conversions before altering algorithmic ad bidding.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Operations &amp; Fulfillment</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Track Cash on Delivery (COD) collection lag and courier remittance shortfalls with configurable grace periods.</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Performance Agencies</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Run objective, evidence-based client audits during onboarding under the "Shopify Measurement &amp; Funnel Truth Sprint" to set clean baselines.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Performance Agencies</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Run objective, evidence-based client audits during onboarding under the "Shopify Measurement &amp; Funnel Truth Sprint".</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Operations &amp; Fulfillment Teams</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Track Cash on Delivery (COD) collection lag and courier remittance shortfalls with merchant-defined grace periods.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Finance &amp; Reconciliation</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Identify over-refunded orders and missing settlement files with multi-currency minor unit precision.</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Finance &amp; Reconciliation Leads</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Identify over-refunded orders and missing settlement batches using integer minor-unit precision across global currencies.
+              </p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-              <h4 className="font-semibold text-gray-900 mb-1">Marketing Data Analysts</h4>
-              <p className="text-xs sm:text-sm text-gray-600">Validate server CAPI vs browser pixel identity alignment and evaluate user consent compliance flags.</p>
+            <div className="p-5 rounded-lg bg-gray-50 border border-gray-100">
+              <h4 className="font-semibold text-gray-900 mb-1.5">Marketing Data Analysts</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Validate server CAPI vs browser pixel identity alignment and evaluate user consent compliance flags.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* What we do NOT claim - Anti-Hype Guarantee */}
+        {/* Section 3: What Problem It Solves */}
+        <section className="space-y-6">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">3. What Problem It Solves: The Evidence Gap</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base">
+              A Shopify order, a payment capture, a courier cash receipt, a refund, and a Meta CAPI signal are five distinct operational events. When they disagree, brands bleed margin silently.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-start space-x-4">
+              <div className="p-2.5 bg-red-50 text-red-600 rounded-lg shrink-0">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">COD Remittance Shortfalls &amp; Delays</h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Couriers mark orders delivered, but remittances are partially settled, missing, or delayed beyond contracted settlement grace windows.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-start space-x-4">
+              <div className="p-2.5 bg-amber-50 text-amber-600 rounded-lg shrink-0">
+                <Activity className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Tracking Identity &amp; Deduplication Failure</h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Browser pixels and Server CAPI emit differing <code className="text-brand-600 font-mono text-xs">event_id</code> values for the same purchase, artificially inflating ad platform conversions.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-start space-x-4">
+              <div className="p-2.5 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                <Scale className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Currency Minor-Unit Multipliers</h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Zero-decimal currencies (such as JPY) or 3-decimal currencies (such as KWD) divided or multiplied incorrectly by pixels produce 100x value distortion in ad reporting.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-start space-x-4">
+              <div className="p-2.5 bg-purple-50 text-purple-600 rounded-lg shrink-0">
+                <FileSpreadsheet className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Refund Leakage Beyond Order Totals</h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Support adjustments or manual gateway refunds exceed the original authorized checkout amount without clear compensatory logs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: How the Audit Engine Works */}
+        <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
+              <Cpu className="w-3.5 h-3.5 mr-1" /> Deterministic Architecture
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">4. How the Audit Engine Works</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base">
+              Commerce Truth Lab uses pure deterministic Python logic—not probabilistic black-box ML models. Every finding is verifiable, reproducible, and trace-linked.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+              <div className="font-mono text-xs font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded w-fit mb-3">
+                RULES CTL-001 to CTL-012
+              </div>
+              <h4 className="font-bold text-gray-900 mb-2">12 Discrete Audit Rules</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Rules inspect deduplication, missing signals, value mismatches, currency disparities, COD overdue status, shortfalls, overcollection, and refund leakage.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+              <div className="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded w-fit mb-3">
+                MINOR UNIT MATH
+              </div>
+              <h4 className="font-bold text-gray-900 mb-2">Integer Precision</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                All amounts are calculated as integer minor units (cents, fils) to completely eliminate floating-point truncation bugs across all currencies.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+              <div className="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded w-fit mb-3">
+                EVIDENCE CONTRACT
+              </div>
+              <h4 className="font-bold text-gray-900 mb-2">Structured Explanation</h4>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Each finding explicitly outputs: Observed anomaly, Source records, Assumptions applied, What is NOT proven, and the Recommended next step.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: What We Do NOT Claim - Anti-Hype Guarantee */}
         <section className="bg-amber-50 border-l-4 border-amber-500 p-6 sm:p-8 rounded-r-xl max-w-4xl mx-auto shadow-sm">
           <div className="flex items-start">
             <Scale className="w-6 h-6 text-amber-600 mr-4 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-bold text-amber-900 mb-2">Our Anti-Hype &amp; Non-Claim Principles</h3>
-              <p className="text-sm text-amber-800 mb-4">
+              <h3 className="text-lg font-bold text-amber-900 mb-2">5. Our Anti-Hype &amp; Non-Claim Principles</h3>
+              <p className="text-sm text-amber-800 mb-4 leading-relaxed">
                 Commerce Truth Lab is an investigative verification tool, not an accounting system, fraud detector, or automatic budget decision engine. We strictly pledge:
               </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-amber-900 list-disc list-inside">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-amber-900 list-disc list-inside">
                 <li>Never claim "recovered revenue" figures</li>
                 <li>Never claim "lost revenue" estimates</li>
-                <li>Never claim "fraud detection"</li>
+                <li>Never claim automated "fraud detection"</li>
                 <li>Never claim "causal ROAS improvements"</li>
-                <li>Never claim unverified client results</li>
-                <li>Never promise integrations that don't exist</li>
+                <li>Never claim unverified client results or fake case studies</li>
+                <li>Never promise live integrations that do not exist</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Current Limitations */}
-        <section className="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-xl border border-gray-200">
-          <div className="flex items-center space-x-3 mb-4">
+        {/* Section 6: Current Limitations */}
+        <section className="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-xl border border-gray-200 space-y-4">
+          <div className="flex items-center space-x-3 mb-2">
             <Lock className="w-5 h-5 text-gray-600" />
-            <h3 className="text-xl font-bold text-gray-900">Current Limitations (v1 Scope)</h3>
+            <h3 className="text-xl font-bold text-gray-900">6. Current Limitations (v1 Scope)</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <span className="font-semibold text-gray-900">1. Synthetic Demonstration Only:</span>
-              <p className="mt-1">The public demo operates entirely on deterministic synthetic records across 5 currencies (AED, USD, JPY, KWD, PKR). No live merchant connections are active.</p>
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <span className="font-semibold text-gray-900 block mb-1">1. Synthetic Public Demonstration:</span>
+              <p className="text-xs sm:text-sm">The public demo operates entirely on deterministic synthetic records across 7 currencies (AED, USD, JPY, KWD, PKR, GBP, EUR). No live merchant accounts are accessible without credentials.</p>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <span className="font-semibold text-gray-900">2. Deterministic Rule Evaluation:</span>
-              <p className="mt-1">Exceptions are flagged via reproducible Python rules (CTL-001 to CTL-012). It does not use probabilistic black-box ML models.</p>
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <span className="font-semibold text-gray-900 block mb-1">2. Deterministic Rule Boundaries:</span>
+              <p className="text-xs sm:text-sm">Exceptions reflect direct discrepancies between uploaded files (CTL-001 to CTL-012). It does not replace internal enterprise general ledgers or ERPs.</p>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <span className="font-semibold text-gray-900">3. Real Pilots Require Authorization:</span>
-              <p className="mt-1">Merchants wishing to audit real stores must execute a structured data authorization agreement and provide pseudonymized CSV exports.</p>
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <span className="font-semibold text-gray-900 block mb-1">3. Real Pilots Require Authorization:</span>
+              <p className="text-xs sm:text-sm">Merchants participating in real-world audits must sign a data-sharing agreement and provide pseudonymized CSV exports.</p>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <span className="font-semibold text-gray-900">4. Isolated Workspace Security:</span>
-              <p className="mt-1">Private workspaces remain protected to enforce multi-tenant isolation and safeguard merchant data governance.</p>
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <span className="font-semibold text-gray-900 block mb-1">4. Multi-Tenant Isolated Workspaces:</span>
+              <p className="text-xs sm:text-sm">Tenant data is strictly separated via composite primary keys and JWT authorization to prevent cross-merchant exposure.</p>
             </div>
           </div>
         </section>
 
-        {/* Commercial Offer & Call to Action */}
-        <section className="text-center bg-gradient-to-b from-brand-50 to-white p-8 sm:p-12 rounded-2xl border border-brand-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Shopify Measurement &amp; Funnel Truth Sprint</h2>
-          <p className="text-gray-600 max-w-xl mx-auto mb-8 text-sm sm:text-base">
-            Ready to audit your store's cash reconciliation, COD health, and advertising signals with real merchant data? Connect with the founder for an authorized pilot.
-          </p>
+        {/* Section 7: Synthetic Demo Explanation */}
+        <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
+              <Compass className="w-3.5 h-3.5 mr-1" /> Public Casebook
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">7. The Synthetic Demo Casebook</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base">
+              The public demo evaluates a deterministic test cohort of 12 multi-currency orders demonstrating both positive exceptions and verified healthy controls.
+            </p>
+          </div>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+            <div className="p-4 bg-gray-50 rounded-lg text-center border border-gray-100">
+              <div className="text-2xl font-bold text-gray-900 font-mono">12</div>
+              <div className="text-xs text-gray-500 mt-1">Multi-Currency Orders</div>
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg text-center border border-gray-100">
+              <div className="text-2xl font-bold text-red-600 font-mono">8</div>
+              <div className="text-xs text-gray-500 mt-1">Investigative Exceptions</div>
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg text-center border border-gray-100">
+              <div className="text-2xl font-bold text-emerald-600 font-mono">4</div>
+              <div className="text-xs text-gray-500 mt-1">Healthy Controls</div>
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg text-center border border-gray-100">
+              <div className="text-2xl font-bold text-brand-600 font-mono">7</div>
+              <div className="text-xs text-gray-500 mt-1">Currencies (AED, USD, JPY, KWD, PKR, GBP, EUR)</div>
+            </div>
+          </div>
+
+          <div className="text-center pt-2">
             <button 
               onClick={() => navigate('/demo')}
-              className="w-full sm:w-auto px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg shadow-sm transition-colors text-sm"
             >
-              Explore the Synthetic Demo
+              Open Interactive Demo (No Login)
+              <ArrowRight className="ml-2 w-4 h-4" />
             </button>
+          </div>
+        </section>
+
+        {/* Section 8: Pilot Process Overview */}
+        <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-8">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
+              <FileSpreadsheet className="w-3.5 h-3.5 mr-1" /> Merchant Sprint Flow
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">8. Pilot Process: Shopify Measurement &amp; Funnel Truth Sprint</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base">
+              A structured 4-step offline audit sprint designed for Shopify stores and agencies to eliminate measurement ambiguity without complex API integrations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
+              <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">1</div>
+              <h4 className="font-bold text-gray-900 text-sm">Authorization &amp; Scope</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Execute a mutual data-sharing authorization confirming audit date windows, courier grace terms, and deletion policies.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
+              <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">2</div>
+              <h4 className="font-bold text-gray-900 text-sm">Safe CSV Exports</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Export standard transaction files. Plaintext PII is intercepted and salted with SHA-256 into anonymous identifiers (<code className="font-mono text-xs">CUST_xxxx</code>).
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
+              <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">3</div>
+              <h4 className="font-bold text-gray-900 text-sm">Deterministic Ingestion</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Automated execution of rules CTL-001 through CTL-012 in an isolated PostgreSQL tenant workspace container.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
+              <div className="w-8 h-8 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-xs mb-3">4</div>
+              <h4 className="font-bold text-gray-900 text-sm">Truth Briefing Delivery</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Receive standalone HTML, JSON, and Markdown briefings with exact exception evidence and clear action items for your media or ops teams.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 9: Founder & Portfolio (Commercial Call to Action) */}
+        <section className="text-center bg-gradient-to-b from-brand-50 to-white p-8 sm:p-14 rounded-2xl border border-brand-100 shadow-sm space-y-6">
+          <div className="max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              9. Founder &amp; Pilot Engagement
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Built by <strong className="text-gray-900">Syed Muslim Shah</strong> as an evidence-first e-commerce audit engine. If you are preparing to change ad budgets or onboard a new performance agency, audit your measurement foundation first.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
             <a 
               href="https://syed-muslim-shah-portfolio.vercel.app/"
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-3.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-lg shadow-sm transition-colors flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow transition-all flex items-center justify-center text-base"
             >
-              Contact Syed Muslim Shah
+              Request a Shopify Measurement &amp; Funnel Truth Sprint
               <ExternalLink className="ml-2 w-4 h-4" />
             </a>
+            <button 
+              onClick={() => navigate('/demo')}
+              className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all text-base"
+            >
+              Explore the Synthetic Demo
+            </button>
+          </div>
+
+          <div className="pt-4 flex flex-wrap justify-center items-center gap-6 text-xs text-gray-500 font-medium">
+            <a 
+              href="https://syed-muslim-shah-portfolio.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-brand-600 underline"
+            >
+              Founder Portfolio
+            </a>
+            <span>&middot;</span>
+            <a 
+              href="https://github.com/muslim-rashdi-ecom/commerce-truth-lab"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-brand-600 underline"
+            >
+              GitHub Source Code
+            </a>
+            <span>&middot;</span>
+            <span>No Cookies / No Tracking</span>
           </div>
         </section>
       </main>

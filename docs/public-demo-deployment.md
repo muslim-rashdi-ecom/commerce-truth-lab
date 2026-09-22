@@ -1,157 +1,124 @@
-# Public Demo Deployment Guide — Commerce Truth Lab v1
+# Public Demo & Production Deployment Guide — Commerce Truth Lab v1
 
-This document outlines the step-by-step procedure for deploying **Commerce Truth Lab v1** to public hosting platforms (such as **Vercel** for the React frontend and **Render / Railway / Koyeb** for the FastAPI backend) with zero cost and zero paid API dependencies.
+This guide documents the architecture and deployment workflow for **Commerce Truth Lab v1** on **Vercel** with zero-login public demonstration, offline synthetic fallback, and secure multi-tenant PostgreSQL workspace connectivity.
 
-- **Public Production URL:** [https://commerce-truth-lab.vercel.app/demo](https://commerce-truth-lab.vercel.app/demo)
+- **Public Production URL:** [https://commerce-truth-lab.vercel.app](https://commerce-truth-lab.vercel.app)
+- **Public Demo Route:** [https://commerce-truth-lab.vercel.app/demo](https://commerce-truth-lab.vercel.app/demo)
 - **GitHub Repository:** [https://github.com/muslim-rashdi-ecom/commerce-truth-lab](https://github.com/muslim-rashdi-ecom/commerce-truth-lab)
 - **Founder Portfolio:** [https://syed-muslim-shah-portfolio.vercel.app/](https://syed-muslim-shah-portfolio.vercel.app/)
 
 ---
 
-## Architecture Overview for Deployment
+## Architecture Overview
 
-Commerce Truth Lab v1 uses a decoupled client-server architecture:
-- **Frontend (`apps/web`)**: Single-Page Application (SPA) built with React, TypeScript, and Vite. Static output in `dist/`.
-- **Backend API (`apps/api`)**: Python 3.12+ ASGI application using FastAPI, SQLAlchemy 2.0, and SQLite (`data/demo.db`) seeded with reproducible synthetic test vectors.
+Commerce Truth Lab v1 uses a monorepo structure deploying frontend static assets and serverless Python API endpoints via Vercel:
 
 ```
-       [ Client Browser ]
-               │
-        ┌──────┴──────┐
-        ▼             ▼
-   [ Vercel CDN ]  [ Backend Host: Render / Railway ]
-    apps/web/dist    apps/api (FastAPI + SQLite)
-        │                     ▲
-        └────── /api ─────────┘
+                      [ Client Browser ]
+                              │
+               ┌──────────────┴──────────────┐
+               ▼                             ▼
+       [ Vercel CDN ]              [ Vercel Serverless ]
+      Static React SPA           FastAPI (/api/index.py)
+   (Overview, Reconciliation,                │
+     Findings, Tracking,                     ▼
+     Client-Side Fallbacks)       [ PostgreSQL (Neon / Supabase) ]
+                                  (Auth, Tenant Isolation, Alembic)
 ```
+
+### Dual Operating Modes
+1. **Public Demonstration Mode (`/demo/*`):**
+   - 100% public, zero login required.
+   - Built-in client-side synthetic fallback adapter (`apps/web/src/api/client.ts`).
+   - If the backend API is unreachable or returns an empty dataset, the UI automatically and reliably serves the complete 12-order, 7-currency synthetic casebook with 8 findings and 4 healthy controls.
+   - HTML, JSON, and Markdown reports are generated deterministically directly in the browser via Blob URLs.
+2. **Private Merchant Workspace Mode (`/workspace/*`):**
+   - Protected behind JWT Bearer authentication (`/workspace/login`).
+   - Requires real PostgreSQL connection managed via Alembic migrations.
+   - Enforces cryptographic tenant isolation via composite primary keys `(workspace_id, id)`.
+   - Salted SHA-256 PII pseudonymization and CWE-1236 CSV formula injection defense.
 
 ---
 
-## 1. Required Environment Variables
+## 1. Environment Variables Configuration
 
-### Frontend (`apps/web`)
+### Production Settings (Vercel Project Settings -> Environment Variables)
 
-| Variable | Environment | Example Value | Description |
+| Variable | Target | Required in Prod? | Description / Example Value |
 |---|---|---|---|
-| `VITE_API_URL` | Production / Preview | `https://commerce-truth-lab-api.onrender.com` | Base URL of the deployed FastAPI backend. Omit in local development to use the default `http://localhost:8000` or the Vite dev proxy. |
-
-### Backend (`apps/api`)
-
-| Variable | Environment | Default Value | Description |
-|---|---|---|---|
-| `PORT` | Production | `8000` | Port assigned by hosting provider (Render/Railway sets this automatically). |
-| `DATABASE_URL` | Production | `sqlite+aiosqlite:///data/demo.db` | Path to SQLite database file. Automatically populated on startup by `seed.py`. |
-| `DEMO_MODE` | Production | `true` | Enforces synthetic data constraints and disables destructive mutations. |
-| `CORS_ORIGINS` | Production | `https://*.vercel.app,http://localhost:5173` | Allowed CORS origins for the frontend. |
+| `ENVIRONMENT` | API | **Yes** | Set to `production` (enforces PostgreSQL, rejects SQLite). |
+| `DATABASE_URL` | API | **Yes** | `postgresql+asyncpg://user:pass@host:5432/dbname` (PostgreSQL connection string). |
+| `JWT_SECRET_KEY` | API | **Yes** | Cryptographically random string (min 32 chars) for signing session tokens. |
+| `PSEUDONYMIZATION_SALT` | API | **Yes** | Cryptographically random salt (min 16 chars) for SHA-256 PII hashing. |
+| `FRONTEND_ORIGIN` | API | **Yes** | `https://commerce-truth-lab.vercel.app` (Strict CORS origin; no wildcard). |
+| `VITE_API_URL` | Web | Optional | Optional custom API base URL. If empty, the frontend uses relative `/api` paths routed to `/api/index.py`. |
 
 ---
 
 ## 2. Public vs. Authenticated Route Matrix
 
-| Route Path | Type | Access Level | Description |
-|---|---|---|---|
-| `/` | Frontend | **Public (No Login)** | Marketing landing page with mission, target users, anti-hype guarantee, limitations, and founder links. |
-| `/demo` | Frontend | **Public (No Login)** | Direct entry to the public synthetic demonstration. |
-| `/demo/overview` | Frontend | **Public (No Login)** | Summary dashboard calculating metrics from the 12 synthetic orders. |
-| `/demo/findings` | Frontend | **Public (No Login)** | Complete list of flagged exceptions and healthy controls with rule filters. |
-| `/demo/reconciliation` | Frontend | **Public (No Login)** | Order-level cross-system comparison (order, payment, courier COD, refund, signals). |
-| `/demo/tracking-health`| Frontend | **Public (No Login)** | Ad platform signal verification table with duplicate identity and mismatch flags. |
-| `/demo/reports` | Frontend | **Public (No Login)** | Export interface for HTML, JSON, and Markdown audit reports. |
-| `/workspace/*` | Frontend | **Protected** | Displays merchant authorization and security requirements screen. |
-| `/app/*` | Frontend | **Protected** | Enforces pilot authorization prerequisites before accessing real data. |
-| `/api/health` | Backend API | **Public** | System status, version info, and demo mode indicator. |
-| `/api/demo/*` | Backend API | **Public** | All read-only synthetic demonstration endpoints. |
-| `/api/upload` | Backend API | **Public** | CSV header detection and column mapping simulation. |
+| Route Path | Access Level | Description |
+|---|---|---|
+| `/` | **Public** | Marketing & positioning landing page (9 anti-hype sections, pilot CTAs). |
+| `/demo` | **Public** | Direct entry redirecting to synthetic demo overview. |
+| `/demo/overview` | **Public** | KPI metrics, registered data sources table, and recent findings. |
+| `/demo/findings` | **Public** | Filterable list of 8 investigative exceptions and 4 healthy controls. |
+| `/demo/reconciliation` | **Public** | Order lifecycle explorer (Order, Gateway, Courier COD, Refund, Signals). |
+| `/demo/tracking-health` | **Public** | Meta Pixel vs CAPI tracking signals comparison with duplicate identity review. |
+| `/demo/reports` | **Public** | Export interface for standalone HTML, machine-readable JSON, and Markdown. |
+| `/workspace/login` | **Public** | Merchant sign-in and registration portal. |
+| `/workspace/*` | **Protected (JWT)** | Authenticated multi-tenant merchant portal (CSV upload, audit run, audit logs). |
+| `/api/health` | **Public** | Health status check returning version and operational mode. |
+| `/api/demo/*` | **Public** | Backend synthetic endpoints (with client-side fallback guarantee). |
 
 ---
 
-## 3. Frontend Deployment (Vercel)
+## 3. Vercel Monorepo Deployment Setup
 
-### Option A: Via Vercel Web Dashboard (Recommended)
+The repository contains `apps/web/vercel.json` configured for a unified monorepo deployment:
 
-1. Push the code to GitHub:
-   ```bash
-   git remote add origin https://github.com/muslim-rashdi-ecom/commerce-truth-lab.git
-   git push -u origin main
-   ```
-2. In the [Vercel Dashboard](https://vercel.com/new), select **Import Git Repository**.
-3. Configure project settings:
-   - **Framework Preset**: `Vite`
-   - **Root Directory**: `apps/web`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-4. Add Environment Variable:
-   - `VITE_API_URL`: Your deployed backend URL (e.g., `https://commerce-truth-lab-api.onrender.com`).
-5. Click **Deploy**.
-
-### Option B: Via Vercel CLI
-
-```bash
-cd apps/web
-npm install -g vercel
-vercel --prod
-```
-
-### SPA Routing Configuration (`vercel.json`)
-To ensure direct links to `/demo/reconciliation` or `/demo/findings` work without 404s, `apps/web/vercel.json` is provided:
 ```json
 {
+  "buildCommand": "python prepare_api.py && npm run build && python ../api/production_migrate.py",
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
 ```
 
----
+### Build Pipeline Steps:
+1. `python prepare_api.py`: Copies backend source files (`apps/api/`, `packages/ctl_engine/`, `packages/shared/`) into `apps/web/api_src` and configures the entry point `apps/web/api/index.py`.
+2. `npm run build`: Executes TypeScript compilation (`tsc`) and Vite static asset bundling into `apps/web/dist`.
+3. `python ../api/production_migrate.py`: Runs Alembic migrations (`alembic upgrade head`) against the production PostgreSQL database.
 
-## 4. Backend Deployment (Render / Railway / Koyeb Free Tier)
-
-### Deploying to Render.com (Web Service)
-
-1. In the [Render Dashboard](https://dashboard.render.com), click **New +** -> **Web Service**.
-2. Connect your GitHub repository.
-3. Configure the service:
-   - **Name**: `commerce-truth-lab-api`
-   - **Environment**: `Python 3`
-   - **Region**: Closest to your users (e.g., Frankfurt or Oregon)
-   - **Branch**: `main`
-   - **Root Directory**: `commerce-truth-lab-v1`
-   - **Build Command**:
-     ```bash
-     pip install -r apps/api/requirements.txt && pip install -r packages/ctl_engine/requirements.txt && PYTHONPATH=packages:apps/api python apps/api/seed.py
-     ```
-   - **Start Command**:
-     ```bash
-     PYTHONPATH=packages:apps/api uvicorn apps.api.main:app --host 0.0.0.0 --port $PORT
-     ```
-4. Environment Variables:
-   - `DEMO_MODE` = `true`
-5. Click **Create Web Service**.
-
-### Alternative: Docker Deployment
-
-The repository includes a production `Dockerfile` in `apps/api/Dockerfile`. To build and run with Docker:
-```bash
-docker build -t commerce-truth-lab-api -f apps/api/Dockerfile .
-docker run -p 8000:8000 -e DEMO_MODE=true commerce-truth-lab-api
-```
+### Deployment Instructions:
+1. In the [Vercel Dashboard](https://vercel.com/new), import the GitHub repository:  
+   `https://github.com/muslim-rashdi-ecom/commerce-truth-lab.git`
+2. Configure settings:
+   - **Root Directory:** `apps/web`
+   - **Framework Preset:** `Vite`
+   - **Build Command:** (Leave default, detected from `vercel.json`)
+   - **Output Directory:** `dist`
+3. Add the production environment variables (`DATABASE_URL`, `JWT_SECRET_KEY`, `PSEUDONYMIZATION_SALT`, `FRONTEND_ORIGIN`, `ENVIRONMENT`).
+4. Click **Deploy**.
 
 ---
 
-## 5. Post-Deployment Verification Checklist
+## 4. Post-Deployment Verification Checklist
 
-Once deployed, run through these verification steps to confirm everything operates as expected:
+After deployment finishes, run through these checks:
 
-- [ ] **1. Public Access**: Open `https://<your-app>.vercel.app/demo` in an Incognito window. The demo must render immediately without prompting for login.
-- [ ] **2. Synthetic Label**: Verify the banner `“SYNTHETIC DEMO — NOT REAL BUSINESS DATA”` appears prominently across all `/demo/*` pages.
-- [ ] **3. Metric Verification**: On `/demo/overview`, check that the cards calculate:
+- [ ] **1. Public Access Without Login:** Navigate to `https://<your-app>.vercel.app/demo`. The audit dashboard renders immediately without login.
+- [ ] **2. Prominent Synthetic Notice:** Verify the yellow banner `“SYNTHETIC DEMO — NOT REAL BUSINESS DATA”` appears across `/demo/*`.
+- [ ] **3. Metric Totals:** Verify `/demo/overview` displays:
   - Orders Reviewed: `12`
   - Findings: `8`
   - Affected Orders: `8`
   - Data Completeness: `100.0%`
-- [ ] **4. Responsive Layout**: Resize the browser to mobile viewport (375px width). Verify the collapsible hamburger navigation menu works and tables scroll smoothly.
-- [ ] **5. Order Reconciliation Detail**: Navigate to `/demo/reconciliation`, click `ORD-001`, and switch between Order, Courier COD, Payment, and Signals tabs. Verify the timeline loads without errors.
-- [ ] **6. Report Downloads**: On `/demo/reports`, click **Download JSON** and **Download Markdown**. Confirm both files download with synthetic disclaimers intact.
-- [ ] **7. Protected Route Enforcement**: Visit `https://<your-app>.vercel.app/workspace`. Confirm the private workspace notice renders and explains authorization requirements.
-- [ ] **8. Founder Portfolio & GitHub Links**: Check the footer and landing page links to Syed Muslim Shah's portfolio (`https://syed-muslim-shah-portfolio.vercel.app/`) and the GitHub repository.
+  - Currencies evaluated: `7` (AED, USD, JPY, KWD, PKR, GBP, EUR)
+- [ ] **4. Responsive Layout:** Check desktop (1440px), tablet (768px), and mobile (375px) viewports. Verify sidebar navigation collapses into a hamburger menu.
+- [ ] **5. Order Reconciliation Explorer:** Navigate to `/demo/reconciliation`, select `ORD-001`, and click through Order, Payment, Courier COD, and Signals tabs. Verify the timeline loads without errors.
+- [ ] **6. Report Generation:** On `/demo/reports`, click **Open in New Tab** (HTML), **Download JSON**, and **Download Markdown**. Confirm all three work without network failure.
+- [ ] **7. Protected Workspace Gate:** Visit `/workspace` without a token. Verify you are prompted to sign in at `/workspace/login`.
+- [ ] **8. Portfolio & GitHub Links:** Verify footer and landing page links direct to Syed Muslim Shah's portfolio (`https://syed-muslim-shah-portfolio.vercel.app/`) and the GitHub repository.

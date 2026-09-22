@@ -121,7 +121,7 @@ This neutralizes command execution or DDE injection when exported reports or dat
 |---|---|---|---|
 | `/` | Public | Marketing landing page | No auth required |
 | `/demo` | Public | Deterministic synthetic dataset only | No auth required; clearly labeled |
-| `/login` | Public | Authentication endpoint | Secure token issuance |
+| `/workspace/login` | Public | Authentication portal | Secure token issuance |
 | `/workspace/*` | **Protected** | Real merchant PostgreSQL database | Strict JWT Bearer auth + Tenant isolation |
 
 ---

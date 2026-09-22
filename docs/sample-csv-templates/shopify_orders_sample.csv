@@ -1,0 +1,6 @@
+order_id,created_at,currency,total_amount,payment_method,fulfillment_status,customer_identifier
+ORD-PILOT-001,2026-09-15T10:30:00Z,USD,120.00,prepaid,delivered,CUST_a1b2c3d4e5f60001
+ORD-PILOT-002,2026-09-15T11:15:00Z,AED,250.00,COD,delivered,CUST_b2c3d4e5f6a70002
+ORD-PILOT-003,2026-09-16T14:20:00Z,USD,85.50,prepaid,refunded,CUST_c3d4e5f6a7b80003
+ORD-PILOT-004,2026-09-17T09:05:00Z,JPY,15000,prepaid,delivered,CUST_d4e5f6a7b8c90004
+ORD-PILOT-005,2026-09-18T16:45:00Z,KWD,18.500,prepaid,delivered,CUST_e5f6a7b8c9d00005

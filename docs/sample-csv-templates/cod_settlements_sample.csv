@@ -1,0 +1,4 @@
+settlement_id,order_id,courier_name,delivered_at,collected_amount,settled_amount,collection_currency,settlement_status,grace_days
+SET-PILOT-001,ORD-PILOT-002,DHL Express,2026-09-17T11:00:00Z,250.00,250.00,AED,settled,7
+SET-PILOT-002,ORD-PILOT-006,Aramex,2026-09-12T14:30:00Z,180.00,,AED,pending,7
+SET-PILOT-003,ORD-PILOT-007,FedEx,2026-09-14T09:15:00Z,400.00,350.00,AED,settled,7

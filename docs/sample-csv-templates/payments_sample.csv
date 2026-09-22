@@ -1,0 +1,5 @@
+payment_id,order_id,captured_at,currency,amount,gateway,status
+PAY-PILOT-001,ORD-PILOT-001,2026-09-15T10:31:00Z,USD,120.00,stripe,captured
+PAY-PILOT-003,ORD-PILOT-003,2026-09-16T14:21:00Z,USD,85.50,shopify_payments,captured
+PAY-PILOT-004,ORD-PILOT-004,2026-09-17T09:06:00Z,JPY,15000,komoju,captured
+PAY-PILOT-005,ORD-PILOT-005,2026-09-18T16:46:00Z,KWD,18.500,knet,captured

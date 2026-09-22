@@ -2,21 +2,16 @@ import asyncio
 import os
 import datetime
 import uuid
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from database import Base, DB_PATH, DATABASE_URL
+from database import Base, SessionLocal, engine
 from models import Order, Payment, CourierSettlement, Refund, PurchaseSignal, DataSource, Finding
 
-async def seed_db():
-    if os.path.exists(DB_PATH):
-        os.remove(DB_PATH)
-    
-    engine = create_async_engine(DATABASE_URL, echo=False)
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+def seed_db():
+    with engine.begin() as conn:
+        Base.metadata.create_all(conn)
         
-    SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
-    
-    async with SessionLocal() as db:
+    with SessionLocal() as db:
+        if db.query(Order).first():
+            return
         now = datetime.datetime.now(datetime.timezone.utc)
         def d(days_ago): return (now - datetime.timedelta(days=days_ago)).isoformat()
         
@@ -80,8 +75,8 @@ async def seed_db():
         db.add(PurchaseSignal(id="SIG-012", order_id="ORD-012", signal_type="purchase", platform="meta", event_name="Purchase", event_id="E-012", reported_at=d(1), currency="USD", value_minor=9000, consent_granted=True, pixel_id="P1"))
         db.add(Finding(id="F-012", rule_id="CTL-004", rule_name="Currency Mismatch", category="tracking", severity="Medium", order_id="ORD-012", observed="Signal USD, Order EUR", source_records={}, assumptions={}, not_proven={}, next_step="Fix pixel currency", owner="system", amount_minor=0, amount_currency="EUR", confidence="High", explanation="Mismatched currency", recommended_action="Update tracking code", is_healthy_control=False))
 
-        await db.commit()
+        db.commit()
         print("Database seeded with synthetic data.")
 
 if __name__ == "__main__":
-    asyncio.run(seed_db())
+    seed_db()

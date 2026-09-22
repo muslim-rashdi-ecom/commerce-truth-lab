@@ -45,7 +45,9 @@ export const api = {
 
   getDemoWorkspace: async (): Promise<WorkspaceMetadata> => {
     try {
-      return await apiFetch<WorkspaceMetadata>('/api/demo/workspace');
+      const res = await apiFetch<WorkspaceMetadata>('/api/demo/workspace');
+      if (res && res.id) return res;
+      return SYNTHETIC_WORKSPACE;
     } catch {
       return SYNTHETIC_WORKSPACE;
     }
@@ -55,11 +57,18 @@ export const api = {
     try {
       const qs = params ? new URLSearchParams(params).toString() : '';
       const res = await apiFetch<PaginatedFindings | FindingResult[]>(`/api/demo/findings${qs ? '?' + qs : ''}`);
-      if (Array.isArray(res)) return res;
-      if (res && Array.isArray((res as PaginatedFindings).items)) {
+      if (Array.isArray(res) && res.length > 0) return res;
+      if (res && Array.isArray((res as PaginatedFindings).items) && (res as PaginatedFindings).items.length > 0) {
         return (res as PaginatedFindings).items;
       }
-      return SYNTHETIC_FINDINGS;
+      let filtered = [...SYNTHETIC_FINDINGS];
+      if (params?.severity) {
+        filtered = filtered.filter(f => f.severity.toLowerCase() === params.severity.toLowerCase());
+      }
+      if (params?.category) {
+        filtered = filtered.filter(f => f.category.toLowerCase() === params.category.toLowerCase());
+      }
+      return filtered;
     } catch {
       let filtered = [...SYNTHETIC_FINDINGS];
       if (params?.severity) {
@@ -74,7 +83,9 @@ export const api = {
 
   getDemoHealthyControls: async (): Promise<FindingResult[]> => {
     try {
-      return await apiFetch<FindingResult[]>('/api/demo/healthy-controls');
+      const res = await apiFetch<FindingResult[]>('/api/demo/healthy-controls');
+      if (Array.isArray(res) && res.length > 0) return res;
+      return SYNTHETIC_HEALTHY_CONTROLS;
     } catch {
       return SYNTHETIC_HEALTHY_CONTROLS;
     }
@@ -82,7 +93,9 @@ export const api = {
 
   getDemoOrders: async (): Promise<Order[]> => {
     try {
-      return await apiFetch<Order[]>('/api/demo/orders');
+      const res = await apiFetch<Order[]>('/api/demo/orders');
+      if (Array.isArray(res) && res.length > 0) return res;
+      return SYNTHETIC_ORDERS;
     } catch {
       return SYNTHETIC_ORDERS;
     }
@@ -90,7 +103,11 @@ export const api = {
 
   getDemoOrder: async (id: string): Promise<Order> => {
     try {
-      return await apiFetch<Order>(`/api/demo/orders/${id}`);
+      const res = await apiFetch<Order>(`/api/demo/orders/${id}`);
+      if (res && res.id) return res;
+      const found = SYNTHETIC_ORDERS.find(o => o.id === id);
+      if (!found) throw new Error(`Order ${id} not found`);
+      return found;
     } catch {
       const found = SYNTHETIC_ORDERS.find(o => o.id === id);
       if (!found) throw new Error(`Order ${id} not found`);
@@ -100,7 +117,9 @@ export const api = {
 
   getDemoReconciliation: async (orderId: string): Promise<ReconciliationView> => {
     try {
-      return await apiFetch<ReconciliationView>(`/api/demo/reconciliation/${orderId}`);
+      const res = await apiFetch<ReconciliationView>(`/api/demo/reconciliation/${orderId}`);
+      if (res && res.order) return res;
+      return getSyntheticReconciliation(orderId);
     } catch {
       return getSyntheticReconciliation(orderId);
     }
@@ -108,7 +127,9 @@ export const api = {
 
   getDemoTrackingHealth: async (): Promise<TrackingHealthResponse> => {
     try {
-      return await apiFetch<TrackingHealthResponse>('/api/demo/tracking-health');
+      const res = await apiFetch<TrackingHealthResponse>('/api/demo/tracking-health');
+      if (res && res.summary) return res;
+      return SYNTHETIC_TRACKING_HEALTH;
     } catch {
       return SYNTHETIC_TRACKING_HEALTH;
     }
