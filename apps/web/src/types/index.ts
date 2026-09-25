@@ -276,3 +276,56 @@ export interface AuditLogEntry {
   timestamp: string;
 }
 
+export type DatasetClassification = 
+  | 'PUBLIC_BENCHMARK'
+  | 'PUBLIC_PLUS_SYNTHETIC_COMPOSITE'
+  | 'SYNTHETIC_DEMO'
+  | 'REAL_AUTHORIZED_PILOT';
+
+export interface BenchmarkProvenance {
+  dataset_name: string;
+  source_url: string;
+  license: string;
+  citation: string;
+  download_date: string;
+  fields_used: string[];
+  fields_unavailable: string[];
+  transformations_performed: string[];
+  is_synthetic_composite: boolean;
+  synthetic_companion_description?: string | null;
+  what_it_can_prove: string[];
+  what_it_cannot_prove: string[];
+}
+
+export interface BenchmarkCaseSummary {
+  id: string;
+  title: string;
+  description: string;
+  classification: DatasetClassification;
+  category: string;
+  dataset_name: string;
+  license: string;
+  order_count: number;
+  record_count: number;
+  findings_count: number;
+  healthy_controls_count: number;
+  is_synthetic_composite: boolean;
+  synthetic_warning?: string | null;
+}
+
+export interface BenchmarkCaseDetail {
+  id: string;
+  title: string;
+  description: string;
+  classification: DatasetClassification;
+  category: string;
+  provenance: BenchmarkProvenance;
+  order_count: number;
+  record_count: number;
+  findings: FindingResult[];
+  healthy_controls: FindingResult[];
+  warnings: string[];
+  non_claims: string[];
+  reproduction_command: string;
+}
+

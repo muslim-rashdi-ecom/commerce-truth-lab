@@ -183,3 +183,57 @@ class AuditRunResult(BaseModel):
     total_orders: int
     evaluated_orders: int
     skipped_orders_insufficient_data: int
+
+
+class DatasetClassification(str, Enum):
+    PUBLIC_BENCHMARK = "PUBLIC_BENCHMARK"
+    PUBLIC_PLUS_SYNTHETIC_COMPOSITE = "PUBLIC_PLUS_SYNTHETIC_COMPOSITE"
+    SYNTHETIC_DEMO = "SYNTHETIC_DEMO"
+    REAL_AUTHORIZED_PILOT = "REAL_AUTHORIZED_PILOT"
+
+
+class BenchmarkProvenance(BaseModel):
+    dataset_name: str
+    source_url: str
+    license: str
+    citation: str
+    download_date: str
+    fields_used: List[str]
+    fields_unavailable: List[str]
+    transformations_performed: List[str]
+    is_synthetic_composite: bool = False
+    synthetic_companion_description: Optional[str] = None
+    what_it_can_prove: List[str]
+    what_it_cannot_prove: List[str]
+
+
+class BenchmarkCaseSummary(BaseModel):
+    id: str
+    title: str
+    description: str
+    classification: DatasetClassification
+    category: str
+    dataset_name: str
+    license: str
+    order_count: int
+    record_count: int
+    findings_count: int
+    healthy_controls_count: int
+    is_synthetic_composite: bool = False
+    synthetic_warning: Optional[str] = None
+
+
+class BenchmarkCaseDetail(BaseModel):
+    id: str
+    title: str
+    description: str
+    classification: DatasetClassification
+    category: str
+    provenance: BenchmarkProvenance
+    order_count: int
+    record_count: int
+    findings: List[FindingResult]
+    healthy_controls: List[FindingResult]
+    warnings: List[str]
+    non_claims: List[str]
+    reproduction_command: str

@@ -10,6 +10,7 @@ import { FindingsPage } from './pages/demo/FindingsPage';
 import { ReconciliationPage } from './pages/demo/ReconciliationPage';
 import { TrackingHealthPage } from './pages/demo/TrackingHealthPage';
 import { ReportsPage } from './pages/demo/ReportsPage';
+import { PublicBenchmarksPage } from './pages/benchmarks/PublicBenchmarksPage';
 
 import { WorkspaceLoginPage } from './pages/workspace/WorkspaceLoginPage';
 import { WorkspaceLayout } from './pages/workspace/WorkspaceLayout';
@@ -36,6 +37,10 @@ export const App: React.FC = () => {
           <Routes>
             {/* Public Landing Page */}
             <Route path="/" element={<LandingPage />} />
+
+            {/* Public Benchmark Track Routes */}
+            <Route path="/benchmarks" element={<PublicBenchmarksPage />} />
+            <Route path="/benchmarks/:id" element={<PublicBenchmarksPage />} />
 
             {/* Public Synthetic Demo Routes - No Login Required */}
             <Route element={<Layout />}>

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from config import ENVIRONMENT, get_allowed_cors_origins
-from routers import health, upload, demo, auth, workspace, merchant_upload, merchant_audit
+from routers import health, upload, demo, auth, workspace, merchant_upload, merchant_audit, benchmarks
 from database import Base, engine
 
 
@@ -38,4 +38,4 @@ app.include_router(auth.router)
 app.include_router(workspace.router)
 app.include_router(merchant_upload.router)
 app.include_router(merchant_audit.router)
-
+app.include_router(benchmarks.router)

@@ -11,8 +11,15 @@ import {
   StageUploadResponse,
   CommitUploadResponse,
   RunAuditResponse,
-  AuditLogEntry
+  AuditLogEntry,
+  BenchmarkCaseSummary,
+  BenchmarkCaseDetail
 } from '../types';
+
+import {
+  PUBLIC_BENCHMARK_SUMMARIES,
+  getPublicBenchmarkDetail
+} from '../data/benchmarkData';
 
 import {
   SYNTHETIC_WORKSPACE,
@@ -202,6 +209,56 @@ export const api = {
       };
     }
   },
+
+  getBenchmarks: async (): Promise<BenchmarkCaseSummary[]> => {
+    return benchmarkApi.getBenchmarks();
+  },
+
+  getBenchmarkDetail: async (caseId: string): Promise<BenchmarkCaseDetail> => {
+    return benchmarkApi.getBenchmarkDetail(caseId);
+  },
+};
+
+export const benchmarkApi = {
+  getBenchmarks: async (): Promise<BenchmarkCaseSummary[]> => {
+    try {
+      const res = await apiFetch<BenchmarkCaseSummary[]>('/api/benchmarks');
+      if (Array.isArray(res) && res.length > 0) return res;
+      return PUBLIC_BENCHMARK_SUMMARIES;
+    } catch {
+      return PUBLIC_BENCHMARK_SUMMARIES;
+    }
+  },
+
+  getBenchmarkDetail: async (caseId: string): Promise<BenchmarkCaseDetail> => {
+    try {
+      const res = await apiFetch<BenchmarkCaseDetail>(`/api/benchmarks/${caseId}`);
+      if (res && res.id) return res;
+      const fallback = getPublicBenchmarkDetail(caseId);
+      if (!fallback) throw new Error(`Benchmark case ${caseId} not found`);
+      return fallback;
+    } catch {
+      const fallback = getPublicBenchmarkDetail(caseId);
+      if (!fallback) throw new Error(`Benchmark case ${caseId} not found`);
+      return fallback;
+    }
+  },
+
+  getBenchmarkReportDownloadUrl: (caseId: string, format: 'html' | 'markdown' | 'json'): string => {
+    if (API_BASE) {
+      return `${API_BASE}/api/benchmarks/${caseId}/reports/${format}`;
+    }
+    const benchmark = getPublicBenchmarkDetail(caseId);
+    if (!benchmark) return '#';
+    if (format === 'json') {
+      const blob = new Blob([JSON.stringify(benchmark, null, 2)], { type: 'application/json' });
+      return URL.createObjectURL(blob);
+    }
+    const content = format === 'html' ? generateBenchmarkHtmlReport(benchmark) : generateBenchmarkMarkdownReport(benchmark);
+    const mime = format === 'html' ? 'text/html' : 'text/markdown';
+    const blob = new Blob([content], { type: mime });
+    return URL.createObjectURL(blob);
+  }
 };
 
 function generateStaticHtmlReport(): string {
@@ -301,6 +358,197 @@ ${list}
 4. No recovered revenue or fraud is claimed.
 
 *Report generated deterministically by Commerce Truth Lab v1.*
+`;
+}
+
+function generateBenchmarkHtmlReport(b: BenchmarkCaseDetail): string {
+  const rows = b.findings.map(f => `
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-family: monospace; font-weight: bold; color: #b91c1c;">${f.rule_id}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: 600;">${f.rule_name}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-family: monospace;">${f.order_id || 'N/A'}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${f.observed}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; color: #4b5563;">${f.next_step}</td>
+    </tr>
+  `).join('');
+
+  const healthyRows = b.healthy_controls.map(h => `
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-family: monospace; font-weight: bold; color: #047857;">${h.rule_id}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: 600;">${h.rule_name}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-family: monospace;">${h.order_id || 'N/A'}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${h.observed}</td>
+      <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; color: #047857;">Verified Clean</td>
+    </tr>
+  `).join('');
+
+  const compositeBanner = b.provenance.is_synthetic_composite ? `
+    <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 8px; padding: 16px; margin: 20px 0; color: #991b1b;">
+      <strong style="font-size: 14px; text-transform: uppercase;">⚠️ Public-Plus-Synthetic Composite Warning</strong>
+      <p style="margin: 8px 0 0 0; font-size: 13px;">${b.provenance.synthetic_companion_description || 'Some source tables in this benchmark were generated for testing because the public dataset does not contain payment, refund, COD, or tracking-signal records.'}</p>
+    </div>
+  ` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Commerce Truth Lab — Public Benchmark Report: ${b.title}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; margin: 0; padding: 40px; color: #111827; background: #f9fafb; }
+    .container { max-width: 960px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .badge { display: inline-block; background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: bold; border: 1px solid #bfdbfe; margin-bottom: 16px; }
+    h1 { margin-top: 0; font-size: 26px; color: #111827; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; text-align: left; font-size: 13px; }
+    th { background: #f3f4f6; padding: 10px; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; }
+    td { vertical-align: top; }
+    .provenance-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 20px 0; font-size: 13px; }
+    .non-claims-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px; margin: 20px 0; font-size: 13px; color: #1e40af; }
+    footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">${b.classification.replace(/_/g, ' ')}</div>
+    <h1>${b.title}</h1>
+    <p>${b.description}</p>
+    ${compositeBanner}
+
+    <div class="provenance-box">
+      <h3 style="margin-top:0;">Dataset Provenance & Legal Attribution</h3>
+      <p><strong>Dataset Name:</strong> ${b.provenance.dataset_name}</p>
+      <p><strong>License:</strong> ${b.provenance.license}</p>
+      <p><strong>Citation:</strong> ${b.provenance.citation}</p>
+      <p><strong>Source URL:</strong> <a href="${b.provenance.source_url}" target="_blank">${b.provenance.source_url}</a></p>
+      <p><strong>Fields Used:</strong> ${b.provenance.fields_used.join(', ')}</p>
+      <p><strong>Fields Unavailable:</strong> ${b.provenance.fields_unavailable.join(', ')}</p>
+    </div>
+
+    <div class="non-claims-box">
+      <h3 style="margin-top:0;">Non-Claims & Anti-Hype Governance</h3>
+      <ul style="margin:0; padding-left: 20px;">
+        ${b.non_claims.map(nc => `<li>${nc}</li>`).join('')}
+      </ul>
+    </div>
+
+    <h2>Identified Exceptions (${b.findings.length})</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Name</th>
+          <th>Order / Record</th>
+          <th>Observation</th>
+          <th>Next Verification Step</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+
+    <h2>Healthy Controls (${b.healthy_controls.length})</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Name</th>
+          <th>Order / Record</th>
+          <th>Observation</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${healthyRows}
+      </tbody>
+    </table>
+
+    <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px; margin-top: 24px;">
+      <strong>Reproduction Command:</strong> ${b.reproduction_command}
+    </div>
+
+    <footer>
+      Commerce Truth Lab v1 &middot; Public Benchmark Track &middot; Built by Syed Muslim Shah &middot; <a href="https://syed-muslim-shah-portfolio.vercel.app/" target="_blank">Portfolio</a>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
+
+function generateBenchmarkMarkdownReport(b: BenchmarkCaseDetail): string {
+  const compositeWarning = b.provenance.is_synthetic_composite ? `
+> ⚠️ **PUBLIC-PLUS-SYNTHETIC COMPOSITE WARNING:**  
+> ${b.provenance.synthetic_companion_description || 'Some source tables in this benchmark were generated for testing because the public dataset does not contain payment, refund, COD, or tracking-signal records.'}
+` : '';
+
+  const findingsList = b.findings.map(f => 
+    `| ${f.rule_id} | ${f.rule_name} | ${f.order_id || 'N/A'} | ${f.severity} | ${f.observed} | ${f.next_step} |`
+  ).join('\n');
+
+  const healthyList = b.healthy_controls.map(h => 
+    `| ${h.rule_id} | ${h.rule_name} | ${h.order_id || 'N/A'} | info | ${h.observed} | Verified Clean |`
+  ).join('\n');
+
+  return `# ${b.title}
+
+> **Classification:** ${b.classification}  
+> **Dataset:** ${b.provenance.dataset_name}  
+> **License:** ${b.provenance.license}  
+> **Citation:** ${b.provenance.citation}  
+${compositeWarning}
+
+---
+
+## 1. Executive Summary
+- **Classification:** \`${b.classification}\`
+- **Orders / Records Evaluated:** ${b.order_count}
+- **Total Source Rows:** ${b.record_count}
+- **Exceptions Identified:** ${b.findings.length}
+- **Healthy Controls Verified:** ${b.healthy_controls.length}
+
+---
+
+## 2. Non-Claims & Boundaries
+${b.non_claims.map(nc => `- ${nc}`).join('\n')}
+
+---
+
+## 3. Data Lineage & Provenance
+- **Source URL:** ${b.provenance.source_url}
+- **Download Date:** ${b.provenance.download_date}
+- **Fields Used:** ${b.provenance.fields_used.join(', ')}
+- **Fields Unavailable:** ${b.provenance.fields_unavailable.join(', ')}
+- **Transformations:**  
+${b.provenance.transformations_performed.map(t => `  - ${t}`).join('\n')}
+
+### What This Benchmark Can Prove
+${b.provenance.what_it_can_prove.map(p => `- ${p}`).join('\n')}
+
+### What This Benchmark Cannot Prove
+${b.provenance.what_it_cannot_prove.map(p => `- ${p}`).join('\n')}
+
+---
+
+## 4. Exceptions Identified
+| Rule ID | Rule Name | Order / Record | Severity | Observation | Next Step |
+|---|---|---|---|---|---|
+${findingsList}
+
+---
+
+## 5. Healthy Controls Verified
+| Rule ID | Rule Name | Order / Record | Severity | Observation | Next Step |
+|---|---|---|---|---|---|
+${healthyList}
+
+---
+
+## 6. Reproduction
+\`\`\`bash
+${b.reproduction_command}
+\`\`\`
+
+*Report generated deterministically by Commerce Truth Lab v1 Public Benchmark Track.*
 `;
 }
 
