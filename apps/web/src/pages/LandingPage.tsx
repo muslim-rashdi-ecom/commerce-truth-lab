@@ -28,12 +28,12 @@ export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
+    <div className="landing-shell min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       {/* Top Banner */}
       <SyntheticBadge />
 
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="site-header bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
             <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
@@ -81,7 +81,7 @@ export const LandingPage: React.FC = () => {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-24">
         {/* Section 0: Hero Section */}
-        <section className="text-center max-w-4xl mx-auto pt-4 sm:pt-8">
+        <section className="hero-section text-center max-w-4xl mx-auto pt-4 sm:pt-8 px-4 sm:px-8 pb-10">
           <div className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 mb-6 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 mr-1.5" />
             Evidence-First E-Commerce Audit Engine
