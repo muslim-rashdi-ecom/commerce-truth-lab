@@ -13,7 +13,7 @@ interface MetricCardProps {
 
 export const MetricCard: React.FC<MetricCardProps> = ({ title, value, subtitle, icon, trend }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col">
+    <div className="metric-card bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col">
       <div className="flex items-start justify-between">
         <h3 className="text-sm font-medium text-gray-500">{title}</h3>
         {icon && <div className="text-gray-400">{icon}</div>}

@@ -19,7 +19,11 @@ import {
   CheckCircle2,
   Building2,
   FileText,
-  Database
+  Database,
+  BarChart3,
+  WalletCards,
+  Check,
+  ChevronRight
 } from 'lucide-react';
 import { SyntheticBadge } from '../components/SyntheticBadge';
 import { Footer } from '../components/Footer';
@@ -72,7 +76,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/demo')}
               className="inline-flex items-center px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
             >
-              Explore Demo
+              Open Casebook
               <ArrowRight className="ml-1.5 w-4 h-4" />
             </button>
           </div>
@@ -81,66 +85,98 @@ export const LandingPage: React.FC = () => {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-24">
         {/* Section 0: Hero Section */}
-        <section className="hero-section text-center max-w-4xl mx-auto pt-4 sm:pt-8 px-4 sm:px-8 pb-10">
-          <div className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 mb-6 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-            Evidence-First E-Commerce Audit Engine
+        <section className="hero-section max-w-6xl mx-auto pt-4 sm:pt-8 px-5 sm:px-10 lg:px-12 pb-10">
+          <div className="hero-grid grid lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-14 items-center">
+            <div className="text-left">
+              <div className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 mb-6 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Evidence-first commerce intelligence
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[4.25rem] font-extrabold tracking-[-0.055em] text-gray-900 mb-6 leading-[1.02]">
+                Know what is true before you{' '}
+                <span className="text-brand-600">change the budget.</span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
+                Commerce Truth Lab gives Shopify and DTC teams an evidence-linked view of orders, cash, settlements, refunds, and purchase signals—so growth decisions start with trusted numbers.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <a 
+                  href="https://syed-muslim-shah-portfolio.vercel.app/"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center"
+                >
+                  Request a Truth Sprint
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </a>
+                <button 
+                  onClick={() => navigate('/benchmarks')}
+                  className="w-full sm:w-auto px-5 py-3.5 bg-white border border-gray-300 hover:border-brand-500 hover:bg-brand-50 text-gray-800 font-semibold rounded-xl transition-all flex items-center justify-center"
+                >
+                  Explore the casebook
+                  <ChevronRight className="ml-1.5 w-4 h-4 text-brand-600" />
+                </button>
+              </div>
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-gray-500">
+                <span className="inline-flex items-center"><Check className="w-3.5 h-3.5 mr-1.5 text-brand-600" />Evidence-linked findings</span>
+                <span className="inline-flex items-center"><Check className="w-3.5 h-3.5 mr-1.5 text-brand-600" />Multi-currency aware</span>
+                <span className="inline-flex items-center"><Check className="w-3.5 h-3.5 mr-1.5 text-brand-600" />No live access required</span>
+              </div>
+            </div>
+
+            <div className="hero-console premium-card p-4 sm:p-5">
+              <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shadow-sm">
+                    <BarChart3 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Commerce integrity</p>
+                    <p className="text-[11px] uppercase tracking-[0.16em] text-gray-500 font-semibold">Audit workspace</p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
+                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Connected
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 py-4">
+                <div className="hero-console-stat bg-gray-50 rounded-xl p-3.5 border border-gray-200">
+                  <div className="flex items-center justify-between text-gray-500"><span className="text-[11px] font-semibold">Orders reviewed</span><Database className="w-3.5 h-3.5" /></div>
+                  <p className="text-2xl font-bold text-gray-900 mt-2">12</p>
+                  <p className="text-[11px] text-gray-500 mt-0.5">7 currencies</p>
+                </div>
+                <div className="hero-console-stat bg-brand-50 rounded-xl p-3.5 border border-brand-100">
+                  <div className="flex items-center justify-between text-brand-700"><span className="text-[11px] font-semibold">Signal confidence</span><Activity className="w-3.5 h-3.5" /></div>
+                  <p className="text-2xl font-bold text-brand-900 mt-2">85.5%</p>
+                  <p className="text-[11px] text-brand-700 mt-0.5">Identity consistency</p>
+                </div>
+              </div>
+
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500"><span>Evidence queue</span><span>4 controls clear</span></div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200">
+                  <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center"><WalletCards className="w-4 h-4" /></div>
+                  <div className="min-w-0 flex-1"><p className="text-xs font-bold text-gray-900">Settlement variance</p><p className="text-[11px] text-gray-500">Evidence attached · CTL-005</p></div>
+                  <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-1 rounded-full">Review</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center"><ShieldCheck className="w-4 h-4" /></div>
+                  <div className="min-w-0 flex-1"><p className="text-xs font-bold text-gray-900">Purchase signal health</p><p className="text-[11px] text-gray-500">Event identity verified · CTL-002</p></div>
+                  <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-1 rounded-full">Clear</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+                <span className="text-[11px] text-gray-500">Deterministic rules · no unsupported claims</span>
+                <button onClick={() => navigate('/demo/reports')} className="text-xs font-bold text-brand-700 hover:text-brand-900 inline-flex items-center">View report <ArrowRight className="ml-1 w-3.5 h-3.5" /></button>
+              </div>
+            </div>
           </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
-            Verify whether orders, cash, and signals can be trusted{' '}
-            <span className="text-brand-600">before you change ad budgets.</span>
-          </h1>
-
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Commerce Truth Lab helps Shopify brands verify whether their orders, cash, COD settlements, refunds, and advertising signals can be trusted before they scale spend or make operational decisions.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <a 
-              href="https://syed-muslim-shah-portfolio.vercel.app/"
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center text-base sm:text-lg"
-            >
-              Request a Shopify Measurement &amp; Funnel Truth Sprint
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </a>
-            <button 
-              onClick={() => navigate('/benchmarks')}
-              className="w-full sm:w-auto px-6 py-4 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-900 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base sm:text-lg"
-            >
-              Explore Public Benchmark
-            </button>
-            <button 
-              onClick={() => navigate('/demo')}
-              className="w-full sm:w-auto px-6 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center text-base sm:text-lg"
-            >
-              Synthetic Demo
-            </button>
-          </div>
-
-          <div className="mt-4 flex flex-wrap justify-center items-center gap-4 text-sm">
-            <button 
-              onClick={() => navigate('/demo/reports')}
-              className="inline-flex items-center text-brand-700 hover:text-brand-900 font-medium underline"
-            >
-              <FileText className="w-4 h-4 mr-1.5" />
-              View Sample Forensic Report
-            </button>
-            <span className="text-gray-300">&middot;</span>
-            <a 
-              href="#agency-partner"
-              className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium"
-            >
-              <Building2 className="w-4 h-4 mr-1.5 text-gray-500" />
-              For Shopify &amp; CRO Agencies &rarr;
-            </a>
-          </div>
-
-          <p className="mt-5 text-xs sm:text-sm text-gray-500 font-medium">
-            100% Deterministic Engine &middot; Instant access without login &middot; Tested across 12 orders in 7 currencies
-          </p>
         </section>
 
         {/* Section 1: What Commerce Truth Lab Does */}
@@ -371,8 +407,8 @@ export const LandingPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
             <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
-              <span className="font-semibold text-gray-900 block mb-1">1. Synthetic Public Demonstration:</span>
-              <p className="text-xs sm:text-sm">The public demo operates entirely on deterministic synthetic records across 7 currencies (AED, USD, JPY, KWD, PKR, GBP, EUR). No live merchant accounts are accessible without credentials.</p>
+              <span className="font-semibold text-gray-900 block mb-1">1. Public sample workspace:</span>
+              <p className="text-xs sm:text-sm">The public workspace operates on deterministic sample records across 7 currencies (AED, USD, JPY, KWD, PKR, GBP, EUR). No live merchant accounts are accessible without credentials.</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
               <span className="font-semibold text-gray-900 block mb-1">2. Deterministic Rule Boundaries:</span>
@@ -389,15 +425,15 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 7: Synthetic Demo Explanation */}
+        {/* Section 7: Public Casebook Explanation */}
         <section className="bg-white p-8 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md mb-2">
               <Compass className="w-3.5 h-3.5 mr-1" /> Public Casebook
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">7. The Synthetic Demo Casebook</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">7. The Public Casebook</h2>
             <p className="mt-2 text-gray-600 text-sm sm:text-base">
-              The public demo evaluates a deterministic test cohort of 12 multi-currency orders demonstrating both positive exceptions and verified healthy controls.
+              The public casebook evaluates a deterministic sample cohort of 12 multi-currency orders demonstrating both positive exceptions and verified healthy controls.
             </p>
           </div>
 
@@ -425,7 +461,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/demo')}
               className="inline-flex items-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg shadow-sm transition-colors text-sm"
             >
-              Open Interactive Demo (No Login)
+              Open Audit Casebook (No Login)
               <ArrowRight className="ml-2 w-4 h-4" />
             </button>
           </div>
@@ -621,7 +657,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/demo')}
               className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-sm transition-all text-base"
             >
-              Explore the Synthetic Demo
+              Explore the Public Casebook
             </button>
           </div>
 

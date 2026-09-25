@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
           </a>
         </p>
         <p className="text-xs text-gray-500">
-          Evidence-first e-commerce audit &middot; Synthetic demo only &middot; No real business data
+          Evidence-first e-commerce audit &middot; Public sample workspace &middot; No live merchant data
         </p>
       </div>
     </footer>

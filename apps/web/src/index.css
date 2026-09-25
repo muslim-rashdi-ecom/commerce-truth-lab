@@ -103,6 +103,105 @@
   isolation: isolate;
 }
 
+.landing-shell main > section:not(.hero-section) {
+  position: relative;
+}
+
+.landing-shell main > section:not(.hero-section) h2 {
+  letter-spacing: -0.035em;
+}
+
+.landing-shell .bg-white.rounded-xl,
+.landing-shell .bg-white.rounded-2xl,
+.app-shell .bg-white.rounded-xl,
+.app-shell .bg-white.rounded-2xl {
+  box-shadow: var(--shadow-card) !important;
+}
+
+.hero-grid {
+  min-height: 33rem;
+}
+
+.hero-console {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.98), rgba(247, 244, 236, 0.92)) !important;
+  box-shadow: 0 24px 65px rgba(23, 56, 61, 0.13), 0 2px 8px rgba(23, 56, 61, 0.06) !important;
+}
+
+.hero-console::after {
+  content: "";
+  position: absolute;
+  width: 15rem;
+  height: 15rem;
+  right: -8rem;
+  top: -8rem;
+  border-radius: 999px;
+  background: rgba(216, 234, 229, 0.65);
+  pointer-events: none;
+}
+
+.hero-console > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-console-stat {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.hero-console-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.metric-card {
+  min-height: 8.7rem;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  border-color: #b8d1cb !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.app-shell aside {
+  background: rgba(255, 253, 248, 0.96) !important;
+  border-color: var(--line) !important;
+}
+
+.app-shell main,
+.app-shell main > div {
+  min-height: 100%;
+}
+
+.app-shell table thead {
+  background: #f3eee5 !important;
+}
+
+.app-shell table tbody tr {
+  transition: background-color 150ms ease;
+}
+
+.app-shell table tbody tr:hover {
+  background: #faf6ee !important;
+}
+
+.app-shell input,
+.app-shell select,
+.app-shell textarea {
+  background-color: rgba(255, 253, 248, 0.9);
+  border-color: var(--line-strong) !important;
+}
+
+.app-shell input:focus,
+.app-shell select:focus,
+.app-shell textarea:focus {
+  border-color: var(--sea) !important;
+  box-shadow: 0 0 0 3px rgba(45, 116, 128, 0.12);
+}
+
 .hero-section::before {
   content: "";
   position: absolute;

@@ -45,8 +45,8 @@ export const OverviewPage: React.FC = () => {
               Deterministic verification across store orders, payments, courier collections, and tracking signals.
             </p>
           </div>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300 w-fit">
-            SYNTHETIC DEMO &middot; 12 ORDERS
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300 w-fit">
+            PUBLIC SAMPLE &middot; 12 ORDERS
           </span>
         </div>
       </div>

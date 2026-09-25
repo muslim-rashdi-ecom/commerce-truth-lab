@@ -53,7 +53,7 @@ export const WorkspaceLoginPage: React.FC = () => {
             className="text-sm font-medium text-brand-600 hover:text-brand-800 flex items-center transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
-            Public Synthetic Demo
+            Open Sample Casebook
           </button>
         </div>
       </header>

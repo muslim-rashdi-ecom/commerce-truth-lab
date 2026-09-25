@@ -13,7 +13,7 @@ export const SyntheticBadge: React.FC<SyntheticBadgeProps> = ({ compact }) => {
       compact ? "px-3 py-1 text-xs rounded-full" : "w-full py-2 px-4 text-sm shadow-sm z-50 sticky top-0"
     )}>
       <Info className={clsx("mr-2", compact ? "w-3 h-3" : "w-4 h-4")} />
-      <span>SYNTHETIC DEMO — NOT REAL BUSINESS DATA</span>
+      <span>PUBLIC SAMPLE DATA — NOT A LIVE MERCHANT ACCOUNT</span>
     </div>
   );
 };

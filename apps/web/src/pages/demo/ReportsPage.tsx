@@ -62,10 +62,10 @@ export const ReportsPage: React.FC = () => {
           <ShieldAlert className="w-5 h-5 text-amber-600 mr-3 shrink-0 mt-0.5" />
           <div>
             <span className="text-sm font-bold text-amber-900 block">
-              SYNTHETIC DEMONSTRATION NOTICE
+              PUBLIC SAMPLE DATA NOTICE
             </span>
             <p className="text-xs text-amber-800 mt-0.5 leading-relaxed">
-              All exported reports contain synthetic demonstration data generated offline for portfolio verification. 
+              All exported reports contain public sample or generated test data for product verification. 
               No real merchant financials or customer identities are represented.
             </p>
           </div>

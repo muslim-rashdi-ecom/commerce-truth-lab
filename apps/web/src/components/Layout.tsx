@@ -35,7 +35,10 @@ export const Layout: React.FC = () => {
           >
             <Menu className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-bold text-gray-900 tracking-tight">Commerce Truth Lab</h1>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900 tracking-tight">Commerce Truth Lab</h1>
+                <p className="hidden sm:block text-[10px] uppercase tracking-[0.18em] text-gray-500 font-semibold mt-0.5">Audit workspace</p>
+              </div>
         </div>
         <div className="hidden sm:block">
           <SyntheticBadge compact />

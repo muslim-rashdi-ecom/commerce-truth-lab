@@ -42,7 +42,7 @@ export const App: React.FC = () => {
             <Route path="/benchmarks" element={<PublicBenchmarksPage />} />
             <Route path="/benchmarks/:id" element={<PublicBenchmarksPage />} />
 
-            {/* Public Synthetic Demo Routes - No Login Required */}
+            {/* Public Casebook Routes - No Login Required */}
             <Route element={<Layout />}>
               <Route path="/demo" element={<OverviewPage />} />
               <Route path="/demo/overview" element={<OverviewPage />} />

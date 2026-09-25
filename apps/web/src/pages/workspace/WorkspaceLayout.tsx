@@ -168,7 +168,7 @@ export const WorkspaceLayout: React.FC = () => {
                 onClick={() => navigate('/demo')}
                 className="hidden sm:inline-flex text-xs font-medium text-gray-500 hover:text-gray-800 bg-gray-100 px-2.5 py-1.5 rounded-md transition-colors"
               >
-                Public Demo
+                Sample Casebook
               </button>
               <div className="flex items-center pl-3 border-l border-gray-200">
                 <div className="text-right hidden sm:block mr-2">
