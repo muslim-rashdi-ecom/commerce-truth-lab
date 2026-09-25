@@ -122,6 +122,14 @@
   min-height: 33rem;
 }
 
+.hero-lede {
+  max-width: 34rem;
+  padding-left: 1.15rem;
+  border-left: 3px solid var(--sea);
+  color: var(--ink-soft) !important;
+  letter-spacing: -0.012em;
+}
+
 .hero-console {
   position: relative;
   overflow: hidden;

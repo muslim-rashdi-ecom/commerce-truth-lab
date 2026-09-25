@@ -98,7 +98,7 @@ export const LandingPage: React.FC = () => {
                 <span className="text-brand-600">change the budget.</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
+              <p className="hero-lede text-base sm:text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
                 Commerce Truth Lab gives Shopify and DTC teams an evidence-linked view of orders, cash, settlements, refunds, and purchase signals—so growth decisions start with trusted numbers.
               </p>
 
